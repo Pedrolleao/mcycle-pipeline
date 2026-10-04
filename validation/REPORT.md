@@ -109,22 +109,24 @@ which model pmoA separately from amoA, still report pmoA in the two gammaproteob
 ammonia oxidizers and in the hydrocarbon-monooxygenase carriers; METABOLIC, DRAM and
 MCycDB report the alkyl-CoM reductases of the alkane oxidizers as McrA.
 
-## 3. GTDB-500 concordance (M6)
+## 3. GTDB-500 concordance (M6, completed 2026-10-05)
 
 500 GTDB r232 species representatives: the 380-genome backbone shared with the
-nitrogen and sulfur studies + 120 methane-enriched genomes (24 clades x 5;
-`comparators/gtdb500_m/selection.tsv`). No ground truth — agreement, not accuracy.
-Tables: `comparators/gtdb500_m/CONCORDANCE.{md,tsv}`; write-up `GTDB500_REPORT.md`.
+nitrogen and sulfur studies + 120 methane-enriched genomes (24 clades x 5). Four
+tools — mcycle, raw KofamScan, METABOLIC v4.0, MCycDB. No ground truth: agreement,
+not accuracy. `comparators/gtdb500_m/GTDB500_REPORT.md`, `CONCORDANCE.{md,tsv}`.
 
-- In the 20 genomes of ammonia-oxidizer clades, `pmoA` is reported by raw KofamScan
-  in 13, by MCycDB in 5 (the five gammaproteobacterial AOB), by mcycle in 0.
-- mcycle calls the Mcr `reverse` in 14 genomes, all of ANME families, and
-  `methanogenic` in none of them; no comparator has a direction call.
-- mcycle vs raw KofamScan agree on 99.3 % of 41,000 cells (kappa 0.96); MCycDB reports
-  about twice as many present calls as either (9,028 vs 4,851 / 4,791), mostly broad
-  families (frmA, pta, mtkAB, fdhA).
-- METABOLIC at scale: see `GTDB500_REPORT.md` (the 120 enriched genomes were still
-  running when this section was first written).
+| | mcycle | raw KofamScan | METABOLIC | MCycDB |
+|---|---|---|---|---|
+| pmoA reported in the 20 ammonia-oxidizer genomes | 0 | 13 | 5 | 5 |
+| — of which the 5 gammaproteobacterial AOB | 0 | 5 | 5 | 5 |
+| mcrA reported in the 5 alkane-oxidizer genomes | 2 | 2 | 5 | 5 |
+| Mcr direction call | 14 reverse, 42 methanogenic | none | none | none |
+
+The 2 alkane-oxidizer genomes with an mcrA call are *Ca.* Methanoliparum, which carry
+a canonical Mcr beside their alkyl-CoM reductase. The three KOfam-based tools agree
+on > 99 % of 41,000 cells (kappa 0.96-0.97); MCycDB reports almost twice as many
+present calls (9,028 vs 4,791-4,961), mostly broad families.
 
 ## 4. Clade calls against independent references (M7)
 
