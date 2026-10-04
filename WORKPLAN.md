@@ -36,10 +36,10 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | DONE 2026-10-04 |
 | M4 | Scoring, leak detection, trap independence, regression gate | DONE 2026-10-04 |
 | M5 | Pre-registration, then comparator benchmark | DONE 2026-10-04 |
-| M6 | GTDB-500 concordance | IN PROGRESS (mcycle + MCycDB running; METABOLIC on the 120 enriched pending) |
+| M6 | GTDB-500 concordance | IN PROGRESS — only METABOLIC on the 120 enriched genomes outstanding |
 | M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | DONE 2026-10-04 |
 | M8 | MAG realism study | DONE 2026-10-04 |
-| M9 | Report, docs, contract, reproducibility pins | TODO |
+| M9 | Report, docs, contract, reproducibility pins | IN PROGRESS — docs, CI, lock file, archive done; contract column and M6 numbers pending |
 
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
 M1 before M3 is not negotiable: the hold-out must be frozen before anything is tuned.
@@ -261,15 +261,22 @@ From the backlog in `../Info-methane.md`:
   set in small batches. Port `concordance.py` with the spotlight on the two methane
   traps: amoA called as pmoA, and Mcr direction.
 - Done when: `CONCORDANCE.{md,tsv}` and `GTDB500_REPORT.md` exist.
-- **IN PROGRESS.** `comparators/gtdb500_m/`: `select_gtdb_mcyc.py` -> `selection.tsv`
-  (380 backbone + 120 enriched, 24 clades x 5); `prepare_proteomes.py` (backbone
-  proteomes linked from ncycle's gtdb500, enriched called with Prodigal -p meta) — 500 /
-  500 ready. Running: mcycle (`MCYCLE_CONFIG=config/config_gtdb500.yaml`, protein input,
-  `results_gtdb500/`) and MCycDB (`gtdb500_m/mcycdb.tsv`). To do: METABOLIC on the 120
-  enriched (batches of <= 12, only after the panel METABOLIC run has ended), merge with
-  the backbone KO lists and worksheet 1 of
-  `Nitrogen_Cycle/ncycle-pipeline/comparators/gtdb500/metabolic_out/`, then
-  `MCYCLE_RESULTS=results_gtdb500 python validation/benchmark/concordance.py ...`.
+- **IN PROGRESS — only METABOLIC on the 120 enriched genomes is outstanding.**
+  `comparators/gtdb500_m/`: `select_gtdb_mcyc.py` -> `selection.tsv` (380 backbone +
+  120 enriched, 24 clades x 5); `prepare_proteomes.py` (500 / 500; backbone proteomes
+  linked from ncycle's gtdb500, enriched called with Prodigal -p meta); mcycle DONE
+  (`results_gtdb500/`, `config/config_gtdb500.yaml`, protein input, ~35 min on 8 cores);
+  MCycDB DONE (`mcycdb.tsv`); `CONCORDANCE_prelim.md` = three tools.
+  - METABOLIC: `comparators/run_metabolic_queue.sh` was started 2026-10-04 22:15 (MAGs,
+    then batches b01-b12 of 10, ~22 min each; log `comparators/metabolic_queue.log`,
+    ends with `ALLDONE`). b01 never started (its log redirect pointed into a directory
+    not yet created) and is re-run by `comparators/run_metabolic_gtdb_b01.sh`, which
+    waits for `ALLDONE` and ends with `B01_DONE` in the same log.
+  - When `B01_DONE` is in the log: `bash comparators/gtdb500_m/finalize.sh` (merges the
+    backbone KO lists and worksheet 1 reused from
+    `Nitrogen_Cycle/.../gtdb500/metabolic_out/`, writes `metabolic.tsv` and the
+    four-tool `CONCORDANCE.{md,tsv}`), then write `GTDB500_REPORT.md`, update REPORT
+    section 3, add the methane column to the sister-tool contract, and close M9.
 
 ### M7 — Orthogonal validation of the clade calls
 - Curate typed reference sets with provenance: McrA (methanogen / ANME clades /

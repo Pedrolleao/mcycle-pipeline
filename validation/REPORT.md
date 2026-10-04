@@ -163,8 +163,8 @@ genomes that supplied none). Not independent of the HMM — both read the same p
 | McrA | 45 | 22 / 25 | 2 / 2 | 18 |
 | PmoA / AmoA | 23 | 11 / 11 | 10 / 12 | 0 |
 
-- The 3 confident McrA "disagreements" are *Ca.* Methanofastidiosum, whose McrA sits
-  next to the ANME-1 references in the tree; the ANME-1 model does not accept them and
+- The 3 confident McrA "disagreements" are Methanofastidiosales (two
+  *Ca.* Methanofastidiosum, one `g__JAFGGT01`), whose McrA sits next to the ANME-1 references in the tree; the ANME-1 model does not accept them and
   the genome lineage says methanogen. Nearest-clade placement would have called them
   ANME — the calibrated threshold is what keeps them out.
 - 18 McrA queries fall in clades holding both ANME and methanogen references: for
