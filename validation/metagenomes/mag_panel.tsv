@@ -1,0 +1,18 @@
+# MAG realism study (M8). Roster and expected phenotype FIXED 2026-10-04, before any of
+# these genomes was run through mcycle or a comparator. Published metagenome-assembled
+# genomes with a stated phenotype, run from NUCLEOTIDE with --prodigal-mode meta.
+# expected_direction: reverse | methanogenic | none (no methyl-coenzyme M reductase call)
+# expected_mmo: pmmo | none.  Accessions, contig counts and DOIs verified against NCBI / Crossref.
+name	source	input	contigs	lineage	phenotype	expected_direction	expected_mmo	citation	doi
+ANME1_Methanospirare_FWG175	GCA_025962715.1	fna	11	ANME-1 (Ca. Methanospirare jalkutatii)	anaerobic methanotroph, hydrothermal sediment	reverse	none	Laso-Perez 2023	10.1038/s41564-022-01297-4
+ANME2a_Methanocomedens_CONS7142H05b1	GCA_013374465.1	fna	171	ANME-2a (Ca. Methanocomedens)	anaerobic methanotroph, sorted marine consortium	reverse	none	Chadwick 2022	10.1371/journal.pbio.3001508
+ANME2c_Methanogaster_AMVER4-21	GCA_013374355.1	fna	94	ANME-2c (Ca. Methanogaster)	anaerobic methanotroph, marine seep	reverse	none	Chadwick 2022	10.1371/journal.pbio.3001508
+ANME3_Methanovorans_HMMV	GCA_020793565.1	fna	236	ANME-3 (Ca. Methanovorans), Haakon Mosby mud volcano	anaerobic methanotroph	reverse	none	Chadwick 2022	10.1371/journal.pbio.3001508
+ANME2d_HGW_Methanoperedenaceae_1	GCA_002839545.1	fna	180	ANME-2d, second GTDB genus (Methanoperedens_A)	anaerobic methanotroph by lineage (no activity data), deep subsurface	reverse	none	Hernsdorf 2017	10.1038/ismej.2017.39
+Mmethylicus_V2	GCA_001717035.1	fna	13	Ca. Methanomethylicus mesodigestus (Verstraetearchaeota; non-euryarchaeal Mcr)	methylotrophic methanogen (predicted)	methanogenic	none	Vanwonterghem 2016	10.1038/nmicrobiol.2016.170
+Mflorens_bog38	GCA_003139855.1	fna	95	Ca. Methanoflorens stordalenmirensis (Methanocellales relative)	hydrogenotrophic methanogen, thawing permafrost	methanogenic	none	Mondav 2014	10.1038/ncomms4212
+Mliparum_NM1a	GCA_004212075.1	fna	12	Ca. Methanoliparum thermophilum (Mcr + alkyl-CoM reductase)	methanogenic degradation of long-chain alkanes	methanogenic	none	Zhou 2021	10.1038/s41586-021-04235-2
+Argoarchaeum_EthArch1	GCA_004193545.1	fna	46	Ca. Argoarchaeum ethanivorans (ethyl-CoM reductase)	anaerobic ethane oxidizer; not methane	none	none	Chen 2019	10.1038/s41586-019-1063-0
+USCalpha_Mlahnbergensis	GCA_002890675.1	fna	240	Ca. Methylaffinis lahnbergensis (USC-alpha; GTDB Methylocapsa)	atmospheric methane oxidizer, pMMO	none	pmmo	Pratscher 2018	10.1111/1462-2920.14036
+Bfragilis_NCTC9343	GCF_000025985.1	fna	2	Bacteroides fragilis (negative)	no methane metabolism	none	none	-	-
+Pmarinus_MED4	GCF_000011465.1	fna	1	Prochlorococcus marinus (negative)	no methane metabolism	none	none	-	-
