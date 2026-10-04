@@ -31,7 +31,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | Phase | What | State |
 |---|---|---|
 | M0 | Housekeeping and decisions | DONE 2026-10-04 |
-| M1 | Reference panel: roster, identity QC, train / hold-out split (frozen) | TODO |
+| M1 | Reference panel: roster, identity QC, train / hold-out split (frozen) | DONE 2026-10-04 |
 | M2 | Dual ground truth | TODO |
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | TODO |
 | M4 | Scoring, leak detection, trap independence, regression gate | TODO |
@@ -134,6 +134,21 @@ M1 before M3 is not negotiable: the hold-out must be frozen before anything is t
 - Extend `../test_panel/fetch_panel.sh` usage to a `ref_panel/` directory; port
   `validate_panel.py` and run it.
 - Done when: roster frozen and dated; all files fetched and identity-checked.
+- **DONE 2026-10-04.** 49 genomes, 27 training / 22 hold-out, frozen in
+  `validation/panel.tsv` (+ `PANEL_PLAN.md`, `CHANGELOG.md`); FASTA in `../ref_panel/`
+  (`make ref-panel`); identity QC 49 / 49 (`make validate-panel`, `panel_qc.tsv`).
+  Things later phases must know:
+  - "genus" = NCBI genus and GTDB r232 genus; the hold-out genera are listed in
+    PANEL_PLAN.md and are banned as seed / HMM-training / calibration sources.
+  - No hold-out is possible for ANME-2d, NC10, alpha pMMO and acetoclastic
+    methanogenesis (every genus is a seed or smoke genus) — say so in the report.
+  - ANME-2d second lineage (`g__Methanoperedens_A`) and marine ANME-2a / -2c / -3 have
+    only fragmented MAGs: they are M8 material. ANME-1 is in the panel (G60 training
+    and intended McrA seed source, G37 hold-out).
+  - 11 genomes are not in KEGG (5 hold-out, 6 training); four smoke genomes have
+    `kegg = tbd`. `rest.kegg.jp/list/organism` now answers 400 — use `list/genome`.
+  - *Thauera butanivorans* is the type-strain assembly (156 contigs), not the newer
+    complete genome of an uncharacterized strain.
 
 ### M2 — Dual ground truth
 - Port `build_ground_truth.py` → KEGG-KO ground truth (`ground_truth.tsv`: genome,

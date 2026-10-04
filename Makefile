@@ -9,7 +9,7 @@
 
 PANEL := ../test_panel
 
-.PHONY: env panel dbs smoke smoke-check clean clean_all
+.PHONY: env panel ref-panel validate-panel dbs smoke smoke-check clean clean_all
 
 env:
 	@mamba env create -f envs/mcycle.yaml 2>/dev/null || conda env create -f envs/mcycle.yaml
@@ -17,6 +17,14 @@ env:
 # Download / copy the smoke-panel genomes listed in ../test_panel/panel.tsv.
 panel:
 	$(PANEL)/fetch_panel.sh
+
+# Download the reference panel (validation/panel.tsv) into ../ref_panel and check that
+# every file is the organism and the assembly the roster says it is.
+ref-panel:
+	validation/fetch_ref_panel.sh
+
+validate-panel:
+	python validation/validate_panel.py --online --strict
 
 # (Re)build the HMM and BLAST databases from config/targets.yaml.
 dbs:

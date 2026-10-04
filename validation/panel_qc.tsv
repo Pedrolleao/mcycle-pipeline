@@ -1,0 +1,51 @@
+# identity QC of the reference panel, 2026-10-04 (defline + NCBI assembly check)
+name	accession	split	n_seqs	total_bp	defline_match	ncbi_organism	ncbi_bp	status	reason
+Mmaripaludis_S2	GCF_000011585.1	train	1	1661137	1/1	Methanococcus maripaludis S2	1661137	pass	
+Mthermautotrophicus_DeltaH	GCF_000008645.1	train	1	1751377	1/1	Methanothermobacter thermautotrophicus str. Delta H	1751377	pass	
+Macetivorans_C2A	GCF_000007345.1	train	1	5751492	1/1	Methanosarcina acetivorans C2A	5751492	pass	
+Msoehngenii_GP6	GCF_000204415.1	train	2	3026645	2/2	Methanothrix soehngenii GP6	3026645	pass	
+Mluminyensis_B10	GCF_000308215.1	train	26	2620233	26/26	Methanomassiliicoccus luminyensis B10	2620233	pass	
+Mnitroreducens_ANME2d	GCA_000685155.1	train	10	3203386	10/10	Candidatus Methanoperedens nitratireducens	3203386	pass	
+Mcapsulatus_Bath	GCF_000008325.1	train	1	3304561	1/1	Methylococcus capsulatus str. Bath	3304561	pass	
+Mfumariolicum_SolV	GCA_000953475.1	train	1	2476671	1/1	Methylacidiphilum fumariolicum SolV	2476671	pass	
+Mtrichosporium_OB3b	GCF_002752655.1	train	4	5183433	4/4	Methylosinus trichosporium OB3b	5183433	pass	
+Msilvestris_BL2	GCF_000021745.1	train	1	4305430	1/1	Methylocella silvestris BL2	4305430	pass	
+Mextorquens_AM1	GCF_000022685.1	train	5	6879778	5/5	Methylorubrum extorquens AM1	6879778	pass	
+Neuropaea_ATCC19718	GCF_000009145.1	train	1	2812094	1/1	Nitrosomonas europaea ATCC 19718	2812094	pass	
+Noceani_ATCC19707	GCF_000012805.1	train	2	3522111	2/2	Nitrosococcus oceani ATCC 19707	3522111	pass	
+Nmaritimus_SCM1	GCF_000018465.1	train	1	1645259	1/1	Nitrosopumilus maritimus SCM1	1645259	pass	
+Afulgidus_DSM4304	GCF_000008665.1	train	1	2178400	1/1	Archaeoglobus fulgidus DSM 4304	2178400	pass	
+Dvulgaris_Hildenborough	GCF_000195755.1	train	2	3773159	2/2	Nitratidesulfovibrio vulgaris str. Hildenborough	3773159	pass	
+Ecoli_K12_MG1655	GCF_000005845.2	train	1	4641652	1/1	Escherichia coli str. K-12 substr. MG1655	4641652	pass	
+Spneumoniae_ref	GCF_001457635.1	train	1	2110968	1/1	Streptococcus pneumoniae	2110968	pass	
+Mkandleri_AV19	GCF_000007185.1	train	1	1694969	1/1	Methanopyrus kandleri AV19	1694969	pass	
+Mthermoacetophila_PT	GCF_000014945.1	train	1	1879471	1/1	Methanothrix thermoacetophila PT	1879471	pass	
+ANME1_G60	GCA_003194435.1	train	38	1805851	38/38	Candidatus Methanophagaceae archaeon	1805851	pass	
+Ethanoperedens_E50	GCA_905171685.1	train	1	1920273	1/1	Candidatus Methanoperedentaceae archaeon GB50	1920273	pass	
+Methylocystis_SC2	GCF_000304315.1	train	1	3773444	1/1	Methylocystis hydrogenophila	3773444	pass	
+Moxyfera	GCF_000091165.1	train	1	2752854	1/1	Methylomirabilis oxygeniifera (SeqCode)	2752854	pass	
+Tbutanivorans_NBRC103042	GCF_001591165.1	train	156	4806543	156/156	Thauera butanivorans NBRC 103042	4806543	pass	
+Nocardioides_CF8	GCF_000389985.1	train	1	4219246	1/1	Nocardioides sp. CF8	4219246	pass	
+Pputida_KT2440	GCF_000007565.2	train	1	6181873	1/1	Pseudomonas putida KT2440	6181873	pass	
+Mbsmithii_ATCC35061	GCF_000016525.1	holdout	1	1853160	1/1	Methanobrevibacter smithii ATCC 35061	1853160	pass	
+Msstadtmanae_DSM3091	GCF_000012545.1	holdout	1	1767403	1/1	Methanosphaera stadtmanae DSM 3091	1767403	pass	
+Mhungatei_JF1	GCF_000013445.1	holdout	1	3544738	1/1	Methanospirillum hungatei JF-1	3544738	pass	
+Mcpaludicola_SANAE	GCF_000011005.1	holdout	1	2957635	1/1	Methanocella paludicola SANAE	2957635	pass	
+Mburtonii_DSM6242	GCF_000013725.1	holdout	1	2575032	1/1	Methanococcoides burtonii DSM 6242	2575032	pass	
+Malvi_Mx1201	GCF_000300255.2	holdout	1	1666795	1/1	Candidatus Methanomethylophilus alvi Mx1201	1666795	pass	
+Mnthermophilum_AMET1	GCF_002153915.1	holdout	8	1513137	8/8	Methanonatronarchaeum thermophilum	1513137	pass	
+ANME1_G37	GCA_003194425.1	holdout	5	1398999	5/5	Candidatus Methanophagaceae archaeon	1398999	pass	
+Sbutanivorans_BOX1	GCA_001766825.1	holdout	16	1456963	16/16	Candidatus Syntropharchaeum butanivorans	1456963	pass	
+Malbum_BG8	GCF_000214275.2	holdout	2	4493444	2/2	Methylomicrobium album BG8	4493444	pass	
+Mcmarinum_S8	GCF_003584645.1	holdout	1	6088916	1/1	Methylocaldum marinum	6088916	pass	
+Mfstellata_AR4	GCF_000385335.1	holdout	1	4235448	1/1	Methyloferula stellata AR4	4235448	pass	
+Methylacidimicrobium_AP8	GCF_903064525.1	holdout	1	2300970	1/1	Methylacidimicrobium sp. AP8	2300970	pass	
+Mbflagellatus_KT	GCF_000013705.1	holdout	1	2971517	1/1	Methylobacillus flagellatus KT	2971517	pass	
+Nsmultiformis_ATCC25196	GCF_000196355.1	holdout	4	3234309	4/4	Nitrosospira multiformis ATCC 25196	3234309	pass	
+Ngterrae_TAO100	GCF_002356115.1	holdout	2	2018309	2/2	Candidatus Nitrosoglobus terrae	2018309	pass	
+Ninopinata_ENR4	GCF_001458695.1	holdout	1	3295117	1/1	Candidatus Nitrospira inopinata	3295117	pass	
+Mchubuense_NBB4	GCF_000266905.1	holdout	3	6342624	3/3	Mycolicibacterium chubuense NBB4	6342624	pass	
+Goxydans_621H	GCF_000011685.1	holdout	6	2922384	6/6	Gluconobacter oxydans 621H	2922384	pass	
+Awoodii_DSM1030	GCF_000247605.1	holdout	1	4044777	1/1	Acetobacterium woodii DSM 1030	4044777	pass	
+Dautotrophicum_HRM2	GCF_000020365.1	holdout	2	5657782	2/2	Desulforapulum autotrophicum HRM2	5657782	pass	
+Fplacidus_DSM10642	GCF_000025505.1	holdout	1	2196266	1/1	Ferroglobus placidus DSM 10642	2196266	pass	

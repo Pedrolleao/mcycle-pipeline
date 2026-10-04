@@ -1,0 +1,56 @@
+# Reference panel of mcycle-pipeline. FROZEN 2026-10-04 (see PANEL_PLAN.md): the
+# train / holdout column must not change; later genomes are dated additions logged in
+# validation/CHANGELOG.md. All genomes are fetched as GENOME sequence (fna) by assembly
+# accession (fetch_ref_panel.sh). `kegg` = KEGG organism code whose genome entry names
+# this assembly (verified 2026-10-04); `-` = not in KEGG; `tbd` = to resolve in M2.
+# `taxa` = lower-case tokens validate_panel.py accepts in the FASTA deflines.
+name	source	input	split	guild	kegg	taxa	role	physiology	citation	doi
+Mmaripaludis_S2	GCF_000011585.1	fna	train	methanogen	mmp	methanococcus;maripaludis	hydrogenotrophic methanogen (Methanococcales)	CH4 from H2/CO2 and formate	Hendrickson 2004	10.1128/jb.186.20.6956-6969.2004
+Mthermautotrophicus_DeltaH	GCF_000008645.1	fna	train	methanogen	mth	methanothermobacter;thermautotrophicus	hydrogenotrophic methanogen (Methanobacteriales)	CH4 from H2/CO2	Smith 1997	10.1128/jb.179.22.7135-7155.1997
+Macetivorans_C2A	GCF_000007345.1	fna	train	methanogen	mac	methanosarcina;acetivorans	acetoclastic + methylotrophic methanogen (Methanosarcinales)	CH4 from acetate, methanol, methylamines; no growth on H2/CO2	Galagan 2002	10.1101/gr.223902
+Msoehngenii_GP6	GCF_000204415.1	fna	train	methanogen	mcj	methanothrix;methanosaeta;soehngenii;concilii	obligate acetoclastic methanogen	CH4 from acetate only	Barber 2011	10.1128/jb.05031-11
+Mluminyensis_B10	GCF_000308215.1	fna	train	methanogen	tbd	methanomassiliicoccus;luminyensis	H2-dependent methylotrophic methanogen (Methanomassiliicoccales)	CH4 from methanol + H2	Dridi 2012	10.1099/ijs.0.033712-0
+Mnitroreducens_ANME2d	GCA_000685155.1	fna	train	anme	-	methanoperedens	anaerobic methanotroph (ANME-2d)	nitrate-dependent anaerobic methane oxidation; Mcr in reverse	Haroon 2013	10.1038/nature12375
+Mcapsulatus_Bath	GCF_000008325.1	fna	train	methanotroph	mca	methylococcus;capsulatus	aerobic methanotroph (gamma, type X); pmoA + mmoX seed strain	pMMO + sMMO; RuMP	Ward 2004	10.1371/journal.pbio.0020303
+Mfumariolicum_SolV	GCA_000953475.1	fna	train	methanotroph	tbd	methylacidiphilum;fumariolicum;fumarolicum	aerobic methanotroph (Verrucomicrobia)	pMMO; lanthanide methanol dehydrogenase only; no sMMO	Pol 2007	10.1038/nature06222
+Mtrichosporium_OB3b	GCF_002752655.1	fna	train	methanotroph	mtw	methylosinus;trichosporium	aerobic methanotroph (alpha, type II); mmoX seed species	pMMO + sMMO; serine cycle	Stein 2010	10.1128/jb.01144-10
+Msilvestris_BL2	GCF_000021745.1	fna	train	methanotroph	msl	methylocella;silvestris	facultative aerobic methanotroph (alpha), sMMO only	sMMO, no pMMO	Chen 2010	10.1128/jb.00506-10
+Mextorquens_AM1	GCF_000022685.1	fna	train	methylotroph	mea	methylorubrum;methylobacterium;extorquens	methylotroph, not a methanotroph	methanol and methylamine; no methane oxidation	Vuilleumier 2009	10.1371/journal.pone.0005584
+Neuropaea_ATCC19718	GCF_000009145.1	fna	train	decoy_amo	neu	nitrosomonas;europaea	decoy: beta-AOB (amoCAB)	ammonia oxidizer; no methane-dependent growth	Chain 2003	10.1128/jb.185.21.6496.2003
+Noceani_ATCC19707	GCF_000012805.1	fna	train	decoy_amo	noc	nitrosococcus;oceani	decoy: gamma-AOB (amoA closest to pmoA)	ammonia oxidizer; no methane-dependent growth	Klotz 2006	10.1128/aem.00463-06
+Nmaritimus_SCM1	GCF_000018465.1	fna	train	decoy_amo	nmr	nitrosopumilus;maritimus	decoy: AOA (archaeal amoA)	ammonia oxidizer	Walker 2010	10.1073/pnas.0913533107
+Afulgidus_DSM4304	GCF_000008665.1	fna	train	decoy_c1	afu	archaeoglobus;fulgidus	decoy: archaeal sulfate reducer with H4MPT C1 genes + CODH/ACS, no Mcr	sulfate reducer; not a methanogen	Klenk 1997	10.1038/37052
+Dvulgaris_Hildenborough	GCF_000195755.1	fna	train	decoy_c1	dvu	desulfovibrio;nitratidesulfovibrio;vulgaris	decoy: sulfate reducer (Hdr-like, CODH)	sulfate reducer	Heidelberg 2004	10.1038/nbt959
+Ecoli_K12_MG1655	GCF_000005845.2	fna	train	negative	eco	escherichia;coli	decoy: ack / pta / acs + frmAB only	no C1 metabolism beyond formaldehyde detoxification	Blattner 1997	10.1126/science.277.5331.1453
+Spneumoniae_ref	GCF_001457635.1	fna	train	negative	-	streptococcus;pneumoniae	negative (strain NCTC7465; the citation is the species genome, strain TIGR4)	nothing methane-related	Tettelin 2001	10.1126/science.1061217
+Mkandleri_AV19	GCF_000007185.1	fna	train	methanogen	mka	methanopyrus;kandleri	hydrogenotrophic methanogen (Methanopyrales); mcrA seed strain	CH4 from H2/CO2 only	Kurr 1991	10.1007/bf00262992
+Mthermoacetophila_PT	GCF_000014945.1	fna	train	methanogen	mtp	methanothrix;methanosaeta;thermoacetophila;thermophila	obligate acetoclastic methanogen, second Methanothrix	CH4 from acetate only	Kamagata 1991	10.1099/00207713-41-2-191
+ANME1_G60	GCA_003194435.1	fna	train	anme	-	g60anme1;methanophag	anaerobic methanotroph, ANME-1 (60 C consortium); intended seed source for marine-ANME McrA in M3	anaerobic methane oxidation with a sulfate-reducing partner; Mcr in reverse	Krukenberg 2018	10.1111/1462-2920.14077
+Ethanoperedens_E50	GCA_905171685.1	fna	train	decoy_acr	-	gom-arc1;gb50;methanoperedentaceae;ethanoperedens	decoy: anaerobic ethane oxidizer (ethyl-CoM reductase); its EcrA was scored in the smoke phase	ethane oxidation; not methane	Hahn 2020	10.1128/mbio.00600-20
+Methylocystis_SC2	GCF_000304315.1	fna	train	methanotroph	msc	methylocystis	aerobic methanotroph (alpha), pMMO only; pmoA seed genus	two pMMO isozymes; no sMMO	Baani 2008	10.1073/pnas.0702643105
+Moxyfera	GCF_000091165.1	fna	train	methanotroph	mox	methylomirabilis	nitrite-dependent methanotroph (NC10); pmoA seed genus	pMMO + NO dismutase (intra-aerobic)	Ettwig 2010	10.1038/nature08883
+Tbutanivorans_NBRC103042	GCF_001591165.1	fna	train	decoy_sdimo	-	thauera;butanivorans	decoy: butane oxidizer with a soluble di-iron butane monooxygenase (closest relative of sMMO); type strain	butane oxidation; sBMO is not a methane monooxygenase	Cooley 2009	10.1099/mic.0.028175-0
+Nocardioides_CF8	GCF_000389985.1	fna	train	decoy_cumo	-	nocardioides	decoy: butane oxidizer with a copper membrane monooxygenase (pBMO)	butane oxidation; pBMO is not a methane monooxygenase	Sayavedra-Soto 2011	10.1111/j.1758-2229.2010.00239.x
+Pputida_KT2440	GCF_000007565.2	fna	train	decoy_pqq	ppu	pseudomonas;putida	decoy: PQQ alcohol dehydrogenases PedE (Ca) and PedH (lanthanide)	not a methylotroph; PedH is an ethanol dehydrogenase	Wehrmann 2017	10.1128/mbio.00570-17
+Mbsmithii_ATCC35061	GCF_000016525.1	fna	holdout	methanogen	msi	methanobrevibacter;methanocatella;smithii	hydrogenotrophic methanogen (Methanobacteriales, human gut)	CH4 from H2/CO2 and formate	Samuel 2007	10.1073/pnas.0704189104
+Msstadtmanae_DSM3091	GCF_000012545.1	fna	holdout	methanogen	mst	methanosphaera;stadtmanae	H2 + methanol specialist (Methanobacteriales)	CH4 only from methanol + H2; cannot reduce CO2 to CH4	Fricke 2006	10.1128/jb.188.2.642-658.2006
+Mhungatei_JF1	GCF_000013445.1	fna	holdout	methanogen	mhu	methanospirillum;hungatei	hydrogenotrophic methanogen (Methanomicrobiales)	CH4 from H2/CO2 and formate	Gunsalus 2016	10.1186/s40793-015-0124-8
+Mcpaludicola_SANAE	GCF_000011005.1	fna	holdout	methanogen	mpd	methanocella;paludicola	hydrogenotrophic methanogen (Methanocellales)	CH4 from H2/CO2 and formate	Sakai 2008	10.1099/ijs.0.65571-0
+Mburtonii_DSM6242	GCF_000013725.1	fna	holdout	methanogen	mbu	methanococcoides;burtonii	obligate methylotrophic methanogen (Methanosarcinales)	CH4 from methylamines and methanol; not from H2/CO2 or acetate	Allen 2009	10.1038/ismej.2009.45
+Malvi_Mx1201	GCF_000300255.2	fna	holdout	methanogen	max	methanomethylophilus;alvi;alvus	H2-dependent methylotrophic methanogen (Methanomassiliicoccales, second family)	CH4 from methanol / methylamines + H2	Borrel 2012	10.1128/jb.01867-12
+Mnthermophilum_AMET1	GCF_002153915.1	fna	holdout	methanogen	-	methanonatronarchaeum;thermophilum	methyl-reducing methanogen (Methanonatronarchaeia)	CH4 from C1-methylated compounds with formate or H2	Sorokin 2017	10.1038/nmicrobiol.2017.81
+ANME1_G37	GCA_003194425.1	fna	holdout	anme	-	g37anme1;methanophag	anaerobic methanotroph, ANME-1 (37 C consortium); GTDB genus differs from ANME1_G60	anaerobic methane oxidation with a sulfate-reducing partner; Mcr in reverse	Krukenberg 2018	10.1111/1462-2920.14077
+Sbutanivorans_BOX1	GCA_001766825.1	fna	holdout	decoy_acr	-	syntropharchaeum;syntrophoarchaeum;butanivorans	decoy: anaerobic butane oxidizer (alkyl-CoM reductases)	butane oxidation; not methane	Laso-Pérez 2016	10.1038/nature20152
+Malbum_BG8	GCF_000214275.2	fna	holdout	methanotroph	-	methylomicrobium;album;agile	aerobic methanotroph (gamma, type I)	pMMO; no sMMO	Kits 2013	10.1128/genomea.00170-13
+Mcmarinum_S8	GCF_003584645.1	fna	holdout	methanotroph	mmai	methylocaldum;marinum	aerobic methanotroph (gamma, Methylococcaceae, thermotolerant)	obligate methanotroph; MMO complement to be read from the paper in M2	Takeuchi 2014	10.1099/ijs.0.063503-0
+Mfstellata_AR4	GCF_000385335.1	fna	holdout	methanotroph	-	methyloferula;stellata	aerobic methanotroph (alpha), sMMO only	sMMO, no pMMO	Vorobev 2011	10.1099/ijs.0.028118-0
+Methylacidimicrobium_AP8	GCF_903064525.1	fna	holdout	methanotroph	meap	methylacidimicrobium	aerobic methanotroph (Verrucomicrobia, second genus)	methane and H2 oxidizer; pMMO	Picone 2021	10.3389/fmicb.2021.637762
+Mbflagellatus_KT	GCF_000013705.1	fna	holdout	methylotroph	mfa	methylobacillus;flagellatus	obligate methylotroph, not a methanotroph	methanol and methylamine; no methane oxidation	Chistoserdova 2007	10.1128/jb.00045-07
+Nsmultiformis_ATCC25196	GCF_000196355.1	fna	holdout	decoy_amo	nmu	nitrosospira;multiformis	decoy: beta-AOB, second genus	ammonia oxidizer	Norton 2008	10.1128/aem.02722-07
+Ngterrae_TAO100	GCF_002356115.1	fna	holdout	decoy_amo	ntt	nitrosoglobus;terrae	decoy: gamma-AOB, second genus	ammonia oxidizer	Hayatsu 2017	10.1038/ismej.2016.191
+Ninopinata_ENR4	GCF_001458695.1	fna	holdout	decoy_amo	nio	nitrospira;inopinata	decoy: comammox Nitrospira (amoA clade A)	complete ammonia oxidizer	Daims 2015	10.1038/nature16461
+Mchubuense_NBB4	GCF_000266905.1	fna	holdout	decoy_cumo	mcb	mycolicibacterium;mycobacterium;chubuense	decoy: hydrocarbon oxidizer with a copper membrane monooxygenase (HMO) and soluble di-iron monooxygenases	ethene / alkane oxidation; not methane	Coleman 2011	10.1038/ismej.2011.98
+Goxydans_621H	GCF_000011685.1	fna	holdout	decoy_pqq	gox	gluconobacter;oxydans	decoy: PQQ-dependent membrane alcohol dehydrogenases	incomplete oxidation of alcohols and sugars; not a methylotroph	Prust 2005	10.1038/nbt1062
+Awoodii_DSM1030	GCF_000247605.1	fna	holdout	decoy_c1	awo	acetobacterium;woodii	decoy: acetogen (Wood-Ljungdahl pathway, CODH/ACS, methyltransferases)	acetate from H2/CO2 and methyl groups; no methane	Poehlein 2012	10.1371/journal.pone.0033439
+Dautotrophicum_HRM2	GCF_000020365.1	fna	holdout	decoy_c1	dat	desulforapulum;desulfobacterium;autotrophicum	decoy: completely oxidizing sulfate reducer (Wood-Ljungdahl pathway, Hdr-like)	sulfate reducer	Strittmatter 2009	10.1111/j.1462-2920.2008.01825.x
+Fplacidus_DSM10642	GCF_000025505.1	fna	holdout	decoy_c1	fpl	ferroglobus;placidus	decoy: Archaeoglobi without Mcr, second genus	Fe(II) oxidizer / nitrate reducer; not a methanogen	Hafenbradl 1996	10.1007/s002030050388
