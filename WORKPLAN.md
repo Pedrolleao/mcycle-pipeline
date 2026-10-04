@@ -34,7 +34,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M1 | Reference panel: roster, identity QC, train / hold-out split (frozen) | DONE 2026-10-04 |
 | M2 | Dual ground truth | DONE 2026-10-04 |
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | DONE 2026-10-04 |
-| M4 | Scoring, leak detection, trap independence, regression gate | TODO |
+| M4 | Scoring, leak detection, trap independence, regression gate | DONE 2026-10-04 |
 | M5 | Pre-registration, then comparator benchmark | TODO |
 | M6 | GTDB-500 concordance | TODO |
 | M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | TODO |
@@ -216,6 +216,14 @@ From the backlog in `../Info-methane.md`:
 - Floors = observed CI lower bounds minus a small slack, set once and written down with
   the observed values (as in the sulfur gate).
 - Done when: the 8-row gate passes and the numbers are in `validation/REPORT.md`.
+- **DONE 2026-10-04.** Hold-out micro-F1 0.961 [0.940, 0.976]; full panel 0.973
+  [0.963, 0.981]; trap precision 1.000 (0 FP in 259 trap negatives). Gate 14 / 14
+  (`make regression-score`). Report: `validation/REPORT.md` section 1. The tool was at
+  commit `9c39500` when the hold-out was first run — any later change to rules, seeds,
+  thresholds or models must be disclosed as post-hold-out, and the pre-change numbers
+  kept. `compare_kofam.py` is the descriptive raw-KOfam table; `mcrA_anme` under a raw
+  KO is "McrA present" — M5 must fix, in the pre-registration, how tools that cannot
+  call direction are scored on that target.
 
 ### M5 — Pre-registration, then benchmark
 - Write `validation/benchmark/prereg.md` BEFORE running any comparator: primary
