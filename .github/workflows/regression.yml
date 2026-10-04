@@ -1,0 +1,55 @@
+# mcycle-pipeline — accuracy regression gate (CI)
+#
+# Fails the build when the accuracy on the 49-genome reference panel drops below the
+# floors of validation/test_regression.py. TEMPLATE: it runs once the repository has
+# a remote (it is local and private for now). Everything it needs is in the repo:
+# the panel roster (validation/panel.tsv) is fetched from NCBI by `make ref-panel`,
+# and both ground truths are committed, so no KEGG access is required.
+# The KOfam download (~1.5 GB) is cached and keyed on the release hash pinned in
+# config/config.yaml, so it is fetched at most once.
+
+name: regression
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  accuracy-gate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}        # login shell so the conda env stays active
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up the cycle-pipeline conda env
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: envs/mcycle.yaml
+          cache-environment: true
+
+      - name: Cache KOfam profiles (pinned release)
+        uses: actions/cache@v4
+        with:
+          path: resources/.cache
+          key: kofam-b03d20b96254d0f04652102ea538087ac36adadf0f807ee7278f8637810ca15a
+
+      - name: Cache the reference panel
+        uses: actions/cache@v4
+        with:
+          path: ../ref_panel
+          key: ref-panel-${{ hashFiles('validation/panel.tsv') }}
+
+      - name: Build the HMM and BLAST databases
+        run: make dbs
+
+      - name: Smoke test (18 genomes, 168 expectations)
+        env:
+          MCYCLE_ENV: cycle-pipeline
+        run: make smoke
+
+      - name: Accuracy regression gate (49 genomes)
+        env:
+          MCYCLE_ENV: cycle-pipeline
+        run: make regression

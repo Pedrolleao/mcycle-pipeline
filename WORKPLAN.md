@@ -35,10 +35,10 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M2 | Dual ground truth | DONE 2026-10-04 |
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | DONE 2026-10-04 |
 | M4 | Scoring, leak detection, trap independence, regression gate | DONE 2026-10-04 |
-| M5 | Pre-registration, then comparator benchmark | TODO |
-| M6 | GTDB-500 concordance | TODO |
-| M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | TODO |
-| M8 | MAG realism study | TODO |
+| M5 | Pre-registration, then comparator benchmark | IN PROGRESS (comparators running) |
+| M6 | GTDB-500 concordance | IN PROGRESS (mcycle + MCycDB running; METABOLIC on the 120 enriched pending) |
+| M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | scripts written, not run |
+| M8 | MAG realism study | roster fixed, genomes fetched, not run |
 | M9 | Report, docs, contract, reproducibility pins | TODO |
 
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
@@ -237,6 +237,26 @@ From the backlog in `../Info-methane.md`:
   counterpart of NCycDB / SCycDB) — confirm it exists and is obtainable, stage it
   untracked, write `build_mcycdb_tsv.py`.
 - Done when: `benchmark_results.tsv` and `COMPARISON_REPORT.md` exist for 4 comparators.
+- **IN PROGRESS (state at 2026-10-04 21:00).** Pre-registration committed at `3cc200c`
+  before any comparator ran (`validation/benchmark/prereg.md`: family = 4 comparators x
+  {trap precision, ALL micro-F1}; `mcrA_anme` of a comparator = its mcrA call, with the
+  trap set also scored without it; METABOLIC decided by its gene-named worksheet rows
+  for 13 targets). Ported: `adapters.py`, `benchmark_stats.py` (smoke-tested).
+  - MCycDB: DONE -> `validation/benchmark/mcycdb.tsv` (`comparators/build_mcycdb_tsv.py`;
+    database under `comparators/MCyc/`, untracked; the split zip needs the stream
+    inflated by hand — see the script header).
+  - METABOLIC: `comparators/run_metabolic_panel.sh`, 5 batches of 10, ~21 min each;
+    outputs in `comparators/metabolic_out/{kegg_all,worksheet1}`. When finished:
+    `python comparators/build_metabolic_tsv.py`.
+  - DRAM: `comparators/run_dram_panel.sh`, 7 parallel batches of 7 (DRAM does one genome
+    per ~15 min). When finished: `python comparators/build_dram_tsv.py`.
+  - Then: `python validation/benchmark/benchmark_stats.py --metabolic
+    validation/benchmark/metabolic.tsv --dram validation/benchmark/dram.tsv --mcycdb
+    validation/benchmark/mcycdb.tsv > validation/benchmark/benchmark_final.txt`, write
+    `COMPARISON_REPORT.md`, port `plot_benchmark.py`.
+  - Never overwrite a shell script that a running bash is executing (bash reads the
+    file as it goes): the DRAM runner was replaced mid-run and the old process carried
+    on into the new text. The outcome was the intended batched run, but by accident.
 
 ### M6 — GTDB-500 concordance
 - `select_gtdb_mcyc.py`: reuse the 380-genome backbone verbatim, add ≈ 120
@@ -246,6 +266,15 @@ From the backlog in `../Info-methane.md`:
   set in small batches. Port `concordance.py` with the spotlight on the two methane
   traps: amoA called as pmoA, and Mcr direction.
 - Done when: `CONCORDANCE.{md,tsv}` and `GTDB500_REPORT.md` exist.
+- **IN PROGRESS.** `comparators/gtdb500_m/`: `select_gtdb_mcyc.py` -> `selection.tsv`
+  (380 backbone + 120 enriched, 24 clades x 5); `prepare_proteomes.py` (backbone
+  proteomes linked from ncycle's gtdb500, enriched called with Prodigal -p meta) — 500 /
+  500 ready. Running: mcycle (`MCYCLE_CONFIG=config/config_gtdb500.yaml`, protein input,
+  `results_gtdb500/`) and MCycDB (`gtdb500_m/mcycdb.tsv`). To do: METABOLIC on the 120
+  enriched (batches of <= 12, only after the panel METABOLIC run has ended), merge with
+  the backbone KO lists and worksheet 1 of
+  `Nitrogen_Cycle/ncycle-pipeline/comparators/gtdb500/metabolic_out/`, then
+  `MCYCLE_RESULTS=results_gtdb500 python validation/benchmark/concordance.py ...`.
 
 ### M7 — Orthogonal validation of the clade calls
 - Curate typed reference sets with provenance: McrA (methanogen / ANME clades /
@@ -255,6 +284,12 @@ From the backlog in `../Info-methane.md`:
   split by characterized genera vs candidate lineages; report which calls no sequence
   method resolves.
 - Done when: `DIR_ACCURACY` and `DIR_PLACEMENT` tables exist for both traps.
+- **Scripts written, not run** (need the M6 results): `validation/phylogeny/
+  clade_accuracy.py` (clade call vs the GTDB lineage of the genome — the independent
+  reference, since mcycle's call is itself sequence-based; stratified by training
+  genome / training genus / new genus) and `place_clades.py` (MAFFT, ClipKIT from
+  `Clipkit_env`, IQ-TREE 2 from `Iqtree_env`; says which calls no sequence method
+  resolves).
 
 ### M8 — MAG realism
 - Dossier of ≈ 8–10 published MAGs with a stated phenotype and CheckM quality: marine
@@ -265,6 +300,14 @@ From the backlog in `../Info-methane.md`:
   METABOLIC and DRAM alongside. Expect this phase to surface real bugs — in nitrogen it
   found one the isolate panel could not.
 - Done when: `mag_truth_vs_tool.tsv` and a short write-up exist.
+- **Roster fixed (commit `ad5a9ef`), not run.** `validation/metagenomes/mag_panel.tsv`:
+  12 inputs (ANME-1, -2a, -2c, -3, second ANME-2d genus, *Ca.* Methanomethylicus,
+  *Ca.* Methanoflorens, *Ca.* Methanoliparum, *Ca.* Argoarchaeum, USC-alpha, two
+  negatives) with expected direction / MMO and DOI. Genomes are in `../mag_panel/`.
+  To do: run with `--prodigal-mode meta` into its own results dir, CheckM
+  (`CheckM_env`, `--reduced_tree`), METABOLIC + DRAM alongside, truth-vs-tool table.
+  Several of these MAGs are of genera present in the clade-HMM training sets — say
+  which, per MAG (`targets/*/refs.fasta`).
 
 ### M9 — Close out
 - `validation/REPORT.md` with the full battery; update `README.md`, `ROADMAP.md`,
