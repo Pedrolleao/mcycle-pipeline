@@ -1,0 +1,28 @@
+# ============================================================================
+# mcycle-pipeline .gitignore
+# Goal: commit the tool + config + small validation artifacts.
+# Exclude large/regenerable data (DBs, downloads, per-genome pipeline outputs).
+# NOTE: resources/blast_db/ holds the cached BLAST reference sequences fetched
+# from UniProt — archive it SEPARATELY (e.g. Zenodo) with a release, because
+# UniProt accessions can be deleted; it is intentionally NOT committed here.
+# ============================================================================
+
+# ---- Python / Snakemake / OS cruft ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.snakemake/
+.DS_Store
+*.log
+
+# ---- Local agent / planning state (not part of the public tool) ----
+.claude/
+
+# ---- Large regenerable resources (archive separately) ----
+resources/.cache/
+resources/hmm/
+resources/blast_db/
+
+# ---- Pipeline run outputs ----
+results/

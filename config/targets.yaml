@@ -1,0 +1,710 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# targets.yaml — single source of truth for the methane-cycle detection pipeline.
+#
+# Modeled on Sulfur_Cycle/scycle-pipeline/config/targets.yaml (same schema, same
+# engine). Three blocks:
+#   targets:    individual enzymes/genes. Each carries KO (primary anchor), optional
+#               Pfam anchors, an optional custom-HMM tier, and a BLAST
+#               fallback/confirmation gate.
+#   complexes:  obligatory multi-subunit assemblies. Scored n/N per genome.
+#   synergies:  process-completeness modules (hydrogenotrophic / acetoclastic /
+#               methylotrophic methanogenesis, reverse methanogenesis, aerobic
+#               methane oxidation, ...). `requires:` lists genes that must all be
+#               present; `requires_any:` lists slots, each satisfied by any ONE of
+#               its alternatives (an alternative is a gene or a list of genes);
+#               `key:` lists what DEFINES the module — every entry must be
+#               present (an entry that is a list is satisfied by any one of its
+#               genes), otherwise the module is ruled out however many shared
+#               genes (Mcr, Mtr, pMMO, ...) the genome carries.
+#
+# Detection is KO-primary: build_hmm_db.py extracts the KOfam profile + adaptive
+# threshold for every `ko:` here. Every KO below was verified against the cached
+# KOfam `ko_list` (release 2026-05-24); every Pfam id against the InterPro API;
+# every `blast_refs_uniprot` accession against the UniProt REST API (2026-10-04:
+# protein name, organism, full length, not a fragment). Empty `blast_refs_uniprot`
+# means the target is called on its KO alone — seeds are CURATED, never guessed.
+#
+# ⚠️ HOMOLOGY / DIRECTIONALITY TRAPS:
+#   mcrABG       methanogenesis vs REVERSE methanogenesis (ANME, anaerobic methane
+#                oxidation) — same enzyme, opposite direction. Resolved by the
+#                ANME-clade McrA gate (`mcrA_anme`) in
+#                apply_rules.resolve_mcr_direction + the direction rule on the
+#                methanogenesis / reverse_methanogenesis_aom synergies.
+#   pmoABC       particulate methane monooxygenase vs ammonia monooxygenase
+#                (amoABC) — one copper-monooxygenase family; KOs K10945/K10946 are
+#                shared verbatim. pmoA is BLAST-gated to methanotroph-clade seeds;
+#                pmoB/pmoC follow the pmoA call (apply_rules.gate_pmo_subunits).
+#   fwdABC, ftr, mch   the H4MPT C1 module is shared between methanogens
+#                (reductive, CO2 → methyl) and methylotrophic bacteria (oxidative,
+#                formaldehyde → formate; Fhc complex = FwdABC + Ftr homologues).
+#                Direction is inferred at the synergy / cycle-map layer, not per gene.
+#   mmoX         soluble methane monooxygenase vs other soluble di-iron
+#                monooxygenases (propane / butane / phenol / toluene) — KO K16157
+#                is specific; BLAST seeds corroborate.
+#   ack, pta, acs, hdrABC, cdh   widespread outside methanogens — interpreted only
+#                at the synergy layer (which also requires mcr).
+# ─────────────────────────────────────────────────────────────────────────────
+
+targets:
+
+  # ── 1. Mcr / Mtr core — methanogenesis and reverse methanogenesis (ANME) ───
+  - id: mcrA
+    name: Methyl-coenzyme M reductase alpha subunit
+    category: mcr_core
+    ko: [K00399]
+    pfam: [PF02249, PF02745]
+    blast_fallback: true
+    blast_identity_min: 50
+    blast_refs_uniprot: [P11558, P58815, P07962, Q58256, P07961, Q49605, R9TAZ9, A0A284VQI9]   # Methanothermobacter marburgensis McrI + McrII, Methanosarcina barkeri, Methanocaldococcus jannaschii, Methanococcus vannielii, Methanopyrus kandleri (all reviewed) + Methanomassiliicoccus intestinalis + Ca. Methanoperedens (ANME-2d)
+    ref_query: "Methanothermobacter marburgensis[organism] AND mcrA[gene]"
+    gate_rationale: "50 = floor between canonical McrA and alkyl-CoM reductases. Measured 2026-10-04: methanogen McrA across orders are >=55% identical to the nearest seed; the ethyl-CoM reductase of Ca. Ethanoperedens (A0A7R9R780) is 42-45% to every McrA seed. Not a hard gate (blast_fallback only): a KO hit with no seed >=50% is reported as domain-only."
+    notes: "⚠️ DIRECTION TRAP: the same enzyme makes methane in methanogens and activates it in ANME archaea (reverse methanogenesis). The direction call is made by resolve_mcr_direction (see mcrA_anme). KOfam K00399 (TC 775.5) already excludes the divergent alkyl-CoM reductases: Ethanoperedens ECR scores 643, canonical McrA >=1000, ANME-2d ~915."
+  - id: mcrB
+    name: Methyl-coenzyme M reductase beta subunit
+    category: mcr_core
+    ko: [K00401]
+    pfam: [PF02241]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND mcrB[gene]"
+  - id: mcrG
+    name: Methyl-coenzyme M reductase gamma subunit
+    category: mcr_core
+    ko: [K00402]
+    pfam: [PF02240]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND mcrG[gene]"
+  - id: mcrC
+    name: Methyl-coenzyme M reductase operon protein C
+    category: mcr_core
+    ko: [K03421]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND mcrC[gene]"
+    notes: "Accessory (mcrBDCGA operon); part of the Mcr activation machinery. Not required by any module."
+  - id: mcrD
+    name: Methyl-coenzyme M reductase operon protein D
+    category: mcr_core
+    ko: [K03422]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND mcrD[gene]"
+    notes: "Accessory (assembly chaperone). Not required by any module."
+  - id: mcrA_anme
+    name: Methyl-coenzyme M reductase alpha subunit — ANME clade (reverse methanogenesis)
+    category: mcr_core
+    ko: [K00399]
+    pfam: [PF02249, PF02745]
+    requires_blast_for_confirmation: true
+    blast_fallback: true
+    blast_identity_min: 80
+    blast_refs_uniprot: [A0A284VQI9]   # Ca. Methanoperedens nitratireducens McrA (ANME-2d, 567 aa). A0A062V7W6 (the ANME-2d genome of the smoke panel) is deliberately NOT a seed.
+    ref_query: "Candidatus Methanoperedens[organism] AND mcrA[gene]"
+    gate_rationale: "80 sits in the measured gap (2026-10-04): the two available Ca. Methanoperedens McrA are 96% identical to each other, while the closest methanogen McrA (Methanosarcina barkeri / acetivorans) are 68-70% identical to the seed and Methanothrix 63-65%."
+    notes: "⚠️ CLADE GATE, ANME-2d ONLY SO FAR. The same protein as mcrA, called a second time against ANME-clade seeds: confirmed here ⇒ the genome's Mcr is called `reverse`; in a methanogen this target is `disqualified` (McrA present, not an ANME clade). No function-verified full-length UniProt McrA was found for the marine ANME-1 / ANME-2a / ANME-2c / ANME-3 clades, so those are NOT yet seeded and are called methanogenic — see Info-methane.md, hardening backlog."
+  - id: mtrA
+    name: Tetrahydromethanopterin S-methyltransferase subunit A
+    category: mcr_core
+    ko: [K00577]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND mtrA[gene]"
+    notes: "Mtr: methyl-H4MPT + CoM → methyl-CoM, the sodium-pumping step. Absent from the H2-dependent methylotrophic methanogens (Methanomassiliicoccales, Methanosphaera-type)."
+  - id: mtrB
+    name: Tetrahydromethanopterin S-methyltransferase subunit B
+    category: mcr_core
+    ko: [K00578]
+    blast_fallback: false
+  - id: mtrC
+    name: Tetrahydromethanopterin S-methyltransferase subunit C
+    category: mcr_core
+    ko: [K00579]
+    blast_fallback: false
+  - id: mtrD
+    name: Tetrahydromethanopterin S-methyltransferase subunit D
+    category: mcr_core
+    ko: [K00580]
+    blast_fallback: false
+  - id: mtrE
+    name: Tetrahydromethanopterin S-methyltransferase subunit E
+    category: mcr_core
+    ko: [K00581]
+    blast_fallback: false
+  - id: mtrF
+    name: Tetrahydromethanopterin S-methyltransferase subunit F
+    category: mcr_core
+    ko: [K00582]
+    blast_fallback: false
+    notes: "Very small subunit (~70 aa); often missed by gene callers or fused to mtrA."
+  - id: mtrG
+    name: Tetrahydromethanopterin S-methyltransferase subunit G
+    category: mcr_core
+    ko: [K00583]
+    blast_fallback: false
+    notes: "Very small subunit (~75 aa)."
+  - id: mtrH
+    name: Tetrahydromethanopterin S-methyltransferase subunit H
+    category: mcr_core
+    ko: [K00584]
+    blast_fallback: false
+
+  # ── 2. CO2 reduction — the H4MPT C1 module (CO2 → methyl-H4MPT) ────────────
+  - id: fwdA
+    name: Formylmethanofuran dehydrogenase subunit A (FwdA/FmdA; FhcA in methylotrophs)
+    category: co2_reduction
+    ko: [K00200]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND fwdA[gene]"
+    notes: "⚠️ SHARED: K00200-K00202 also cover FhcA/B/C, the formyltransferase/hydrolase complex of methylotrophic bacteria (formyl-H4MPT → formate). Direction is set at the synergy layer."
+  - id: fwdB
+    name: Formylmethanofuran dehydrogenase subunit B (FwdB/FmdB; FhcB in methylotrophs)
+    category: co2_reduction
+    ko: [K00201]
+    blast_fallback: false
+  - id: fwdC
+    name: Formylmethanofuran dehydrogenase subunit C (FwdC/FmdC; FhcC in methylotrophs)
+    category: co2_reduction
+    ko: [K00202]
+    blast_fallback: false
+  - id: fwdD
+    name: Formylmethanofuran dehydrogenase subunit D
+    category: co2_reduction
+    ko: [K00203]
+    blast_fallback: false
+    notes: "Archaeal Fwd/Fmd subunit; no counterpart in the bacterial Fhc complex."
+  - id: ftr
+    name: Formylmethanofuran--tetrahydromethanopterin N-formyltransferase (Ftr; FhcD in methylotrophs)
+    category: co2_reduction
+    ko: [K00672]
+    blast_fallback: false
+    ref_query: "Methanopyrus kandleri[organism] AND ftr[gene]"
+    notes: "⚠️ SHARED with the methylotroph Fhc complex (FhcD)."
+  - id: mch
+    name: Methenyltetrahydromethanopterin cyclohydrolase
+    category: co2_reduction
+    ko: [K01499]
+    blast_fallback: false
+    ref_query: "Methanopyrus kandleri[organism] AND mch[gene]"
+    notes: "⚠️ SHARED: the same enzyme runs reductively in methanogens and oxidatively in methylotrophs / ANME."
+  - id: mtd
+    name: Methylenetetrahydromethanopterin dehydrogenase (F420-dependent)
+    category: co2_reduction
+    ko: [K00319]
+    blast_fallback: false
+    ref_query: "Methanopyrus kandleri[organism] AND mtd[gene]"
+  - id: hmd
+    name: 5,10-methenyltetrahydromethanopterin hydrogenase (H2-forming, [Fe]-hydrogenase)
+    category: co2_reduction
+    ko: [K13942]
+    blast_fallback: false
+    ref_query: "Methanothermobacter marburgensis[organism] AND hmd[gene]"
+    notes: "H2-dependent alternative to mtd in hydrogenotrophic methanogens without cytochromes."
+  - id: mer
+    name: 5,10-methylenetetrahydromethanopterin reductase (F420-dependent)
+    category: co2_reduction
+    ko: [K00320]
+    blast_fallback: false
+    ref_query: "Methanopyrus kandleri[organism] AND mer[gene]"
+    notes: "ANME-1 lack mer (a MetF-like enzyme is proposed to replace it)."
+  - id: fdhA
+    name: Formate dehydrogenase (coenzyme F420) alpha subunit
+    category: co2_reduction
+    ko: [K22516]
+    blast_fallback: false
+    ref_query: "Methanococcus maripaludis[organism] AND fdhA[gene]"
+    notes: "Formate as electron donor for CO2-reducing methanogenesis. A selenoprotein in Methanococcus (in-frame UGA): from genome input the two halves are joined by apply_rules.join_inframe_stops and the call is tagged `joined:`."
+  - id: fdhB
+    name: Formate dehydrogenase (coenzyme F420) beta subunit
+    category: co2_reduction
+    ko: [K00125]
+    blast_fallback: false
+
+  # ── 3. Acetoclastic methanogenesis (acetate → CH4 + CO2) ───────────────────
+  - id: ackA
+    name: Acetate kinase
+    category: acetoclastic
+    ko: [K00925]
+    blast_fallback: false
+    notes: "⚠️ Ubiquitous in bacteria. Acetate activation in Methanosarcina (ack + pta); meaningful only inside the acetoclastic module."
+  - id: pta
+    name: Phosphate acetyltransferase
+    category: acetoclastic
+    ko: [K00625, K13788]
+    ko_tc: 350
+    blast_fallback: false
+    notes: "⚠️ Ubiquitous in bacteria; see ackA. ko_tc 350: the archaeal Pta of Methanosarcina scores just under the KOfam thresholds (M. acetivorans C2A Pta: 378 on K00625, TC 391.4; measured 2026-10-04), which would break the ack + pta acetate-activation route of the acetoclastic module."
+  - id: acs
+    name: Acetyl-CoA synthetase (AMP-forming)
+    category: acetoclastic
+    ko: [K01895]
+    blast_fallback: false
+    notes: "⚠️ Ubiquitous. Acetate activation in Methanothrix (the obligate acetoclast); also used for acetate ASSIMILATION by hydrogenotrophic methanogens."
+  - id: cdhA
+    name: CODH/ACS complex subunit alpha (acetyl-CoA decarbonylase/synthase, CO dehydrogenase)
+    category: acetoclastic
+    ko: [K00192]
+    blast_fallback: false
+    ref_query: "Methanosarcina thermophila[organism] AND cdhA[gene]"
+    notes: "⚠️ The CODH/ACS complex cleaves acetyl-CoA in acetoclasts but SYNTHESIZES it in autotrophic methanogens and in acetogens / sulfate reducers (Wood-Ljungdahl)."
+  - id: cdhB
+    name: CODH/ACS complex subunit epsilon
+    category: acetoclastic
+    ko: [K00195]
+    blast_fallback: false
+  - id: cdhC
+    name: CODH/ACS complex subunit beta (acetyl-CoA synthase)
+    category: acetoclastic
+    ko: [K00193]
+    blast_fallback: false
+  - id: cdhD
+    name: CODH/ACS complex subunit delta (corrinoid Fe-S protein)
+    category: acetoclastic
+    ko: [K00194]
+    blast_fallback: false
+  - id: cdhE
+    name: CODH/ACS complex subunit gamma (corrinoid Fe-S protein)
+    category: acetoclastic
+    ko: [K00197]
+    blast_fallback: false
+
+  # ── 4. Methylotrophic methanogenesis (methanol / methylamines / methyl sulfides)
+  - id: mtaA
+    name: Methylcobamide:CoM methyltransferase (methanol-specific, MtaA)
+    category: methylotrophic_methanogenesis
+    ko: [K14080]
+    ko_tc: 375
+    blast_fallback: false
+    ref_query: "Methanosarcina barkeri[organism] AND mtaA[gene]"
+    notes: "ko_tc 375 (KOfam 382.7): on genome input Prodigal starts the Methanomassiliicoccus luminyensis MtaA 8 residues late and it scores 382.1 — 0.6 under the KOfam threshold — while the same gene from the NCBI annotation passes. Measured 2026-10-04; the next hits in the panel are 360.8 (the MtbA of M. acetivorans, which belongs to K14082) and 351.9, so 375 admits nothing else."
+  - id: mtaB
+    name: Methanol:corrinoid methyltransferase (MtaB)
+    category: methylotrophic_methanogenesis
+    ko: [K04480]
+    blast_fallback: false
+    ref_query: "Methanosarcina barkeri[organism] AND mtaB[gene]"
+  - id: mtaC
+    name: Methanol corrinoid protein (MtaC)
+    category: methylotrophic_methanogenesis
+    ko: [K14081]
+    blast_fallback: false
+  - id: mtbA
+    name: Methylcobamide:CoM methyltransferase (methylamine-specific, MtbA)
+    category: methylotrophic_methanogenesis
+    ko: [K14082]
+    blast_fallback: false
+    ref_query: "Methanosarcina barkeri[organism] AND mtbA[gene]"
+  - id: mtmB
+    name: Monomethylamine:corrinoid methyltransferase (MtmB)
+    category: methylotrophic_methanogenesis
+    ko: [K16176]
+    blast_fallback: false
+    notes: "Pyrrolysine-containing: the gene has an in-frame amber (UAG) codon, so a gene caller splits it in two. It is still called from genome input when one half passes the KOfam threshold on its own (the case in the smoke panel) or when apply_rules.join_inframe_stops can add the two halves; an annotated proteome may omit it altogether."
+  - id: mtmC
+    name: Monomethylamine corrinoid protein (MtmC)
+    category: methylotrophic_methanogenesis
+    ko: [K16177]
+    blast_fallback: false
+  - id: mtbB
+    name: Dimethylamine:corrinoid methyltransferase (MtbB)
+    category: methylotrophic_methanogenesis
+    ko: [K16178]
+    blast_fallback: false
+    notes: "Pyrrolysine-containing (in-frame UAG); see mtmB."
+  - id: mtbC
+    name: Dimethylamine corrinoid protein (MtbC)
+    category: methylotrophic_methanogenesis
+    ko: [K16179]
+    blast_fallback: false
+  - id: mttB
+    name: Trimethylamine:corrinoid methyltransferase (MttB)
+    category: methylotrophic_methanogenesis
+    ko: [K14083]
+    blast_fallback: false
+    notes: "⚠️ Pyrrolysine-containing (in-frame UAG); see mtmB. K14083 also covers the non-pyrrolysine MttB superfamily (e.g. glycine-betaine methyltransferases) found in non-methanogenic bacteria."
+  - id: mttC
+    name: Trimethylamine corrinoid protein (MttC)
+    category: methylotrophic_methanogenesis
+    ko: [K14084]
+    blast_fallback: false
+  - id: mtsA
+    name: Methylthiol:CoM methyltransferase (MtsA)
+    category: methylotrophic_methanogenesis
+    ko: [K16954]
+    blast_fallback: false
+    notes: "Dimethylsulfide / methanethiol as methanogenic substrates."
+  - id: mtsB
+    name: Methylated-thiol corrinoid protein (MtsB)
+    category: methylotrophic_methanogenesis
+    ko: [K16955]
+    blast_fallback: false
+
+  # ── 5. Energy conservation — heterodisulfide reductases and hydrogenases ───
+  - id: hdrA
+    name: Heterodisulfide reductase subunit A
+    category: energy_conservation
+    ko: [K03388, K22480]
+    blast_fallback: false
+    notes: "⚠️ HdrA-like flavoproteins are widespread in non-methanogens (sulfate reducers, acetogens). Electron-bifurcating HdrABC-MvhADG is the heterodisulfide reductase of methanogens without cytochromes."
+  - id: hdrB
+    name: Heterodisulfide reductase subunit B
+    category: energy_conservation
+    ko: [K03389, K22481]
+    blast_fallback: false
+  - id: hdrC
+    name: Heterodisulfide reductase subunit C
+    category: energy_conservation
+    ko: [K03390, K22482]
+    blast_fallback: false
+  - id: hdrD
+    name: Heterodisulfide reductase subunit D (membrane-bound HdrDE)
+    category: energy_conservation
+    ko: [K08264]
+    blast_fallback: false
+    notes: "HdrDE is the methanophenazine-linked heterodisulfide reductase of the cytochrome-containing Methanosarcinales — the only order with acetoclastic methanogens — and is therefore required by the acetoclastic module."
+  - id: hdrE
+    name: Heterodisulfide reductase subunit E (cytochrome b, membrane-bound HdrDE)
+    category: energy_conservation
+    ko: [K08265]
+    blast_fallback: false
+  - id: mvhA
+    name: F420-non-reducing hydrogenase large subunit (MvhA)
+    category: energy_conservation
+    ko: [K14126]
+    blast_fallback: false
+  - id: mvhG
+    name: F420-non-reducing hydrogenase small subunit (MvhG)
+    category: energy_conservation
+    ko: [K14128]
+    blast_fallback: false
+  - id: mvhD
+    name: F420-non-reducing hydrogenase iron-sulfur subunit (MvhD)
+    category: energy_conservation
+    ko: [K14127]
+    blast_fallback: false
+  - id: frhA
+    name: Coenzyme F420-reducing hydrogenase subunit alpha (FrhA)
+    category: energy_conservation
+    ko: [K00440]
+    blast_fallback: false
+  - id: frhB
+    name: Coenzyme F420-reducing hydrogenase subunit beta (FrhB)
+    category: energy_conservation
+    ko: [K00441]
+    blast_fallback: false
+    notes: "⚠️ FrhB-like F420-binding subunits also occur in F420-dependent sulfite reductase and formate dehydrogenase."
+  - id: frhG
+    name: Coenzyme F420-reducing hydrogenase subunit gamma (FrhG)
+    category: energy_conservation
+    ko: [K00443]
+    blast_fallback: false
+
+  # ── 6. Aerobic methane oxidation (CH4 → CH3OH → HCHO) ──────────────────────
+  - id: pmoA
+    name: Particulate methane monooxygenase subunit A
+    category: aerobic_methane_oxidation
+    ko: [K10944, K28504]   # K10944 = methane MO subunit A; K28504 = ammonia MO subunit A. Both profiles fire on both enzymes, so both are listed as the signature and the CLADE call is left to the BLAST gate.
+    pfam: [PF02461]
+    requires_blast_for_confirmation: true
+    blast_fallback: true
+    blast_identity_min: 70
+    blast_refs_uniprot: [Q607G3, G4SZ63, G0A0H7, A0A3G8M5C3, A9QPE3, A9QPE6, A0A2T4U1K1, A0A1I3Z8P3]   # Methylococcus capsulatus Bath (reviewed; pMMO crystal structure), Methylotuvimicrobium alcaliphilum 20Z, Methylomonas methanica MC09 (gamma); Methylocystis rosea, Methylocapsa palsarum (alpha); Methylacidiphilum infernorum V4 pmoA1 + pmoA2 (Verrucomicrobia); Ca. Methylomirabilis limnetica (NC10)
+    ref_query: "Methylococcus capsulatus[organism] AND pmoA[gene]"
+    gate_rationale: "70 sits in the measured gap (2026-10-04, smoke panel): the closest non-target, gamma-AOB amoA (Nitrosococcus oceani), is 63.5% identical to the nearest pmoA seed and beta-AOB amoA (Nitrosomonas europaea) 51.3%; real pmoA reach >=74% to a seed of their own clade WITHOUT their own strain in the seed set (M. capsulatus 78.1 to M. alcaliphilum; Methylosinus trichosporium 88.9 to Methylocystis; M. fumariolicum 93.6 / 99.2 to M. infernorum)."
+    notes: "⚠️ TRAP: pmoA and amoA are one family (PF02461); KOfam K10944 and K28504 do not separate methane from ammonia oxidizers. The clade call is the BLAST gate to methanotroph pmoA seeds spanning gamma, alpha, verrucomicrobial and NC10 clades. An ammonia oxidizer's amoA is reported here as `disqualified`. Not seeded: the divergent pxmA / verrucomicrobial pmoA3 paralogues (function unresolved) and the atmospheric-methane clades USC-gamma / most of USC-alpha."
+  - id: pmoB
+    name: Particulate methane monooxygenase subunit B
+    category: aerobic_methane_oxidation
+    ko: [K10945]
+    pfam: [PF04744]
+    blast_fallback: false
+    ref_query: "Methylococcus capsulatus[organism] AND pmoB[gene]"
+    notes: "⚠️ KO K10945 is shared verbatim with amoB. Called only when pmoA is confirmed in the same genome; otherwise `disqualified` (apply_rules.gate_pmo_subunits)."
+  - id: pmoC
+    name: Particulate methane monooxygenase subunit C
+    category: aerobic_methane_oxidation
+    ko: [K10946]
+    pfam: [PF04896]
+    blast_fallback: false
+    ref_query: "Methylococcus capsulatus[organism] AND pmoC[gene]"
+    notes: "⚠️ KO K10946 is shared verbatim with amoC. Follows the pmoA call, as pmoB."
+  - id: mmoX
+    name: Soluble methane monooxygenase hydroxylase alpha chain (MmoX)
+    category: aerobic_methane_oxidation
+    ko: [K16157]
+    pfam: [PF02332]
+    blast_fallback: true
+    blast_identity_min: 70
+    blast_refs_uniprot: [P22869, P27353]   # Methylococcus capsulatus Bath, Methylosinus trichosporium (both reviewed; sMMO crystal structures)
+    ref_query: "Methylococcus capsulatus[organism] AND mmoX[gene]"
+    gate_rationale: "Measured 2026-10-04: the sMMO alpha chains of the panel (M. capsulatus, M. trichosporium OB3b, Methylocella silvestris) are 82-86% identical across genera. 70 is a provisional floor — NOT yet calibrated against the closest non-methane di-iron monooxygenases (butane / propane monooxygenase); not a hard gate (a KO hit without a seed >=70% is reported as domain-only)."
+    notes: "⚠️ Soluble di-iron monooxygenase family (PF02332) also holds propane, butane, phenol and toluene monooxygenases. KO K16157 (TC 1168.7) is sMMO-specific; the BLAST seeds corroborate."
+  - id: mmoY
+    name: Soluble methane monooxygenase hydroxylase beta chain (MmoY)
+    category: aerobic_methane_oxidation
+    ko: [K16158]
+    blast_fallback: false
+  - id: mmoZ
+    name: Soluble methane monooxygenase hydroxylase gamma chain (MmoZ)
+    category: aerobic_methane_oxidation
+    ko: [K16159]
+    blast_fallback: false
+  - id: mmoB
+    name: Soluble methane monooxygenase regulatory protein B (MmoB)
+    category: aerobic_methane_oxidation
+    ko: [K16160]
+    blast_fallback: false
+  - id: mmoC
+    name: Soluble methane monooxygenase reductase (MmoC)
+    category: aerobic_methane_oxidation
+    ko: [K16161]
+    blast_fallback: false
+  - id: mmoD
+    name: Soluble methane monooxygenase component D (MmoD / OrfY)
+    category: aerobic_methane_oxidation
+    ko: [K16162]
+    blast_fallback: false
+  - id: mxaF
+    name: Methanol dehydrogenase (cytochrome c) large subunit (calcium-dependent, MxaF)
+    category: aerobic_methane_oxidation
+    ko: [K14028]
+    blast_fallback: false
+    ref_query: "Methylorubrum extorquens[organism] AND mxaF[gene]"
+    notes: "⚠️ PQQ-dependent alcohol dehydrogenase family; KO K14028 separates MxaF from XoxF (K23995) and from ethanol dehydrogenases."
+  - id: mxaI
+    name: Methanol dehydrogenase (cytochrome c) small subunit (MxaI)
+    category: aerobic_methane_oxidation
+    ko: [K14029]
+    blast_fallback: false
+  - id: xoxF
+    name: Lanthanide-dependent methanol dehydrogenase (XoxF)
+    category: aerobic_methane_oxidation
+    ko: [K23995]
+    blast_fallback: false
+    ref_query: "Methylacidiphilum fumariolicum[organism] AND xoxF[gene]"
+    notes: "⚠️ PQQ-dependent alcohol dehydrogenase family. The sole methanol dehydrogenase of verrucomicrobial and NC10 methanotrophs; widespread in non-methanotrophic methylotrophs."
+  - id: nod
+    name: Nitric oxide dismutase (Nod)
+    category: aerobic_methane_oxidation
+    ko: [K27148]
+    blast_fallback: false
+    ref_query: "Candidatus Methylomirabilis oxyfera[organism] AND nitric oxide dismutase"
+    notes: "⚠️ Divergent quinol-dependent NO-reductase homologue; KO K27148 (TC 1155). Supplies intracellular O2 to pMMO for nitrite-dependent ('intra-aerobic') methane oxidation in NC10 bacteria. No NC10 genome is in the smoke panel yet — unvalidated."
+
+  # ── 7. Formaldehyde oxidation and C1 assimilation ──────────────────────────
+  - id: fae
+    name: Formaldehyde-activating enzyme (5,6,7,8-tetrahydromethanopterin hydro-lyase)
+    category: formaldehyde_c1
+    ko: [K10713, K13812]
+    blast_fallback: false
+    ref_query: "Methylorubrum extorquens[organism] AND fae[gene]"
+    notes: "Formaldehyde + H4MPT → methylene-H4MPT: the entry to the oxidative H4MPT route of methylotrophs. Fae homologues also occur in methanogens (K13812 = Fae/Hps fusion, ribose-phosphate synthesis)."
+  - id: mtdB
+    name: Methylene-tetrahydromethanopterin dehydrogenase (NAD(P)-dependent, MtdB)
+    category: formaldehyde_c1
+    ko: [K10714]
+    blast_fallback: false
+    ref_query: "Methylorubrum extorquens[organism] AND mtdB[gene]"
+  - id: gfa
+    name: S-(hydroxymethyl)glutathione synthase (Gfa)
+    category: formaldehyde_c1
+    ko: [K03396]
+    blast_fallback: false
+  - id: frmA
+    name: S-(hydroxymethyl)glutathione dehydrogenase (FrmA / FlhA)
+    category: formaldehyde_c1
+    ko: [K00121]
+    blast_fallback: false
+    notes: "⚠️ Class-III alcohol dehydrogenase, near-universal (formaldehyde detoxification)."
+  - id: frmB
+    name: S-formylglutathione hydrolase (FrmB / FghA)
+    category: formaldehyde_c1
+    ko: [K01070]
+    blast_fallback: false
+  - id: fdh
+    name: Formate dehydrogenase (NAD+ / quinone-linked) catalytic subunit
+    category: formaldehyde_c1
+    ko: [K00123, K00122]
+    blast_fallback: false
+    notes: "⚠️ Widespread. Last step of C1 oxidation (formate → CO2). The F420-dependent archaeal enzyme is fdhA/fdhB."
+  - id: hxlA
+    name: 3-hexulose-6-phosphate synthase (Hps; RuMP pathway)
+    category: formaldehyde_c1
+    ko: [K08093, K13831, K13812]
+    blast_fallback: false
+    ref_query: "Methylococcus capsulatus[organism] AND hxlA[gene]"
+    notes: "⚠️ In archaea (including methanogens) Hps/Phi run in reverse for pentose-phosphate synthesis, so a hit there is not formaldehyde assimilation."
+  - id: hxlB
+    name: 6-phospho-3-hexuloisomerase (Phi; RuMP pathway)
+    category: formaldehyde_c1
+    ko: [K08094, K13831]
+    blast_fallback: false
+  - id: sgaA
+    name: Serine--glyoxylate aminotransferase (serine cycle)
+    category: formaldehyde_c1
+    ko: [K00830]
+    blast_fallback: false
+    notes: "⚠️ K00830 is a broad aminotransferase KO (alanine--glyoxylate / serine--pyruvate transaminases); meaningful only inside the serine-cycle module."
+  - id: hprA
+    name: Hydroxypyruvate reductase / glycerate dehydrogenase (serine cycle)
+    category: formaldehyde_c1
+    ko: [K00018]
+    blast_fallback: false
+    notes: "⚠️ Broad D-2-hydroxyacid dehydrogenase family."
+  - id: gckA
+    name: Glycerate 2-kinase (serine cycle)
+    category: formaldehyde_c1
+    ko: [K11529]
+    blast_fallback: false
+  - id: mtkA
+    name: Malate--CoA ligase subunit beta (malate thiokinase, MtkA)
+    category: formaldehyde_c1
+    ko: [K14067]
+    blast_fallback: false
+    notes: "⚠️ Succinyl-CoA synthetase homologue; KO K14067 separates."
+  - id: mtkB
+    name: Malate--CoA ligase subunit alpha (malate thiokinase, MtkB)
+    category: formaldehyde_c1
+    ko: [K08692]
+    blast_fallback: false
+  - id: mcl
+    name: Malyl-CoA lyase (serine cycle)
+    category: formaldehyde_c1
+    ko: [K08691]
+    blast_fallback: false
+    notes: "⚠️ Malyl-CoA / citramalyl-CoA lyases also serve the ethylmalonyl-CoA and 3-hydroxypropionate pathways."
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Obligatory complexes — must find ALL members for the function to be present.
+# ─────────────────────────────────────────────────────────────────────────────
+complexes:
+  mcr:
+    members: [mcrA, mcrB, mcrG]
+    obligatory: true
+    application: "Methyl-CoM <=> CH4; methanogenesis, or (ANME) reverse methanogenesis — ⚠️ direction set by resolve_mcr_direction"
+  mtr:
+    members: [mtrA, mtrB, mtrC, mtrD, mtrE, mtrH]
+    obligatory: true
+    application: "Methyl-H4MPT <=> methyl-CoM (Na+-pumping); needed for CO2-reducing and acetoclastic methanogenesis. The ~70-aa subunits mtrF / mtrG are reported but not required (often fused to mtrA or missed by gene callers)"
+  fwd:
+    members: [fwdA, fwdB, fwdC, fwdD]
+    obligatory: true
+    application: "CO2 <=> formyl-methanofuran (methanogens / ANME); the bacterial Fhc complex scores 3/4 (no fwdD)"
+  hdr_abc:
+    members: [hdrA, hdrB, hdrC]
+    obligatory: true
+    application: "Soluble electron-bifurcating heterodisulfide reductase (CoM-S-S-CoB reduction)"
+  hdr_de:
+    members: [hdrD, hdrE]
+    obligatory: true
+    application: "Membrane-bound heterodisulfide reductase of cytochrome-containing Methanosarcinales"
+  mvh_hydrogenase:
+    members: [mvhA, mvhG, mvhD]
+    obligatory: true
+    application: "F420-non-reducing hydrogenase, electron donor to HdrABC"
+  frh_hydrogenase:
+    members: [frhA, frhB, frhG]
+    obligatory: true
+    application: "F420-reducing hydrogenase (H2 => F420H2 for mtd / mer)"
+  f420_formate_dh:
+    members: [fdhA, fdhB]
+    obligatory: true
+    application: "Formate => F420H2 (formate-dependent methanogenesis)"
+  codh_acs:
+    members: [cdhA, cdhB, cdhC, cdhD, cdhE]
+    obligatory: true
+    application: "Acetyl-CoA <=> methyl-H4MPT + CO2 (acetoclastic cleavage, or autotrophic acetyl-CoA synthesis)"
+  methanol_methyltransferase:
+    members: [mtaA, mtaB, mtaC]
+    obligatory: true
+    application: "Methanol => methyl-CoM"
+  monomethylamine_methyltransferase:
+    members: [mtmB, mtmC]
+    obligatory: true
+    application: "Monomethylamine => methyl-corrinoid (with mtbA => methyl-CoM)"
+  dimethylamine_methyltransferase:
+    members: [mtbB, mtbC]
+    obligatory: true
+    application: "Dimethylamine => methyl-corrinoid (with mtbA => methyl-CoM)"
+  trimethylamine_methyltransferase:
+    members: [mttB, mttC]
+    obligatory: true
+    application: "Trimethylamine => methyl-corrinoid (with mtbA => methyl-CoM)"
+  pmmo:
+    members: [pmoA, pmoB, pmoC]
+    obligatory: true
+    application: "CH4 => CH3OH (particulate, copper methane monooxygenase)"
+  smmo_hydroxylase:
+    members: [mmoX, mmoY, mmoZ]
+    obligatory: true
+    application: "CH4 => CH3OH (soluble, di-iron methane monooxygenase; needs mmoB + mmoC)"
+  mxa_methanol_dh:
+    members: [mxaF, mxaI]
+    obligatory: true
+    application: "CH3OH => HCHO (calcium-dependent methanol dehydrogenase; xoxF is the lanthanide alternative)"
+  malate_thiokinase:
+    members: [mtkA, mtkB]
+    obligatory: true
+    application: "Malate => malyl-CoA (serine cycle)"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Process-completeness modules — scored as completeness fractions, interpreted in
+# the gap-analysis report. The four Mcr-dependent modules also carry a direction
+# rule (compute_complex_completeness.MCR_DIRECTION_OF): when the genome's Mcr
+# direction is called, a module that needs the other direction is ruled out.
+# ─────────────────────────────────────────────────────────────────────────────
+synergies:
+  - name: hydrogenotrophic_methanogenesis
+    requires: [fwdA, fwdB, ftr, mch, mer, mtrA, mtrH, mcrA, mcrB, mcrG]
+    requires_any:
+      - [mtd, hmd]
+      - [[frhA, frhB, frhG], [fdhA, fdhB]]
+    key: [mcrA]
+    benefit: "CO2-reducing methanogenesis (CO2 + 4 H2 => CH4). The last slot is the electron donor: H2 through the F420-reducing hydrogenase Frh, or formate through the F420-dependent Fdh. ⚠️ Genomic potential only — Methanosarcina acetivorans carries frh but does not grow on H2 + CO2."
+  - name: acetoclastic_methanogenesis
+    requires: [cdhC, cdhD, cdhE, mtrA, mcrA, mcrB, mcrG, hdrD]
+    requires_any:
+      - [[ackA, pta], acs]
+    key: [mcrA, hdrD]
+    benefit: "Acetate => CH4 + CO2. Acetate activation by ack + pta (Methanosarcina) or acs (Methanothrix). Key genes mcrA + hdrD: membrane-bound HdrDE marks the cytochrome-containing Methanosarcinales, the only acetoclasts — without it, cdh + acs is autotrophy / acetate assimilation."
+  - name: methylotrophic_methanogenesis
+    requires: [mcrA, mcrB, mcrG]
+    requires_any:
+      - [[mtaA, mtaB, mtaC], [mtbA, mtmB, mtmC], [mtbA, mtbB, mtbC], [mtbA, mttB, mttC], [mtsA, mtsB]]
+    key: [mcrA, [mtaB, mtmB, mtbB, mttB, mtsA]]
+    benefit: "Methanol / methylamines / methyl sulfides => CH4. With mtr + the H4MPT module the methyl groups are also disproportionated to CO2 (Methanosarcina); without mtr and fwd the pathway is H2-dependent (Methanomassiliicoccales). Key genes: the substrate-specific methyltransferases."
+  - name: reverse_methanogenesis_aom
+    requires: [mcrA, mcrB, mcrG, mtrA, mtrH, mch, ftr, fwdA, fwdB]
+    key: [mcrA]
+    benefit: "Anaerobic oxidation of methane by ANME archaea (CH4 => CO2 through the methanogenesis pathway run backwards). Needs the Mcr direction call `reverse` (ANME-clade McrA)."
+  - name: heterodisulfide_recycling
+    requires: [mcrA]
+    requires_any:
+      - [[hdrA, hdrB, hdrC], [hdrD, hdrE]]
+    key: [mcrA]
+    benefit: "Regeneration of CoM-SH + CoB-SH from the heterodisulfide — the energy-conserving step every Mcr-based metabolism depends on. Key gene mcrA: Hdr-like enzymes without Mcr (sulfate reducers, acetogens) are not heterodisulfide recycling."
+  - name: aerobic_methane_oxidation
+    requires_any:
+      - [[pmoA, pmoB, pmoC], [mmoX, mmoY, mmoZ]]
+      - [[mxaF, mxaI], xoxF]
+    key: [[pmoA, mmoX]]
+    benefit: "Aerobic methanotrophy: CH4 => CH3OH (pMMO or sMMO) => HCHO (MxaFI or XoxF methanol dehydrogenase)."
+  - name: nitrite_dependent_methane_oxidation
+    requires: [pmoA, pmoB, pmoC, nod]
+    key: [nod]
+    benefit: "Intra-aerobic methane oxidation coupled to nitrite reduction (NC10, Ca. Methylomirabilis): NO dismutase supplies the O2 for pMMO."
+  - name: methanol_oxidation
+    requires_any:
+      - [[mxaF, mxaI], xoxF]
+    benefit: "CH3OH => HCHO. On its own (no pmo / mmo) this marks a non-methanotrophic methylotroph."
+  - name: h4mpt_formaldehyde_oxidation
+    requires: [fae, mtdB, mch, ftr, fwdA]
+    key: [mtdB]
+    benefit: "Formaldehyde => formate through the bacterial H4MPT route (Fae, MtdB, Mch, Fhc; fwdA / ftr stand for FhcA / FhcD). Key gene mtdB: the NAD(P)-dependent dehydrogenase is bacterial — archaea carry fae / mch / ftr / fwd for methanogenesis instead."
+  - name: rump_assimilation
+    requires: [hxlA, hxlB]
+    requires_any:
+      - [[mxaF, mxaI], xoxF]
+    key: [[mxaF, xoxF]]
+    benefit: "Formaldehyde assimilation by the ribulose-monophosphate cycle (gamma-proteobacterial methanotrophs). Key: a methanol dehydrogenase as the formaldehyde source — archaea (methanogens included) run Hps / Phi in reverse to make pentose phosphates. ⚠️ Misses NAD-dependent methanol dehydrogenase (Bacillus methanolicus)."
+  - name: serine_cycle
+    requires: [sgaA, hprA, mtkA, mtkB, mcl]
+    requires_any:
+      - [[mxaF, mxaI], xoxF]
+    key: [[mxaF, xoxF]]
+    benefit: "C1 assimilation by the serine cycle (alpha-proteobacterial methanotrophs and methylotrophs). Key: a methanol dehydrogenase as the C1 source — the serine-cycle enzymes alone also occur in non-methylotrophs (e.g. Nitrosomonas europaea carries all five)."
