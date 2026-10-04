@@ -1,0 +1,62 @@
+target_id: pmoA
+tier: 2
+method: clade HMMs from GTDB-typed genomes (harvest_clade_refs.py, build_clade_hmms.py)
+source: GTDB r232 taxonomy; genomes from NCBI; genes called with Prodigal (meta)
+holdout_exclusion: no sequence from a hold-out genus of validation/panel.tsv (NCBI or GTDB naming) — enforced
+  by harvest_clade_refs.py
+positive_rule:
+  seed_identity_min: 60
+n_sequences_harvested: 178
+n_negatives: 40
+n_unresolved_paralogues: 24
+clade_models:
+  gamma:
+    n_harvested: 54
+    n_training: 46
+    n_genera: 43
+    leave_out_unit: genus
+    tc_bitscore: 423.5
+    tc_rationale: midpoint of the best negative (402.5, amo_gamma Nitrosococcus) and the worst left-out
+      positive (444.5)
+    max_negative: 402.5
+    min_training_score: 446.0
+    min_left_out_score: 444.5
+    left_out_passing: 54/54
+  alpha:
+    n_harvested: 41
+    n_training: 18
+    n_genera: 3
+    leave_out_unit: genus
+    tc_bitscore: 383.1
+    tc_rationale: midpoint of the best negative (370.2, amo_gamma Nitrosococcus) and the worst left-out
+      positive (396.0)
+    max_negative: 370.2
+    min_training_score: 460.4
+    min_left_out_score: 396.0
+    left_out_passing: 41/41
+  verruco:
+    n_harvested: 12
+    n_training: 8
+    n_genera: 2
+    leave_out_unit: genus
+    tc_bitscore: 330.0
+    tc_rationale: midpoint of the best negative (312.5, amo_gamma Nitrosococcus) and the worst left-out
+      positive (347.5)
+    max_negative: 312.5
+    min_training_score: 450.5
+    min_left_out_score: 347.5
+    left_out_passing: 1/1
+  nc10:
+    n_harvested: 7
+    n_training: 4
+    n_genera: 1
+    leave_out_unit: species
+    tc_bitscore: 415.9
+    tc_rationale: midpoint of the best negative (282.3, amo_gamma Nitrosococcus) and the worst left-out
+      positive (549.5)
+    max_negative: 282.3
+    min_training_score: 552.1
+    min_left_out_score: 549.5
+    left_out_passing: 4/4
+curator: pedro.leao.ru@gmail.com
+curation_date: '2026-10-04'

@@ -42,7 +42,10 @@ def parse_hmmscan_domtbl(path: Path, tc_cutoffs: dict[str, float],
     Pfam profiles are identified by target_acc starting with "PF" (e.g.
     PF13435.10). Custom HMMs (built via build_custom_hmms.py with
     `hmmbuild --name target_id`) carry the target_id in target_name and
-    typically have no ACC field (`-`).
+    typically have no ACC field (`-`). A target may have several clade models,
+    named `target_id__clade` (build_clade_hmms.py), each with its own threshold;
+    a protein passing any of them is a custom hit of the target, and
+    out[protein]["clade"][target_id] names the best-scoring clade.
 
     `qcov_cutoffs` is a per-target {target_id: min_query_coverage} dict.
     When set, domains with env-coverage of the query protein below the
@@ -55,7 +58,8 @@ def parse_hmmscan_domtbl(path: Path, tc_cutoffs: dict[str, float],
     profile range over all domains) — the input of join_inframe_stops.
     """
     qcov_cutoffs = qcov_cutoffs or {}
-    out: dict[str, dict] = defaultdict(lambda: {"pfam": {}, "custom": {}, "ko": {}})
+    out: dict[str, dict] = defaultdict(
+        lambda: {"pfam": {}, "custom": {}, "ko": {}, "clade": {}})
     if not path.exists() or path.stat().st_size == 0:
         return out
     with open(path) as fh:
@@ -100,10 +104,17 @@ def parse_hmmscan_domtbl(path: Path, tc_cutoffs: dict[str, float],
                 qcov = (env_to - env_from + 1) / qlen
                 if qcov < min_qcov:
                     continue
+            clade = None
+            if bucket == "custom" and "__" in key:
+                # clade model `<target>__<clade>`: counts for the target, the best
+                # clade is remembered for the evidence column
+                key, clade = key.split("__", 1)
             entry = out[query_name][bucket]
             prev = entry.get(key)
             if prev is None or full_evalue < prev:
                 entry[key] = full_evalue
+                if clade:
+                    out[query_name]["clade"][key] = clade
     return out
 
 
@@ -153,6 +164,7 @@ def evaluate_target(target: dict,
                     ko_hits: dict[str, dict[str, float]],
                     blast_hits: dict[str, dict],
                     pident_default: float, qcov_default: float,
+                    custom_clade: dict[str, dict[str, str]] | None = None,
                     ) -> tuple[str, dict] | None:
     """Return (status, evidence_dict) for the BEST protein matching this target,
     or None if nothing matches.
@@ -163,6 +175,11 @@ def evaluate_target(target: dict,
       domain-only   — signature met, no BLAST hit (only meaningful when fallback set)
       narrow-no-IPR — BLAST hit, signature not met
       disqualified  — requires_blast_for_confirmation set, signature met, BLAST missing
+
+    `clade_hmm_required` targets (pmoA, mcrA_anme) are decided by their clade HMMs
+    alone: a protein passing a clade model is `confirmed`; a protein with only the
+    family signature (KO) is `disqualified` — the family is there, the clade is
+    not. The BLAST seeds are then reported as the nearest reference, not required.
     """
     tid = target["id"]
     is_custom = bool(target.get("custom_hmm"))
@@ -174,6 +191,8 @@ def evaluate_target(target: dict,
         target.get("requires_blast_for_confirmation"))
     pident_min = float(target.get("blast_identity_min")
                        or pident_default)
+    clade_gate = bool(target.get("clade_hmm_required"))
+    custom_clade = custom_clade or {}
 
     # Collect per-protein evidence summaries.
     candidates = []
@@ -214,7 +233,11 @@ def evaluate_target(target: dict,
         if not (sig_ok or blast_ok):
             continue
         # Status.
-        if requires_blast_for_confirmation and sig_ok and not blast_ok:
+        if clade_gate:
+            if not sig_ok:
+                continue
+            status = "confirmed" if sig_source == "custom-hmm" else "disqualified"
+        elif requires_blast_for_confirmation and sig_ok and not blast_ok:
             status = "disqualified"
         elif sig_ok and (fallback and blast_ok or not fallback):
             status = "confirmed"
@@ -241,7 +264,9 @@ def evaluate_target(target: dict,
             "evidence_source": evidence_source,
             "pfam_hits": (sorted(present_kos) if sig_source == "ko"
                           else sorted(present_pfams) if sig_source == "pfam"
-                          else [tid] if sig_source == "custom-hmm"
+                          else [f"{tid}__{custom_clade[prot][tid]}"
+                                if tid in custom_clade.get(prot, {}) else tid]
+                          if sig_source == "custom-hmm"
                           else []),
             "pfam_evalue": sig_evalue,
             "blast_acc": best_b[0] if best_b else "",
@@ -457,6 +482,100 @@ def gate_pmo_subunits(rows_by_id: dict[str, dict]) -> list[str]:
     return demoted
 
 
+def _demote(rows_by_id: dict[str, dict], tids: tuple[str, ...], tag: str) -> list[str]:
+    demoted = []
+    for tid in tids:
+        r = rows_by_id.get(tid)
+        if r and r["status"] in PRESENT_STATUSES:
+            r["status"] = "disqualified"
+            r["evidence_source"] = f"{r['evidence_source'] or 'ko'}|{tag}"
+            demoted.append(tid)
+    return demoted
+
+
+ACR_MIN_FRACTION = 0.5     # of the K00399 threshold: "an McrA homologue is there"
+
+
+def gate_mcr_subunits(rows_by_id: dict[str, dict], below: dict[str, dict],
+                      tc_cutoffs: dict[str, float]) -> list[str]:
+    """Alkyl-coenzyme M reductases of alkane-oxidizing archaea are Mcr homologues.
+    Their alpha subunit fails K00399 (Ca. Ethanoperedens EcrA: 642, threshold 775.5)
+    but the beta subunit passes K00401 (586, threshold 504.3). mcrB / mcrG are
+    therefore demoted to `disqualified` when the genome has no McrA call AND
+    carries an McrA homologue under the threshold (>= half of it) — the signature
+    of an alkyl-CoM reductase. A genome with mcrB / mcrG and no McrA homologue at
+    all (a MAG that lost the contig) keeps its calls."""
+    if _present(rows_by_id, "mcrA"):
+        return []
+    tc = tc_cutoffs.get("K00399")
+    homologue = tc is not None and any(
+        rec[0] >= ACR_MIN_FRACTION * tc for rec in below.get("K00399", {}).values())
+    return _demote(rows_by_id, ("mcrB", "mcrG"), "no_mcrA_acr_like") if homologue else []
+
+
+def gate_mmo_subunits(rows_by_id: dict[str, dict]) -> list[str]:
+    """The reductase, regulatory and assembly components of soluble methane
+    monooxygenase (and the beta / gamma chains of its hydroxylase) have close
+    relatives in every other soluble di-iron monooxygenase and among unrelated
+    oxidoreductases (a lone FNR-type reductase of Methylocystis sp. SC2 scores 410
+    on K16161, threshold 407.7). What makes them sMMO is the hydroxylase alpha
+    chain: without mmoX in the genome, mmoY / mmoZ / mmoB / mmoC / mmoD are demoted
+    to `disqualified`."""
+    if _present(rows_by_id, "mmoX"):
+        return []
+    return _demote(rows_by_id, ("mmoY", "mmoZ", "mmoB", "mmoC", "mmoD"), "no_mmoX")
+
+
+FDHA_PARTNER_FRACTION = 0.70   # of the K22516 threshold, when fdhB is in the genome
+
+
+def resolve_fdh(rows_by_id: dict[str, dict], below: dict[str, dict],
+                tc_cutoffs: dict[str, float], ko_hits: dict[str, dict],
+                joined: dict) -> list[str]:
+    """Separate the F420-dependent formate dehydrogenase of methanogens (fdhA,
+    K22516) from the NAD / quinone-linked one (fdh, K00123).
+
+    The two alpha subunits are one family and the profiles overlap: archaeal FdhA
+    score 0.72-0.95 of the K22516 threshold while passing K00123, bacterial FdhA
+    score 0.76-0.86 on K22516. The F420-binding beta subunit FdhB (K00125) exists
+    only in the F420-dependent enzyme. So, in a genome WITH fdhB:
+      - an FdhA-family protein scoring >= 0.70 of the K22516 threshold is fdhA
+        (evidence `ko|fdhB_partner` when it is under the threshold itself);
+      - that protein is not also the generic `fdh`: if every protein behind the
+        `fdh` call is such an FdhA, `fdh` is demoted to `disqualified`.
+    Without fdhB nothing changes. Returns a list of notes for the log."""
+    if not _present(rows_by_id, "fdhB"):
+        return []
+    tc = tc_cutoffs.get("K22516")
+    if tc is None:
+        return []
+    notes = []
+    family = {p for p, rec in below.get("K22516", {}).items()
+              if rec[0] >= FDHA_PARTNER_FRACTION * tc}
+    family |= {p for p, kos in ko_hits.items() if "K22516" in kos}
+    family |= {partner for (p, ko), (_e, partner) in joined.items() if ko == "K22516"}
+    r = rows_by_id.get("fdhA")
+    if r is not None and r["status"] not in PRESENT_STATUSES and family:
+        best = max((p for p in family if p in below.get("K22516", {})),
+                   key=lambda p: below["K22516"][p][0], default=None)
+        if best is not None:
+            r.update(status="confirmed", evidence_source="ko|fdhB_partner",
+                     protein_id=best, pfam_hits="K22516",
+                     best_pfam_evalue=below["K22516"][best][1],
+                     other_copies=";".join(sorted((family - {best}) & set(below["K22516"]),
+                                                  key=_natural_key)))
+            notes.append(f"fdhA called on {best} (K22516 "
+                         f"{below['K22516'][best][0]:.0f} of {tc:.0f}, fdhB present)")
+    g = rows_by_id.get("fdh")
+    if g is not None and g["status"] in PRESENT_STATUSES and _present(rows_by_id, "fdhA"):
+        behind = {g["protein_id"], *filter(None, g.get("other_copies", "").split(";"))}
+        if behind <= family:
+            g["status"] = "disqualified"
+            g["evidence_source"] = f"{g['evidence_source'] or 'ko'}|f420_fdhA"
+            notes.append("fdh disqualified (its protein is the F420-dependent FdhA)")
+    return notes
+
+
 # ───────────────────────────── main ──────────────────────────────────────────
 
 def main() -> None:
@@ -489,8 +608,9 @@ def main() -> None:
         # Per-target hmm_min_qcov override from targets.yaml — defends small
         # domain HMMs (e.g. 104-aa hcnA) from hitting domains of large
         # multidomain proteins.
-        qcov_cutoffs = {t["id"]: float(t["hmm_min_qcov"])
-                        for t in targets if t.get("hmm_min_qcov") is not None}
+        qcov_cutoffs = {key: float(t["hmm_min_qcov"])
+                        for t in targets if t.get("hmm_min_qcov") is not None
+                        for key in [t["id"], *(t.get("ko") or [])]}
         below: dict[str, dict] = {}
         hmm_parsed = (parse_hmmscan_domtbl(args.hmm, tc, qcov_cutoffs, below)
                       if args.hmm else {})
@@ -511,12 +631,14 @@ def main() -> None:
         pfam_hits_flat = {p: d["pfam"] for p, d in hmm_parsed.items()}
         custom_hits_flat = {p: d["custom"] for p, d in hmm_parsed.items()}
         ko_hits_flat = {p: d["ko"] for p, d in hmm_parsed.items()}
+        clade_flat = {p: d["clade"] for p, d in hmm_parsed.items() if d.get("clade")}
 
         rows = []
         for t in targets:
             res = evaluate_target(t, pfam_hits_flat, custom_hits_flat,
                                   ko_hits_flat, blast_hits,
-                                  args.pident_default, args.qcov_default)
+                                  args.pident_default, args.qcov_default,
+                                  custom_clade=clade_flat)
             if res is None:
                 rows.append({
                     "target_id": t["id"], "name": t["name"],
@@ -558,6 +680,17 @@ def main() -> None:
             print(f"[apply_rules] {args.sample}: {', '.join(demoted)} disqualified "
                   "(no confirmed pmoA — amoB/amoC-type copper monooxygenase)",
                   file=sys.stderr)
+
+        # Subunits that mean something only next to the subunit that defines the
+        # enzyme (training-panel hardening, 2026-10-04).
+        for what, ids in (("alkyl-CoM reductase subunits", gate_mcr_subunits(by_id, below, tc)),
+                          ("no mmoX — not a soluble methane monooxygenase",
+                           gate_mmo_subunits(by_id))):
+            if ids:
+                print(f"[apply_rules] {args.sample}: {', '.join(ids)} disqualified ({what})",
+                      file=sys.stderr)
+        for note in resolve_fdh(by_id, below, tc, ko_hits_flat, joined):
+            print(f"[apply_rules] {args.sample}: {note}", file=sys.stderr)
 
         # Mcr direction call: methanogenesis vs reverse methanogenesis (ANME).
         # Annotates the mcrA / mcrB / mcrG evidence_source (e.g. "ko|mcr_reverse");

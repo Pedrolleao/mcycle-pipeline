@@ -1,0 +1,33 @@
+# Clade definition for the pmoA clade HMMs (harvest_clade_refs.py, build_clade_hmms.py).
+# Positives: subunit A of the copper membrane monooxygenase from genomes of the four
+# methanotroph lineages. Negatives: the same protein family from ammonia oxidizers and a
+# hydrocarbon oxidizer. Lineages are GTDB r232; hold-out genera are excluded by the script.
+target: pmoA
+ko: [K10944, K28504]
+min_fraction: 0.5        # of the KOfam threshold of the profile
+min_len: 180             # residues; PmoA / AmoA are ~250
+groups:
+  - {name: gamma,    role: positive, per_genus: 2, max_genomes: 60,
+     lineages: [f__Methylomonadaceae, f__Methylococcaceae, f__Methylothermaceae]}
+  - {name: alpha,    role: positive, per_genus: 8, max_genomes: 24,
+     lineages: [g__Methylocystis, g__Methylosinus, g__Methylocapsa]}
+  - {name: verruco,  role: positive, per_genus: 8, max_genomes: 14,
+     lineages: [f__Methylacidiphilaceae]}
+  - {name: nc10,     role: positive, per_genus: 12, max_genomes: 12,
+     lineages: [f__Methylomirabilaceae]}
+  - {name: amo_beta, role: negative, per_genus: 6, max_genomes: 20,
+     lineages: [f__Nitrosomonadaceae]}
+  - {name: amo_gamma, role: negative, per_genus: 8, max_genomes: 8,
+     lineages: [f__Nitrosococcaceae]}
+  - {name: amo_aoa,  role: negative, per_genus: 1, max_genomes: 24,
+     lineages: [f__Nitrosopumilaceae, f__Nitrososphaeraceae]}
+extra_genomes:
+  # butane monooxygenase pBMO (training decoy; Sayavedra-Soto 2011)
+  - {assembly: GCF_000389985.1, group: cumo_hc, role: negative,
+     lineage: "d__Bacteria;p__Actinomycetota;c__Actinomycetes;o__Propionibacteriales;f__Nocardioidaceae;g__Nocardioides;s__Nocardioides allogilvus"}
+
+# A positive-group sequence under 60 % identity to every curated PmoA seed is a divergent
+# paralogue (pxmA of gammaproteobacteria, pmoA3 of Verrucomicrobia; function unresolved):
+# it is left out of the positives and of the negatives.
+positive_rule: {seed_identity_min: 60}
+cdhit_identity: 0.97

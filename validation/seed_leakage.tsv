@@ -1,0 +1,26 @@
+genome	split	target	severity	seed_acc	seed_organism
+Mmaripaludis_S2	train	mcrA	genus	P07961	methanococcus vannielii
+Mthermautotrophicus_DeltaH	train	mcrA	genus	P11558	methanothermobacter marburgensis
+Macetivorans_C2A	train	mcrA	genus	P07962	methanosarcina barkeri
+Mluminyensis_B10	train	mcrA	genus	R9TAZ9	methanomassiliicoccus intestinalis
+Mnitroreducens_ANME2d	train	mcrA	genus	A0A284VQI9	methanoperedens nitratireducens
+Mnitroreducens_ANME2d	train	mcrA_anme	genus	A0A284VQI9	methanoperedens nitratireducens
+Mcapsulatus_Bath	train	mmoX	species	P22869	methylococcus capsulatus
+Mcapsulatus_Bath	train	pmoA	species	GCF_000008325.1|NC_002977.6_1765	methylococcus capsulatus
+Mcapsulatus_Bath	train	pmoB	species	GCF_000008325.1|NC_002977.6_1765	methylococcus capsulatus
+Mcapsulatus_Bath	train	pmoC	species	GCF_000008325.1|NC_002977.6_1765	methylococcus capsulatus
+Mfumariolicum_SolV	train	pmoA	species	GCF_000297415.1|NZ_CAHT01000087.1_2	methylacidiphilum fumarolicum
+Mfumariolicum_SolV	train	pmoB	species	GCF_000297415.1|NZ_CAHT01000087.1_2	methylacidiphilum fumarolicum
+Mfumariolicum_SolV	train	pmoC	species	GCF_000297415.1|NZ_CAHT01000087.1_2	methylacidiphilum fumarolicum
+Mtrichosporium_OB3b	train	mmoX	species	P27353	methylosinus trichosporium
+Mtrichosporium_OB3b	train	pmoA	genus	GCF_000379125.1|NZ_KB900626.1_1796	methylosinus sp000379125
+Mtrichosporium_OB3b	train	pmoB	genus	GCF_000379125.1|NZ_KB900626.1_1796	methylosinus sp000379125
+Mtrichosporium_OB3b	train	pmoC	genus	GCF_000379125.1|NZ_KB900626.1_1796	methylosinus sp000379125
+Mkandleri_AV19	train	mcrA	species	Q49605	methanopyrus kandleri
+ANME1_G60	train	mcrA_anme	genus	GCA_003194435.1|PQXC01000021.1_2	g60anme1 sp003194435
+Methylocystis_SC2	train	pmoA	genus	GCF_036576025.1|NZ_JAZHYN010000050.1_15	methylocystis borbori
+Methylocystis_SC2	train	pmoB	genus	GCF_036576025.1|NZ_JAZHYN010000050.1_15	methylocystis borbori
+Methylocystis_SC2	train	pmoC	genus	GCF_036576025.1|NZ_JAZHYN010000050.1_15	methylocystis borbori
+Moxyfera	train	pmoA	genus	GCA_002632385.1|NSJN01000034.1_1	methylomirabilis lanthanidiphila
+Moxyfera	train	pmoB	genus	GCA_002632385.1|NSJN01000034.1_1	methylomirabilis lanthanidiphila
+Moxyfera	train	pmoC	genus	GCA_002632385.1|NSJN01000034.1_1	methylomirabilis lanthanidiphila

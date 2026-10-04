@@ -1,0 +1,74 @@
+target_id: mcrA_anme
+tier: 2
+method: clade HMMs from GTDB-typed genomes (harvest_clade_refs.py, build_clade_hmms.py)
+source: GTDB r232 taxonomy; genomes from NCBI; genes called with Prodigal (meta)
+holdout_exclusion: no sequence from a hold-out genus of validation/panel.tsv (NCBI or GTDB naming) — enforced
+  by harvest_clade_refs.py
+positive_rule: every harvested homologue of a positive group
+n_sequences_harvested: 126
+n_negatives: 80
+n_unresolved_paralogues: 0
+clade_models:
+  anme1:
+    n_harvested: 14
+    n_training: 13
+    n_genera: 11
+    leave_out_unit: genus
+    tc_bitscore: 866.8
+    tc_rationale: midpoint of the best negative (794.8, mg_other JACIVX01) and the worst left-out positive
+      (938.9)
+    max_negative: 794.8
+    min_training_score: 974.1
+    min_left_out_score: 938.9
+    left_out_passing: 14/14
+  anme2ab:
+    n_harvested: 9
+    n_training: 6
+    n_genera: 4
+    leave_out_unit: genus
+    tc_bitscore: 1108.7
+    tc_rationale: midpoint of the best negative (982.2, mg_sarcinaceae Methanosalsum) and the worst left-out
+      positive (1235.1)
+    max_negative: 982.2
+    min_training_score: 1267.0
+    min_left_out_score: 1235.1
+    left_out_passing: 9/9
+  anme2c:
+    n_harvested: 4
+    n_training: 4
+    n_genera: 3
+    leave_out_unit: genus
+    tc_bitscore: 1014.5
+    tc_rationale: midpoint of the best negative (983.0, mg_sarcinia_other Methanocrinis) and the worst
+      left-out positive (1046.0)
+    max_negative: 983.0
+    min_training_score: 1079.5
+    min_left_out_score: 1046.0
+    left_out_passing: 2/2
+  anme2d:
+    n_harvested: 11
+    n_training: 9
+    n_genera: 3
+    leave_out_unit: genus
+    tc_bitscore: 998.0
+    tc_rationale: 'OVERLAP: best negative 978.4 (mg_sarcinaceae Methanosalsum) >= worst left-out positive
+      967.6; threshold set 2 % above the best negative; left-out genus under it: CAZCRM01'
+    max_negative: 978.4
+    min_training_score: 999.6
+    min_left_out_score: 967.6
+    left_out_passing: 10/11
+  anme3:
+    n_harvested: 8
+    n_training: 5
+    n_genera: 1
+    leave_out_unit: species
+    tc_bitscore: 1251.7
+    tc_rationale: 'OVERLAP: best negative 1227.2 (mg_sarcinaceae JAFGQV01) >= worst left-out positive
+      1201.8; threshold set 2 % above the best negative; left-out species under it: Methanovorans sp019429165,
+      Methanovorans sp030609665'
+    max_negative: 1227.2
+    min_training_score: 1274.2
+    min_left_out_score: 1201.8
+    left_out_passing: 3/5
+curator: pedro.leao.ru@gmail.com
+curation_date: '2026-10-04'

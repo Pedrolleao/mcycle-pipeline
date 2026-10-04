@@ -222,9 +222,15 @@ def main() -> None:
     pfams = pfam_only_ids(targets)
     # Optional per-target KO threshold override (targets.yaml `ko_tc:`) — used when
     # the KOfam ko_list threshold is mis-calibrated for an environmentally relevant
-    # clade.
-    ko_override = {ko: float(t["ko_tc"]) for t in targets if t.get("ko_tc")
-                   for ko in (t.get("ko") or [])}
+    # clade. A number applies to every KO of the target; a mapping {KO: threshold}
+    # to the KOs it names.
+    ko_override = {}
+    for t in targets:
+        tc = t.get("ko_tc")
+        if isinstance(tc, dict):
+            ko_override.update({ko: float(v) for ko, v in tc.items()})
+        elif tc:
+            ko_override.update({ko: float(tc) for ko in (t.get("ko") or [])})
     print(f"[build_hmm_db] {len(kos)} KOfam KOs + {len(pfams)} Pfam-only fallback profiles")
 
     HMM_DIR.mkdir(parents=True, exist_ok=True)
@@ -261,6 +267,23 @@ def main() -> None:
         # 2. Custom HMMs (homology-trap clade models; built in the hardening phase).
         custom_ids = [t["id"] for t in targets if t.get("custom_hmm")]
         for tid in custom_ids:
+            # clade models `<tid>__<clade>.hmm`, each with its own threshold in
+            # manifest.yaml > clade_models (build_clade_hmms.py)
+            clade_hmms = sorted((TARGETS_DIR / tid).glob(f"{tid}__*.hmm"))
+            if clade_hmms:
+                m = yaml.safe_load(open(TARGETS_DIR / tid / "manifest.yaml")) or {}
+                for ch in clade_hmms:
+                    clade = ch.stem.split("__", 1)[1]
+                    tc_val = (m.get("clade_models") or {}).get(clade, {}).get("tc_bitscore")
+                    if tc_val is None:
+                        sys.exit(f"error: {ch.name} has no tc_bitscore in manifest.yaml")
+                    out.write(ch.read_text().rstrip("\n") + "\n")
+                    tc_rows.append(f"{ch.stem}\t\t{float(tc_val):.1f}")
+                    print(f"  + spliced clade HMM: {ch.stem} (TC={float(tc_val):.1f})")
+                continue
+            if next((t for t in targets if t["id"] == tid), {}).get("clade_hmm_required"):
+                sys.exit(f"error: {tid} has clade_hmm_required but no clade models "
+                         f"under targets/{tid}/")
             chmm = TARGETS_DIR / tid / f"{tid}.hmm"
             if not chmm.exists():
                 print(f"  · custom_hmm: true for '{tid}' but {chmm} not built yet "

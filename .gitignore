@@ -27,3 +27,6 @@ resources/blast_db/
 # ---- Pipeline run outputs ----
 results/
 /validation/.kegg_cache/
+
+# ---- Validation runs (one results dir per study) ----
+results_*/

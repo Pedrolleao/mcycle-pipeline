@@ -33,7 +33,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M0 | Housekeeping and decisions | DONE 2026-10-04 |
 | M1 | Reference panel: roster, identity QC, train / hold-out split (frozen) | DONE 2026-10-04 |
 | M2 | Dual ground truth | DONE 2026-10-04 |
-| M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | TODO |
+| M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | DONE 2026-10-04 |
 | M4 | Scoring, leak detection, trap independence, regression gate | TODO |
 | M5 | Pre-registration, then comparator benchmark | TODO |
 | M6 | GTDB-500 concordance | TODO |
@@ -191,6 +191,23 @@ From the backlog in `../Info-methane.md`:
 - Examine the probable KO-tier noise (`mtrA` in AOA, `mtbC`, `mtsA`).
 - Done when: every change is justified by training genomes only and logged; `make
   smoke` still passes.
+- **DONE 2026-10-04.** Log with every number: `validation/HARDENING.md`. Training
+  micro-F1 0.964 -> 0.983, trap precision and recall 1.000 (in-sample); smoke 168 / 168.
+  - Engine: `gate_mcr_subunits`, `gate_mmo_subunits`, `resolve_fdh`, per-KO `ko_tc`,
+    query-coverage floor for KO profiles, clade models `<target>__<clade>` with
+    `clade_hmm_required`.
+  - pmoA and mcrA_anme are now decided by clade HMMs (4 + 5 models), built with
+    `harvest_clade_refs.py` + `build_clade_hmms.py` from GTDB-typed genomes cached in
+    `../clade_refs/` (317 genomes). These two scripts replace the UniRef90-based
+    `build_custom_hmms.py expand` / `calibrate_tc.py` / `logo_cv.py` route of the
+    sisters: leave-one-genus-out is built into `build_clade_hmms.py`.
+  - Runs: `MCYCLE_CONFIG=config/config_ref.yaml python run.py --input ../ref_panel_train
+    ...` writes `results_ref/`; scoring with `MCYCLE_SCOPE=train`. `../ref_panel_holdout/`
+    holds the 22 hold-out genomes and had NOT been run when M3 closed.
+  - Known limits to report: ANME-3 not cleanly separable; no comammox / mycobacterial
+    negatives (hold-out genera); verruco and NC10 pmoA models rest on 2 and 1 genera.
+  - `hmmbuild` takes `-n`, not `--name` (the older `build_custom_hmms.py` uses the
+    wrong flag and would fail if it were ever run).
 
 ### M4 — Scoring and gate
 - Port `score_scycle.py` → `score_mcycle.py` (define `TRAP` and `HOLDOUT`), N's

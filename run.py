@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-CONFIG_PATH = ROOT / "config" / "config.yaml"
+CONFIG_PATH = Path(os.environ.get("MCYCLE_CONFIG", ROOT / "config" / "config.yaml")).resolve()
 ENV_FILE = ROOT / "envs" / "mcycle.yaml"
 # Conda env, shared with the nitrogen and sulfur sister pipelines: all three tools
 # have the same dependencies, so one env named `cycle-pipeline` serves them. It is

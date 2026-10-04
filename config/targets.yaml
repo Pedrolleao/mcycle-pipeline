@@ -92,6 +92,8 @@ targets:
     category: mcr_core
     ko: [K00399]
     pfam: [PF02249, PF02745]
+    custom_hmm: true
+    clade_hmm_required: true   # decided by the clade HMMs of targets/mcrA_anme/ (manifest.yaml); the BLAST seeds are reported as nearest reference only
     requires_blast_for_confirmation: true
     blast_fallback: true
     blast_identity_min: 80
@@ -167,6 +169,8 @@ targets:
     category: co2_reduction
     ko: [K00203]
     blast_fallback: false
+    ko_tc: 110
+    tc_rationale: "KOfam 122.93. Training panel 2026-10-04: the two FwdD of Ca. Methylomirabilis oxyfera score 119.6 and 119.2 (KEGG assigns K00203 to both); the best hit in a training genome without FwdD is 39."
     notes: "Archaeal Fwd/Fmd subunit; no counterpart in the bacterial Fhc complex."
   - id: ftr
     name: Formylmethanofuran--tetrahydromethanopterin N-formyltransferase (Ftr; FhcD in methylotrophs)
@@ -193,6 +197,8 @@ targets:
     category: co2_reduction
     ko: [K13942]
     blast_fallback: false
+    ko_tc: 540
+    tc_rationale: "KOfam 575.0. Training panel 2026-10-04: Hmd of Methanopyrus kandleri AV19 scores 566.3 (KEGG: K13942); the next hits in any training genome are the HmdII-type paralogues at <= 72."
     ref_query: "Methanothermobacter marburgensis[organism] AND hmd[gene]"
     notes: "H2-dependent alternative to mtd in hydrogenotrophic methanogens without cytochromes."
   - id: mer
@@ -208,7 +214,7 @@ targets:
     ko: [K22516]
     blast_fallback: false
     ref_query: "Methanococcus maripaludis[organism] AND fdhA[gene]"
-    notes: "Formate as electron donor for CO2-reducing methanogenesis. A selenoprotein in Methanococcus (in-frame UGA): from genome input the two halves are joined by apply_rules.join_inframe_stops and the call is tagged `joined:`."
+    notes: "Formate as electron donor for CO2-reducing methanogenesis. A selenoprotein in Methanococcus (in-frame UGA): from genome input the two halves are joined by apply_rules.join_inframe_stops and the call is tagged `joined:`. K22516 and the generic K00123 overlap: archaeal F420-dependent FdhA score 0.72-0.95 of the K22516 threshold and pass K00123, bacterial NAD-dependent FdhA score 0.76-0.86 on K22516. The subunit that tells them apart is the F420-binding FdhB: with fdhB in the genome an FdhA-family protein at >= 0.70 of the K22516 threshold is called fdhA (evidence `fdhB_partner`; apply_rules.resolve_fdh)."
   - id: fdhB
     name: Formate dehydrogenase (coenzyme F420) beta subunit
     category: co2_reduction
@@ -346,11 +352,15 @@ targets:
     category: energy_conservation
     ko: [K03389, K22481]
     blast_fallback: false
+    ko_tc: {K03389: 260}
+    tc_rationale: "KOfam 333.63 for K03389. Training panel 2026-10-04: HdrB of Methanothrix soehngenii, M. thermoacetophila and Archaeoglobus fulgidus score 316, 314 and 276 (KEGG: K03389 in all three); the best hit in a genome without HdrB is 90."
   - id: hdrC
     name: Heterodisulfide reductase subunit C
     category: energy_conservation
     ko: [K03390, K22482]
     blast_fallback: false
+    ko_tc: {K03390: 100}
+    tc_rationale: "KOfam 125.27 for K03390. Training panel 2026-10-04: HdrC of Archaeoglobus fulgidus scores 108 (KEGG: K03390); the best hit in a genome without HdrC is 64."
   - id: hdrD
     name: Heterodisulfide reductase subunit D (membrane-bound HdrDE)
     category: energy_conservation
@@ -377,6 +387,8 @@ targets:
     category: energy_conservation
     ko: [K14127]
     blast_fallback: false
+    hmm_min_qcov: 0.5
+    notes: "MvhD is a ~140-residue protein. The same domain is fused to HdrA-type proteins of 500-800 residues in Methanosarcinales, Methanothrix and sulfate reducers, which pass K14127 (204-225, TC 180.1) and which KEGG does not assign to it; the 0.5 query-coverage floor removes them (true MvhD cover > 0.9, the fusions < 0.3; training panel 2026-10-04)."
   - id: frhA
     name: Coenzyme F420-reducing hydrogenase subunit alpha (FrhA)
     category: energy_conservation
@@ -400,6 +412,8 @@ targets:
     category: aerobic_methane_oxidation
     ko: [K10944, K28504]   # K10944 = methane MO subunit A; K28504 = ammonia MO subunit A. Both profiles fire on both enzymes, so both are listed as the signature and the CLADE call is left to the BLAST gate.
     pfam: [PF02461]
+    custom_hmm: true
+    clade_hmm_required: true   # decided by the clade HMMs of targets/pmoA/ (manifest.yaml); the BLAST seeds are reported as nearest reference only
     requires_blast_for_confirmation: true
     blast_fallback: true
     blast_identity_min: 70
@@ -521,7 +535,9 @@ targets:
     category: formaldehyde_c1
     ko: [K00123, K00122]
     blast_fallback: false
-    notes: "⚠️ Widespread. Last step of C1 oxidation (formate → CO2). The F420-dependent archaeal enzyme is fdhA/fdhB."
+    ko_tc: {K00122: 400}
+    tc_rationale: "KOfam 238.4 for K00122. Training panel 2026-10-04: the NAD-dependent Fdh of Methylacidiphilum and Methylocella score 648 and 640; unrelated proteins of archaea reach 240 (Methanopyrus) and 198."
+    notes: "⚠️ Widespread. Last step of C1 oxidation (formate → CO2). The F420-dependent archaeal enzyme is fdhA/fdhB: in a genome with fdhB, an FdhA-family protein is called fdhA and not fdh (apply_rules.resolve_fdh)."
   - id: hxlA
     name: 3-hexulose-6-phosphate synthase (Hps; RuMP pathway)
     category: formaldehyde_c1

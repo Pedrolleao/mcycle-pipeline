@@ -1,0 +1,26 @@
+# Clade definition for the ANME McrA clade HMMs. Positives: McrA from genomes of the
+# anaerobic methanotroph lineages (GTDB r232 families). Negatives: McrA of methanogens
+# from every other lineage, and the alkyl-coenzyme M reductase of an ethane oxidizer.
+# Hold-out genera are excluded by the script (g__ANME1a, g__Methanococcoides, ...).
+target: mcrA_anme
+ko: [K00399]
+min_fraction: 0.5
+min_len: 400             # residues; McrA is ~570
+groups:
+  - {name: anme1,   role: positive, per_genus: 2, max_genomes: 20, lineages: [f__Methanospirareceae]}
+  - {name: anme2ab, role: positive, per_genus: 5, max_genomes: 14, lineages: [f__Methanocomedenaceae]}
+  - {name: anme2c,  role: positive, per_genus: 4, max_genomes: 14, lineages: [f__Methanogasteraceae]}
+  - {name: anme2d,  role: positive, per_genus: 8, max_genomes: 14, lineages: [f__Methanoperedenaceae]}
+  - {name: anme3,   role: positive, per_genus: 10, max_genomes: 10, lineages: [g__Methanovorans]}
+  - {name: mg_sarcinaceae, role: negative, per_genus: 3, max_genomes: 36,
+     lineages: [f__Methanosarcinaceae], exclude: [g__Methanovorans]}
+  # only families with described methanogens: placeholder families of Methanosarcinales
+  # (e.g. f__CAZCCY01, whose McrA scores like Methanoperedens) are of unknown physiology
+  # and are used neither as positives nor as negatives
+  - {name: mg_sarcinia_other, role: negative, per_genus: 1, max_genomes: 20,
+     lineages: [f__Methanotrichaceae, f__Methermicoccaceae]}
+  - {name: mg_other, role: negative, per_genus: 1, max_genomes: 40,
+     lineages: [c__Methanomicrobia, c__Methanocellia, c__Methanobacteria, c__Methanococci,
+                c__Methanopyri, o__Methanomassiliicoccales, c__Methanonatronarchaeia]}
+  - {name: acr, role: negative, per_genus: 2, max_genomes: 6, lineages: [f__EX4572-44]}
+cdhit_identity: 0.97
