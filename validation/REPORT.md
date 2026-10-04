@@ -88,3 +88,23 @@ listed for a later evidence-based review (`CHANGELOG.md`):
   `mttB`; the organism grows on mono- and dimethylamine; flagged in the changelog
   before the hold-out was run);
 - `ftr` in *Methanonatronarchaeum thermophilum* (called; Sorokin 2017 reports Ftr lost).
+
+## 2. Comparator benchmark (M5, 2026-10-04)
+
+Pre-registered (`benchmark/prereg.md`, commit `3cc200c`) and run as registered; full
+write-up in `benchmark/COMPARISON_REPORT.md`, figure `benchmark/figures/curated_panel_accuracy.*`.
+
+| comparator | trap precision | difference [95 % CI] | ALL micro-F1 | difference [95 % CI] |
+|---|---|---|---|---|
+| mcycle | 1.000 | — | 0.973 | — |
+| raw KofamScan | 0.664 | +0.336 [0.210, 0.488] | 0.937 | +0.037 [0.028, 0.047] |
+| METABOLIC v4.0 | 0.689 | +0.311 [0.202, 0.446] | 0.936 | +0.037 [0.028, 0.049] |
+| DRAM v1.4.6 | 0.527 | +0.473 [0.333, 0.616] | 0.350 | +0.623 [0.561, 0.675] |
+| MCycDB 2021 | 0.626 | +0.374 [0.250, 0.526] | 0.795 | +0.178 [0.143, 0.219] |
+
+All eight contrasts: bootstrap p < 0.0001, BH q < 0.0001. The trap differences hold
+with `mcrA_anme` removed from the trap set (+0.190 to +0.378, every interval excludes
+0) and on the 22 hold-out genomes alone (+0.356 to +0.524). METABOLIC and MCycDB,
+which model pmoA separately from amoA, still report pmoA in the two gammaproteobacterial
+ammonia oxidizers and in the hydrocarbon-monooxygenase carriers; METABOLIC, DRAM and
+MCycDB report the alkyl-CoM reductases of the alkane oxidizers as McrA.

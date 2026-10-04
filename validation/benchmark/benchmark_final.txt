@@ -1,0 +1,732 @@
+tools available: ['mcycle', 'kofam', 'metabolic', 'dram', 'mcycdb']   (B=10000, n_genomes=49)
+
+======================================================================
+SUBUNIT resolution
+======================================================================
+
+[ALL]  cells=3173 (present=877)
+  mcycle    precision  0.976  [0.965, 0.985]
+  mcycle    recall     0.970  [0.956, 0.982]
+  mcycle    specificity 0.991  [0.986, 0.995]
+  mcycle    f1         0.973  [0.963, 0.981]
+  mcycle    mcc        0.963  [0.950, 0.974]
+  kofam     precision  0.922  [0.897, 0.941]   Δ=0.054 [0.038,0.075] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.952  [0.934, 0.968]   Δ=0.018 [0.011,0.027] bootP=0.0000 mcN=0.0000
+  kofam     specificity 0.969  [0.960, 0.977]   Δ=0.022 [0.015,0.029] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.937  [0.920, 0.950]   Δ=0.037 [0.028,0.047] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.912  [0.893, 0.928]   Δ=0.051 [0.040,0.063] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.921  [0.893, 0.941]   Δ=0.055 [0.039,0.078] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.952  [0.934, 0.967]   Δ=0.018 [0.011,0.027] bootP=0.0000 mcN=0.0000
+  metabolic specificity 0.969  [0.957, 0.978]   Δ=0.022 [0.015,0.032] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.936  [0.918, 0.950]   Δ=0.037 [0.028,0.049] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.911  [0.889, 0.929]   Δ=0.052 [0.040,0.066] bootP=0.0000 mcN=0.0000
+  dram      precision  0.765  [0.673, 0.849]   Δ=0.211 [0.129,0.299] bootP=0.0000 mcN=0.0000
+  dram      recall     0.227  [0.186, 0.279]   Δ=0.743 [0.690,0.783] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.973  [0.961, 0.984]   Δ=0.017 [0.007,0.029] bootP=0.0008 mcN=0.0000
+  dram      f1         0.350  [0.298, 0.411]   Δ=0.623 [0.561,0.675] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.327  [0.268, 0.392]   Δ=0.636 [0.573,0.695] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.710  [0.644, 0.763]   Δ=0.266 [0.216,0.328] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.904  [0.885, 0.921]   Δ=0.066 [0.045,0.089] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.859  [0.842, 0.874]   Δ=0.132 [0.117,0.147] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.795  [0.749, 0.831]   Δ=0.178 [0.143,0.219] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.715  [0.674, 0.748]   Δ=0.248 [0.216,0.287] bootP=0.0000 mcN=0.0000
+
+[trap]  cells=330 (present=71)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  0.664  [0.513, 0.792]   Δ=0.336 [0.210,0.488] bootP=0.0000 mcN=0.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  kofam     specificity 0.861  [0.812, 0.907]   Δ=0.139 [0.092,0.188] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.798  [0.679, 0.882]   Δ=0.202 [0.117,0.320] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.756  [0.651, 0.844]   Δ=0.244 [0.157,0.350] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.689  [0.557, 0.797]   Δ=0.311 [0.202,0.446] bootP=0.0000 mcN=0.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  metabolic specificity 0.876  [0.828, 0.917]   Δ=0.124 [0.083,0.171] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.816  [0.709, 0.888]   Δ=0.184 [0.111,0.288] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.777  [0.684, 0.852]   Δ=0.223 [0.150,0.317] bootP=0.0000 mcN=0.0000
+  dram      precision  0.527  [0.380, 0.667]   Δ=0.473 [0.333,0.616] bootP=0.0000 mcN=0.0000
+  dram      recall     0.690  [0.603, 0.782]   Δ=0.310 [0.216,0.393] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.830  [0.770, 0.884]   Δ=0.170 [0.116,0.229] bootP=0.0000 mcN=0.0000
+  dram      f1         0.598  [0.490, 0.686]   Δ=0.402 [0.317,0.512] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.475  [0.373, 0.573]   Δ=0.525 [0.429,0.629] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.626  [0.478, 0.750]   Δ=0.374 [0.250,0.526] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.944  [0.877, 0.988]   Δ=0.056 [0.012,0.121] bootP=0.0288 mcN=0.0000
+  mcycdb    specificity 0.846  [0.802, 0.887]   Δ=0.154 [0.113,0.199] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.753  [0.628, 0.843]   Δ=0.247 [0.160,0.373] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.693  [0.585, 0.785]   Δ=0.307 [0.217,0.416] bootP=0.0000 mcN=0.0000
+
+[nontrap]  cells=2843 (present=806)
+  mcycle    precision  0.974  [0.962, 0.984]
+  mcycle    recall     0.968  [0.952, 0.981]
+  mcycle    specificity 0.990  [0.985, 0.994]
+  mcycle    f1         0.971  [0.960, 0.980]
+  mcycle    mcc        0.959  [0.946, 0.972]
+  kofam     precision  0.956  [0.941, 0.969]   Δ=0.018 [0.011,0.024] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.948  [0.928, 0.964]   Δ=0.020 [0.011,0.029] bootP=0.0000 mcN=0.0000
+  kofam     specificity 0.983  [0.975, 0.989]   Δ=0.007 [0.004,0.011] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.952  [0.938, 0.964]   Δ=0.019 [0.014,0.024] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.933  [0.916, 0.949]   Δ=0.026 [0.018,0.034] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.950  [0.932, 0.965]   Δ=0.024 [0.015,0.034] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.948  [0.928, 0.964]   Δ=0.020 [0.011,0.029] bootP=0.0000 mcN=0.0000
+  metabolic specificity 0.980  [0.972, 0.987]   Δ=0.009 [0.005,0.014] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.949  [0.934, 0.961]   Δ=0.022 [0.016,0.028] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.929  [0.910, 0.945]   Δ=0.030 [0.022,0.040] bootP=0.0000 mcN=0.0000
+  dram      precision  0.898  [0.808, 0.974]   Δ=0.076 [0.002,0.159] bootP=0.0410 mcN=0.0000
+  dram      recall     0.186  [0.153, 0.230]   Δ=0.782 [0.734,0.818] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.992  [0.984, 0.998]   Δ=-0.002 [-0.009,0.006] bootP=0.6160 mcN=0.0000
+  dram      f1         0.308  [0.261, 0.367]   Δ=0.662 [0.601,0.711] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.341  [0.288, 0.400]   Δ=0.619 [0.560,0.669] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.719  [0.649, 0.776]   Δ=0.255 [0.201,0.321] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.901  [0.879, 0.918]   Δ=0.067 [0.044,0.092] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.861  [0.843, 0.877]   Δ=0.129 [0.113,0.145] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.800  [0.750, 0.837]   Δ=0.171 [0.136,0.218] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.717  [0.673, 0.752]   Δ=0.242 [0.207,0.283] bootP=0.0000 mcN=0.0000
+
+[trap_no_anme]  cells=281 (present=68)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  0.756  [0.589, 0.896]   Δ=0.244 [0.100,0.415] bootP=0.0008 mcN=0.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  kofam     specificity 0.897  [0.833, 0.956]   Δ=0.103 [0.045,0.168] bootP=0.0002 mcN=0.0000
+  kofam     f1         0.861  [0.738, 0.945]   Δ=0.139 [0.055,0.262] bootP=0.0004 mcN=0.0000
+  kofam     mcc        0.823  [0.701, 0.925]   Δ=0.177 [0.075,0.297] bootP=0.0002 mcN=0.0000
+  metabolic precision  0.810  [0.667, 0.919]   Δ=0.190 [0.081,0.333] bootP=0.0000 mcN=0.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  metabolic specificity 0.925  [0.871, 0.968]   Δ=0.075 [0.032,0.129] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.895  [0.800, 0.958]   Δ=0.105 [0.044,0.200] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.865  [0.770, 0.942]   Δ=0.135 [0.059,0.232] bootP=0.0000 mcN=0.0000
+  dram      precision  0.622  [0.446, 0.803]   Δ=0.378 [0.200,0.561] bootP=0.0000 mcN=0.0000
+  dram      recall     0.676  [0.593, 0.769]   Δ=0.324 [0.232,0.410] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.869  [0.795, 0.938]   Δ=0.131 [0.063,0.207] bootP=0.0000 mcN=0.0000
+  dram      f1         0.648  [0.527, 0.748]   Δ=0.352 [0.254,0.471] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.530  [0.400, 0.666]   Δ=0.470 [0.339,0.604] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.719  [0.562, 0.843]   Δ=0.281 [0.157,0.439] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.941  [0.873, 0.988]   Δ=0.059 [0.012,0.128] bootP=0.0334 mcN=0.0000
+  mcycdb    specificity 0.883  [0.831, 0.929]   Δ=0.117 [0.070,0.168] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.815  [0.692, 0.899]   Δ=0.185 [0.103,0.308] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.758  [0.637, 0.852]   Δ=0.242 [0.149,0.357] bootP=0.0000 mcN=0.0000
+
+[holdout_ALL]  cells=1470 (present=387)
+  mcycle    precision  0.966  [0.942, 0.984]
+  mcycle    recall     0.956  [0.928, 0.979]
+  mcycle    specificity 0.988  [0.980, 0.995]
+  mcycle    f1         0.961  [0.940, 0.976]
+  mcycle    mcc        0.947  [0.924, 0.966]
+  kofam     precision  0.908  [0.861, 0.939]   Δ=0.058 [0.034,0.092] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.946  [0.910, 0.974]   Δ=0.010 [0.000,0.024] bootP=0.0808 mcN=0.0000
+  kofam     specificity 0.966  [0.951, 0.978]   Δ=0.022 [0.013,0.032] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.927  [0.893, 0.948]   Δ=0.034 [0.023,0.053] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.900  [0.863, 0.925]   Δ=0.047 [0.032,0.068] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.910  [0.856, 0.944]   Δ=0.056 [0.031,0.093] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.946  [0.909, 0.973]   Δ=0.010 [0.000,0.024] bootP=0.0860 mcN=0.0000
+  metabolic specificity 0.967  [0.948, 0.981]   Δ=0.021 [0.011,0.035] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.928  [0.892, 0.950]   Δ=0.033 [0.021,0.054] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.902  [0.860, 0.929]   Δ=0.046 [0.030,0.069] bootP=0.0000 mcN=0.0000
+  dram      precision  0.735  [0.585, 0.867]   Δ=0.231 [0.101,0.374] bootP=0.0002 mcN=0.0000
+  dram      recall     0.222  [0.168, 0.305]   Δ=0.734 [0.647,0.790] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.971  [0.952, 0.987]   Δ=0.017 [0.001,0.035] bootP=0.0474 mcN=0.0000
+  dram      f1         0.341  [0.269, 0.439]   Δ=0.620 [0.518,0.693] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.315  [0.230, 0.422]   Δ=0.632 [0.530,0.715] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.699  [0.590, 0.781]   Δ=0.267 [0.191,0.365] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.917  [0.888, 0.939]   Δ=0.039 [0.008,0.071] bootP=0.0190 mcN=0.0000
+  mcycdb    specificity 0.859  [0.832, 0.884]   Δ=0.129 [0.104,0.155] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.793  [0.712, 0.848]   Δ=0.168 [0.119,0.237] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.719  [0.647, 0.772]   Δ=0.229 [0.181,0.290] bootP=0.0000 mcN=0.0000
+
+[holdout_trap]  cells=155 (present=29)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  0.617  [0.381, 0.807]   Δ=0.383 [0.193,0.619] bootP=0.0000 mcN=0.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  kofam     specificity 0.857  [0.789, 0.922]   Δ=0.143 [0.078,0.213] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.763  [0.554, 0.894]   Δ=0.237 [0.105,0.444] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.727  [0.560, 0.858]   Δ=0.273 [0.143,0.437] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.644  [0.421, 0.807]   Δ=0.356 [0.191,0.571] bootP=0.0000 mcN=0.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  metabolic specificity 0.873  [0.808, 0.930]   Δ=0.127 [0.071,0.195] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.784  [0.600, 0.893]   Δ=0.216 [0.107,0.400] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.750  [0.600, 0.861]   Δ=0.250 [0.140,0.401] bootP=0.0000 mcN=0.0000
+  dram      precision  0.476  [0.267, 0.694]   Δ=0.524 [0.300,0.732] bootP=0.0000 mcN=0.0000
+  dram      recall     0.690  [0.542, 0.867]   Δ=0.310 [0.143,0.462] bootP=0.0082 mcN=0.0000
+  dram      specificity 0.825  [0.739, 0.906]   Δ=0.175 [0.096,0.262] bootP=0.0000 mcN=0.0000
+  dram      f1         0.563  [0.377, 0.698]   Δ=0.437 [0.304,0.619] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.452  [0.291, 0.599]   Δ=0.548 [0.400,0.715] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.587  [0.343, 0.780]   Δ=0.413 [0.221,0.659] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.931  [0.792, 1.000]   Δ=0.069 [0.000,0.211] bootP=0.2484 mcN=0.0000
+  mcycdb    specificity 0.849  [0.782, 0.911]   Δ=0.151 [0.087,0.218] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.720  [0.500, 0.857]   Δ=0.280 [0.143,0.509] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.666  [0.466, 0.805]   Δ=0.334 [0.192,0.535] bootP=0.0000 mcN=0.0000
+
+[covered:kofam]  cells=3124 (present=874)
+  mcycle    precision  0.976  [0.965, 0.985]
+  mcycle    recall     0.970  [0.956, 0.982]
+  mcycle    specificity 0.991  [0.986, 0.995]
+  mcycle    f1         0.973  [0.963, 0.981]
+  mcycle    mcc        0.963  [0.950, 0.974]
+  kofam     precision  0.936  [0.910, 0.955]   Δ=0.040 [0.024,0.061] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.952  [0.934, 0.967]   Δ=0.018 [0.011,0.027] bootP=0.0000 mcN=0.0000
+  kofam     specificity 0.975  [0.967, 0.982]   Δ=0.016 [0.010,0.022] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.944  [0.927, 0.957]   Δ=0.029 [0.021,0.041] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.922  [0.903, 0.938]   Δ=0.041 [0.030,0.054] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.937  [0.909, 0.956]   Δ=0.039 [0.024,0.061] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.952  [0.935, 0.967]   Δ=0.018 [0.010,0.027] bootP=0.0000 mcN=0.0000
+  metabolic specificity 0.975  [0.965, 0.983]   Δ=0.016 [0.010,0.023] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.944  [0.926, 0.958]   Δ=0.029 [0.020,0.040] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.923  [0.900, 0.940]   Δ=0.040 [0.029,0.054] bootP=0.0000 mcN=0.0000
+  dram      precision  0.813  [0.709, 0.904]   Δ=0.163 [0.075,0.262] bootP=0.0000 mcN=0.0000
+  dram      recall     0.224  [0.185, 0.276]   Δ=0.746 [0.695,0.787] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.980  [0.968, 0.990]   Δ=0.011 [0.000,0.022] bootP=0.0554 mcN=0.0000
+  dram      f1         0.352  [0.299, 0.415]   Δ=0.621 [0.559,0.673] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.344  [0.287, 0.404]   Δ=0.619 [0.559,0.674] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.719  [0.650, 0.776]   Δ=0.257 [0.204,0.324] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.904  [0.885, 0.921]   Δ=0.066 [0.044,0.089] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.863  [0.847, 0.878]   Δ=0.128 [0.113,0.143] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.801  [0.753, 0.838]   Δ=0.172 [0.138,0.216] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.721  [0.678, 0.756]   Δ=0.242 [0.208,0.282] bootP=0.0000 mcN=0.0000
+
+[covered:metabolic]  cells=3124 (present=874)
+  mcycle    precision  0.976  [0.965, 0.985]
+  mcycle    recall     0.970  [0.956, 0.982]
+  mcycle    specificity 0.991  [0.986, 0.995]
+  mcycle    f1         0.973  [0.963, 0.981]
+  mcycle    mcc        0.963  [0.950, 0.974]
+  kofam     precision  0.936  [0.911, 0.956]   Δ=0.040 [0.024,0.062] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.952  [0.934, 0.968]   Δ=0.018 [0.010,0.027] bootP=0.0000 mcN=0.0000
+  kofam     specificity 0.975  [0.967, 0.982]   Δ=0.016 [0.010,0.022] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.944  [0.926, 0.957]   Δ=0.029 [0.021,0.040] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.922  [0.903, 0.938]   Δ=0.041 [0.030,0.054] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.937  [0.910, 0.956]   Δ=0.039 [0.023,0.060] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.952  [0.934, 0.967]   Δ=0.018 [0.010,0.027] bootP=0.0000 mcN=0.0000
+  metabolic specificity 0.975  [0.965, 0.983]   Δ=0.016 [0.010,0.023] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.944  [0.926, 0.958]   Δ=0.029 [0.020,0.040] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.923  [0.900, 0.940]   Δ=0.040 [0.029,0.054] bootP=0.0000 mcN=0.0000
+  dram      precision  0.813  [0.713, 0.905]   Δ=0.163 [0.075,0.258] bootP=0.0000 mcN=0.0000
+  dram      recall     0.224  [0.185, 0.276]   Δ=0.746 [0.694,0.785] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.980  [0.968, 0.990]   Δ=0.011 [0.000,0.022] bootP=0.0538 mcN=0.0000
+  dram      f1         0.352  [0.300, 0.412]   Δ=0.621 [0.561,0.673] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.344  [0.288, 0.405]   Δ=0.619 [0.559,0.674] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.719  [0.650, 0.775]   Δ=0.257 [0.204,0.322] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.904  [0.885, 0.921]   Δ=0.066 [0.044,0.089] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.863  [0.847, 0.879]   Δ=0.128 [0.113,0.143] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.801  [0.753, 0.839]   Δ=0.172 [0.138,0.215] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.721  [0.677, 0.756]   Δ=0.242 [0.208,0.282] bootP=0.0000 mcN=0.0000
+
+[covered:dram]  cells=788 (present=210)
+  mcycle    precision  0.986  [0.963, 1.000]
+  mcycle    recall     0.976  [0.955, 0.995]
+  mcycle    specificity 0.995  [0.986, 1.000]
+  mcycle    f1         0.981  [0.967, 0.993]
+  mcycle    mcc        0.974  [0.955, 0.990]
+  kofam     precision  0.874  [0.802, 0.935]   Δ=0.112 [0.053,0.183] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.957  [0.930, 0.982]   Δ=0.019 [0.005,0.036] bootP=0.0314 mcN=0.0000
+  kofam     specificity 0.950  [0.924, 0.974]   Δ=0.045 [0.021,0.070] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.914  [0.870, 0.949]   Δ=0.067 [0.035,0.109] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.882  [0.830, 0.929]   Δ=0.092 [0.049,0.140] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.893  [0.825, 0.951]   Δ=0.092 [0.037,0.164] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.957  [0.934, 0.979]   Δ=0.019 [0.005,0.036] bootP=0.0322 mcN=0.0000
+  metabolic specificity 0.958  [0.928, 0.982]   Δ=0.036 [0.014,0.065] bootP=0.0004 mcN=0.0000
+  metabolic f1         0.924  [0.883, 0.957]   Δ=0.057 [0.027,0.095] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.896  [0.846, 0.939]   Δ=0.078 [0.037,0.127] bootP=0.0000 mcN=0.0000
+  dram      precision  0.813  [0.712, 0.905]   Δ=0.172 [0.081,0.278] bootP=0.0000 mcN=0.0000
+  dram      recall     0.933  [0.899, 0.963]   Δ=0.043 [0.019,0.070] bootP=0.0004 mcN=0.0000
+  dram      specificity 0.922  [0.876, 0.961]   Δ=0.073 [0.034,0.120] bootP=0.0000 mcN=0.0000
+  dram      f1         0.869  [0.801, 0.926]   Δ=0.112 [0.057,0.179] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.821  [0.737, 0.892]   Δ=0.153 [0.079,0.239] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.730  [0.646, 0.803]   Δ=0.255 [0.182,0.342] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.876  [0.846, 0.904]   Δ=0.100 [0.067,0.135] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.882  [0.847, 0.911]   Δ=0.112 [0.083,0.147] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.797  [0.739, 0.843]   Δ=0.184 [0.138,0.241] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.719  [0.657, 0.773]   Δ=0.255 [0.200,0.321] bootP=0.0000 mcN=0.0000
+
+[covered:mcycdb]  cells=3009 (present=822)
+  mcycle    precision  0.977  [0.965, 0.987]
+  mcycle    recall     0.971  [0.956, 0.983]
+  mcycle    specificity 0.991  [0.987, 0.995]
+  mcycle    f1         0.974  [0.964, 0.982]
+  mcycle    mcc        0.964  [0.951, 0.975]
+  kofam     precision  0.934  [0.907, 0.955]   Δ=0.042 [0.026,0.065] bootP=0.0000 mcN=0.0000
+  kofam     recall     0.953  [0.934, 0.969]   Δ=0.018 [0.010,0.027] bootP=0.0000 mcN=0.0000
+  kofam     specificity 0.975  [0.967, 0.982]   Δ=0.016 [0.010,0.023] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.943  [0.926, 0.957]   Δ=0.030 [0.021,0.043] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.922  [0.902, 0.939]   Δ=0.042 [0.031,0.057] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.935  [0.908, 0.956]   Δ=0.041 [0.025,0.064] bootP=0.0000 mcN=0.0000
+  metabolic recall     0.953  [0.934, 0.968]   Δ=0.018 [0.010,0.027] bootP=0.0000 mcN=0.0000
+  metabolic specificity 0.975  [0.965, 0.984]   Δ=0.016 [0.010,0.024] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.944  [0.925, 0.958]   Δ=0.030 [0.021,0.042] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.923  [0.900, 0.940]   Δ=0.041 [0.030,0.056] bootP=0.0000 mcN=0.0000
+  dram      precision  0.792  [0.682, 0.891]   Δ=0.185 [0.086,0.292] bootP=0.0000 mcN=0.0000
+  dram      recall     0.208  [0.167, 0.262]   Δ=0.763 [0.708,0.804] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.979  [0.967, 0.990]   Δ=0.012 [0.001,0.024] bootP=0.0334 mcN=0.0000
+  dram      f1         0.329  [0.273, 0.397]   Δ=0.644 [0.578,0.700] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.324  [0.264, 0.389]   Δ=0.640 [0.576,0.701] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.719  [0.651, 0.775]   Δ=0.258 [0.204,0.323] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.961  [0.946, 0.975]   Δ=0.010 [-0.009,0.030] bootP=0.3470 mcN=0.0000
+  mcycdb    specificity 0.859  [0.842, 0.874]   Δ=0.133 [0.117,0.148] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.822  [0.773, 0.860]   Δ=0.151 [0.116,0.197] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.759  [0.713, 0.795]   Δ=0.205 [0.170,0.246] bootP=0.0000 mcN=0.0000
+
+======================================================================
+STEP resolution
+======================================================================
+
+[ALL]  cells=554 (present=154)
+  mcycle    precision  0.987  [0.966, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 0.995  [0.987, 1.000]
+  mcycle    f1         0.994  [0.983, 1.000]
+  mcycle    mcc        0.991  [0.977, 1.000]
+  kofam     precision  0.875  [0.836, 0.910]   Δ=0.112 [0.078,0.149] bootP=0.0000 mcN=0.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  kofam     specificity 0.945  [0.927, 0.962]   Δ=0.050 [0.033,0.068] bootP=0.0000 mcN=0.0000
+  kofam     f1         0.933  [0.911, 0.953]   Δ=0.060 [0.042,0.082] bootP=0.0000 mcN=0.0000
+  kofam     mcc        0.909  [0.884, 0.934]   Δ=0.082 [0.057,0.107] bootP=0.0000 mcN=0.0000
+  metabolic precision  0.856  [0.800, 0.900]   Δ=0.132 [0.091,0.180] bootP=0.0000 mcN=0.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  metabolic specificity 0.935  [0.909, 0.957]   Δ=0.060 [0.039,0.085] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.922  [0.890, 0.947]   Δ=0.071 [0.048,0.101] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.894  [0.856, 0.927]   Δ=0.097 [0.066,0.132] bootP=0.0000 mcN=0.0000
+  dram      precision  0.702  [0.617, 0.779]   Δ=0.285 [0.208,0.367] bootP=0.0000 mcN=0.0000
+  dram      recall     0.429  [0.386, 0.478]   Δ=0.571 [0.523,0.614] bootP=0.0000 mcN=0.0000
+  dram      specificity 0.930  [0.904, 0.951]   Δ=0.065 [0.043,0.091] bootP=0.0000 mcN=0.0000
+  dram      f1         0.532  [0.486, 0.579]   Δ=0.461 [0.414,0.508] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.428  [0.370, 0.486]   Δ=0.563 [0.505,0.622] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.636  [0.558, 0.706]   Δ=0.351 [0.286,0.420] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     0.818  [0.786, 0.849]   Δ=0.182 [0.151,0.215] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 0.820  [0.782, 0.855]   Δ=0.175 [0.142,0.211] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.716  [0.661, 0.761]   Δ=0.278 [0.236,0.329] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.597  [0.542, 0.648]   Δ=0.394 [0.347,0.444] bootP=0.0000 mcN=0.0000
+
+[acetoclastic]  cells=37 (present=10)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0020
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0020
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0020
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0020
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0020
+  mcycdb    precision  0.833  [0.600, 1.000]   Δ=0.167 [0.000,0.400] bootP=0.2558 mcN=0.5000
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.5000
+  mcycdb    specificity 0.926  [0.815, 1.000]   Δ=0.074 [0.000,0.185] bootP=0.2632 mcN=0.5000
+  mcycdb    f1         0.909  [0.737, 1.000]   Δ=0.091 [0.000,0.263] bootP=0.2574 mcN=0.5000
+  mcycdb    mcc        0.878  [0.714, 1.000]   Δ=0.122 [0.000,0.294] bootP=0.2516 mcN=0.5000
+
+[co2_to_methyl]  cells=40 (present=25)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+  mcycdb    recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0000
+  mcycdb    specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  mcycdb    f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+  mcycdb    mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+
+[formaldehyde_h4mpt]  cells=37 (present=8)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0078
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0078
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  mcycdb    precision  0.667  [0.375, 0.917]   Δ=0.333 [0.083,0.625] bootP=0.0230 mcN=0.1250
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.1250
+  mcycdb    specificity 0.862  [0.724, 0.968]   Δ=0.138 [0.032,0.276] bootP=0.0276 mcN=0.1250
+  mcycdb    f1         0.800  [0.545, 0.957]   Δ=0.200 [0.043,0.455] bootP=0.0294 mcN=0.1250
+  mcycdb    mcc        0.758  [0.537, 0.939]   Δ=0.242 [0.061,0.465] bootP=0.0256 mcN=0.1250
+
+[heterodisulfide]  cells=38 (present=17)
+  mcycle    precision  0.895  [0.737, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 0.905  [0.762, 1.000]
+  mcycle    f1         0.944  [0.848, 1.000]
+  mcycle    mcc        0.900  [0.760, 1.000]
+  kofam     precision  0.895  [0.737, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 0.905  [0.762, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         0.944  [0.848, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        0.900  [0.760, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  0.895  [0.737, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 0.905  [0.760, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         0.944  [0.848, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        0.900  [0.764, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0007
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0007
+  dram      specificity 1.000  [1.000, 1.000]   Δ=-0.095 [-0.240,0.000] bootP=0.2540 mcN=0.0007
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0007
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0007
+  mcycdb    precision  0.607  [0.423, 0.786]   Δ=0.288 [0.137,0.464] bootP=0.0000 mcN=0.0039
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0039
+  mcycdb    specificity 0.476  [0.261, 0.696]   Δ=0.429 [0.217,0.643] bootP=0.0000 mcN=0.0039
+  mcycdb    f1         0.756  [0.588, 0.880]   Δ=0.189 [0.082,0.324] bootP=0.0002 mcN=0.0039
+  mcycdb    mcc        0.538  [0.363, 0.721]   Δ=0.362 [0.187,0.549] bootP=0.0000 mcN=0.0039
+
+[mcr]  cells=44 (present=17)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  0.895  [0.733, 1.000]   Δ=0.105 [0.000,0.263] bootP=0.2620 mcN=0.5000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.5000
+  metabolic specificity 0.926  [0.815, 1.000]   Δ=0.074 [0.000,0.185] bootP=0.2584 mcN=0.5000
+  metabolic f1         0.944  [0.848, 1.000]   Δ=0.056 [0.000,0.152] bootP=0.2390 mcN=0.5000
+  metabolic mcc        0.910  [0.784, 1.000]   Δ=0.090 [0.000,0.216] bootP=0.2628 mcN=0.5000
+  dram      precision  0.895  [0.737, 1.000]   Δ=0.105 [0.000,0.263] bootP=0.2612 mcN=0.5000
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.5000
+  dram      specificity 0.926  [0.815, 1.000]   Δ=0.074 [0.000,0.188] bootP=0.2780 mcN=0.5000
+  dram      f1         0.944  [0.848, 1.000]   Δ=0.056 [0.000,0.152] bootP=0.2574 mcN=0.5000
+  dram      mcc        0.910  [0.784, 1.000]   Δ=0.090 [0.000,0.217] bootP=0.2498 mcN=0.5000
+  mcycdb    precision  0.889  [0.720, 1.000]   Δ=0.111 [0.000,0.278] bootP=0.2620 mcN=0.2500
+  mcycdb    recall     0.941  [0.800, 1.000]   Δ=0.059 [0.000,0.200] bootP=0.7318 mcN=0.2500
+  mcycdb    specificity 0.926  [0.810, 1.000]   Δ=0.074 [0.000,0.190] bootP=0.2636 mcN=0.2500
+  mcycdb    f1         0.914  [0.800, 1.000]   Δ=0.086 [0.000,0.211] bootP=0.0916 mcN=0.2500
+  mcycdb    mcc        0.859  [0.686, 1.000]   Δ=0.141 [0.000,0.317] bootP=0.0872 mcN=0.2500
+
+[methanol_oxidation]  cells=39 (present=12)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  0.857  [0.643, 1.000]   Δ=0.143 [0.000,0.357] bootP=0.2532 mcN=0.5000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.5000
+  metabolic specificity 0.926  [0.815, 1.000]   Δ=0.074 [0.000,0.185] bootP=0.2486 mcN=0.5000
+  metabolic f1         0.923  [0.783, 1.000]   Δ=0.077 [0.000,0.217] bootP=0.2568 mcN=0.5000
+  metabolic mcc        0.891  [0.743, 1.000]   Δ=0.109 [0.000,0.268] bootP=0.2606 mcN=0.5000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0005
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0005
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0005
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0005
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0005
+  mcycdb    precision  0.571  [0.353, 0.778]   Δ=0.429 [0.222,0.650] bootP=0.0002 mcN=0.0039
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0039
+  mcycdb    specificity 0.667  [0.480, 0.839]   Δ=0.333 [0.167,0.517] bootP=0.0000 mcN=0.0039
+  mcycdb    f1         0.727  [0.519, 0.875]   Δ=0.273 [0.125,0.481] bootP=0.0000 mcN=0.0039
+  mcycdb    mcc        0.617  [0.439, 0.804]   Δ=0.383 [0.196,0.564] bootP=0.0000 mcN=0.0039
+
+[methylotrophic]  cells=38 (present=8)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+
+[mtr]  cells=41 (present=14)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0001
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0001
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0001
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0001
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0001
+  mcycdb    precision  0.933  [0.778, 1.000]   Δ=0.067 [0.000,0.222] bootP=0.7294 mcN=1.0000
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    specificity 0.963  [0.880, 1.000]   Δ=0.037 [0.000,0.125] bootP=0.7120 mcN=1.0000
+  mcycdb    f1         0.966  [0.880, 1.000]   Δ=0.034 [0.000,0.125] bootP=0.7244 mcN=1.0000
+  mcycdb    mcc        0.948  [0.834, 1.000]   Δ=0.052 [0.000,0.166] bootP=0.7198 mcN=1.0000
+
+[nod]  cells=37 (present=1)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=1.0000
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+  mcycdb    precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+  mcycdb    recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=1.0000
+  mcycdb    specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+  mcycdb    mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=1.0000
+
+[pmmo]  cells=40 (present=8)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  0.571  [0.300, 0.833]   Δ=0.429 [0.167,0.700] bootP=0.0024 mcN=0.0312
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0312
+  kofam     specificity 0.812  [0.667, 0.938]   Δ=0.188 [0.062,0.333] bootP=0.0024 mcN=0.0312
+  kofam     f1         0.727  [0.462, 0.909]   Δ=0.273 [0.091,0.545] bootP=0.0032 mcN=0.0312
+  kofam     mcc        0.681  [0.463, 0.882]   Δ=0.319 [0.125,0.537] bootP=0.0028 mcN=0.0312
+  metabolic precision  0.667  [0.375, 0.923]   Δ=0.333 [0.077,0.625] bootP=0.0330 mcN=0.1250
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.1250
+  metabolic specificity 0.875  [0.750, 0.971]   Δ=0.125 [0.029,0.257] bootP=0.0246 mcN=0.1250
+  metabolic f1         0.800  [0.545, 0.960]   Δ=0.200 [0.043,0.455] bootP=0.0284 mcN=0.1250
+  metabolic mcc        0.764  [0.545, 0.941]   Δ=0.236 [0.057,0.455] bootP=0.0316 mcN=0.1250
+  dram      precision  0.500  [0.250, 0.750]   Δ=0.500 [0.250,0.750] bootP=0.0004 mcN=0.0078
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0078
+  dram      specificity 0.750  [0.594, 0.889]   Δ=0.250 [0.107,0.412] bootP=0.0000 mcN=0.0078
+  dram      f1         0.667  [0.400, 0.857]   Δ=0.333 [0.143,0.600] bootP=0.0002 mcN=0.0078
+  dram      mcc        0.612  [0.408, 0.811]   Δ=0.388 [0.188,0.592] bootP=0.0004 mcN=0.0078
+  mcycdb    precision  0.727  [0.429, 1.000]   Δ=0.273 [0.000,0.571] bootP=0.0868 mcN=0.2500
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.2500
+  mcycdb    specificity 0.906  [0.793, 1.000]   Δ=0.094 [0.000,0.206] bootP=0.0834 mcN=0.2500
+  mcycdb    f1         0.842  [0.600, 1.000]   Δ=0.158 [0.000,0.400] bootP=0.0944 mcN=0.2500
+  mcycdb    mcc        0.812  [0.596, 1.000]   Δ=0.188 [0.000,0.395] bootP=0.0896 mcN=0.2500
+
+[reverse_methanogenesis]  cells=49 (present=3)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  0.176  [0.000, 0.381]   Δ=0.824 [0.615,0.947] bootP=0.0000 mcN=0.0001
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0001
+  kofam     specificity 0.696  [0.556, 0.826]   Δ=0.304 [0.178,0.444] bootP=0.0000 mcN=0.0001
+  kofam     f1         0.300  [0.100, 0.552]   Δ=0.700 [0.455,0.900] bootP=0.0000 mcN=0.0001
+  kofam     mcc        0.350  [0.181, 0.536]   Δ=0.650 [0.464,0.819] bootP=0.0000 mcN=0.0001
+  metabolic precision  0.158  [0.000, 0.333]   Δ=0.842 [0.667,0.952] bootP=0.0000 mcN=0.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  metabolic specificity 0.652  [0.511, 0.787]   Δ=0.348 [0.213,0.489] bootP=0.0000 mcN=0.0000
+  metabolic f1         0.273  [0.091, 0.514]   Δ=0.727 [0.500,0.909] bootP=0.0000 mcN=0.0000
+  metabolic mcc        0.321  [0.167, 0.496]   Δ=0.679 [0.504,0.833] bootP=0.0000 mcN=0.0000
+  dram      precision  0.158  [0.000, 0.350]   Δ=0.842 [0.667,0.952] bootP=0.0000 mcN=0.0000
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  dram      specificity 0.652  [0.511, 0.786]   Δ=0.348 [0.217,0.489] bootP=0.0000 mcN=0.0000
+  dram      f1         0.273  [0.091, 0.519]   Δ=0.727 [0.500,0.909] bootP=0.0000 mcN=0.0000
+  dram      mcc        0.321  [0.167, 0.492]   Δ=0.679 [0.492,0.833] bootP=0.0000 mcN=0.0000
+  mcycdb    precision  0.167  [0.000, 0.357]   Δ=0.833 [0.632,0.950] bootP=0.0000 mcN=0.0001
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0001
+  mcycdb    specificity 0.674  [0.533, 0.804]   Δ=0.326 [0.191,0.467] bootP=0.0000 mcN=0.0001
+  mcycdb    f1         0.286  [0.095, 0.538]   Δ=0.714 [0.467,0.905] bootP=0.0000 mcN=0.0001
+  mcycdb    mcc        0.335  [0.174, 0.524]   Δ=0.665 [0.488,0.826] bootP=0.0000 mcN=0.0001
+
+[rump]  cells=38 (present=18)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0000
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0000
+  mcycdb    precision  0.773  [0.579, 0.944]   Δ=0.227 [0.053,0.412] bootP=0.0120 mcN=0.0312
+  mcycdb    recall     0.944  [0.818, 1.000]   Δ=0.056 [0.000,0.188] bootP=0.7308 mcN=0.0312
+  mcycdb    specificity 0.750  [0.550, 0.938]   Δ=0.250 [0.062,0.462] bootP=0.0116 mcN=0.0312
+  mcycdb    f1         0.850  [0.710, 0.952]   Δ=0.150 [0.048,0.294] bootP=0.0032 mcN=0.0312
+  mcycdb    mcc        0.702  [0.474, 0.899]   Δ=0.298 [0.101,0.530] bootP=0.0030 mcN=0.0312
+
+[serine_cycle]  cells=37 (present=8)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  dram      recall     0.000  [0.000, 0.000]   Δ=1.000 [1.000,1.000] bootP=0.0000 mcN=0.0078
+  dram      specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0078
+  dram      f1         NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  dram      mcc        NA  [NA, NA]   Δ=NA [NA,NA] bootP=nan mcN=0.0078
+  mcycdb    precision  0.296  [0.130, 0.480]   Δ=0.704 [0.520,0.870] bootP=0.0000 mcN=0.0000
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.0000
+  mcycdb    specificity 0.345  [0.179, 0.520]   Δ=0.655 [0.481,0.821] bootP=0.0000 mcN=0.0000
+  mcycdb    f1         0.457  [0.231, 0.649]   Δ=0.543 [0.351,0.769] bootP=0.0000 mcN=0.0000
+  mcycdb    mcc        0.320  [0.183, 0.479]   Δ=0.680 [0.525,0.817] bootP=0.0000 mcN=0.0000
+
+[smmo]  cells=39 (present=5)
+  mcycle    precision  1.000  [1.000, 1.000]
+  mcycle    recall     1.000  [1.000, 1.000]
+  mcycle    specificity 1.000  [1.000, 1.000]
+  mcycle    f1         1.000  [1.000, 1.000]
+  mcycle    mcc        1.000  [1.000, 1.000]
+  kofam     precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  kofam     mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic precision  1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic specificity 1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic f1         1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  metabolic mcc        1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  dram      precision  0.714  [0.333, 1.000]   Δ=0.286 [0.000,0.667] bootP=0.2588 mcN=0.5000
+  dram      recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=0.5000
+  dram      specificity 0.941  [0.853, 1.000]   Δ=0.059 [0.000,0.147] bootP=0.2526 mcN=0.5000
+  dram      f1         0.833  [0.500, 1.000]   Δ=0.167 [0.000,0.500] bootP=0.2564 mcN=0.5000
+  dram      mcc        0.820  [0.545, 1.000]   Δ=0.180 [0.000,0.455] bootP=0.2492 mcN=0.5000
+  mcycdb    precision  0.833  [0.500, 1.000]   Δ=0.167 [0.000,0.500] bootP=0.7433 mcN=1.0000
+  mcycdb    recall     1.000  [1.000, 1.000]   Δ=0.000 [0.000,0.000] bootP=1.0000 mcN=1.0000
+  mcycdb    specificity 0.971  [0.906, 1.000]   Δ=0.029 [0.000,0.094] bootP=0.7434 mcN=1.0000
+  mcycdb    f1         0.909  [0.667, 1.000]   Δ=0.091 [0.000,0.333] bootP=0.7259 mcN=1.0000
+  mcycdb    mcc        0.899  [0.677, 1.000]   Δ=0.101 [0.000,0.323] bootP=0.7390 mcN=1.0000
+
+======================================================================
+PRIMARY FAMILY — BH-FDR corrected (subunit resolution)
+======================================================================
+  comparator metric                 Δ(ours−cmp)            95% CI    bootP    BH q  verdict
+  kofam      ALL f1                       0.037     [0.028,0.047]   0.0000  0.0000  mcycle WINS
+  metabolic  ALL f1                       0.037     [0.028,0.049]   0.0000  0.0000  mcycle WINS
+  dram       ALL f1                       0.623     [0.561,0.675]   0.0000  0.0000  mcycle WINS
+  mcycdb     ALL f1                       0.178     [0.143,0.219]   0.0000  0.0000  mcycle WINS
+  kofam      trap precision               0.336     [0.210,0.488]   0.0000  0.0000  mcycle WINS
+  metabolic  trap precision               0.311     [0.202,0.446]   0.0000  0.0000  mcycle WINS
+  dram       trap precision               0.473     [0.333,0.616]   0.0000  0.0000  mcycle WINS
+  mcycdb     trap precision               0.374     [0.250,0.526]   0.0000  0.0000  mcycle WINS
+
+======================================================================
+PRE-SPECIFIED SENSITIVITY (not in the BH family)
+======================================================================
+  dram       covered:dram f1                  0.112     [0.057,0.179]   0.0000
+  kofam      covered:kofam f1                 0.029     [0.021,0.041]   0.0000
+  mcycdb     covered:mcycdb f1                0.151     [0.116,0.197]   0.0000
+  metabolic  covered:metabolic f1             0.029     [0.020,0.040]   0.0000
+  dram       holdout_ALL f1                   0.620     [0.518,0.693]   0.0000
+  kofam      holdout_ALL f1                   0.034     [0.023,0.053]   0.0000
+  mcycdb     holdout_ALL f1                   0.168     [0.119,0.237]   0.0000
+  metabolic  holdout_ALL f1                   0.033     [0.021,0.054]   0.0000
+  dram       holdout_trap precision           0.524     [0.300,0.732]   0.0000
+  kofam      holdout_trap precision           0.383     [0.193,0.619]   0.0000
+  mcycdb     holdout_trap precision           0.413     [0.221,0.659]   0.0000
+  metabolic  holdout_trap precision           0.356     [0.191,0.571]   0.0000
+  dram       trap_no_anme precision           0.378     [0.200,0.561]   0.0000
+  kofam      trap_no_anme precision           0.244     [0.100,0.415]   0.0008
+  mcycdb     trap_no_anme precision           0.281     [0.157,0.439]   0.0000
+  metabolic  trap_no_anme precision           0.190     [0.081,0.333]   0.0000
+
+======================================================================
+EXPLORATORY FAMILY — MCC, BH-FDR corrected separately (subunit res.)
+======================================================================
+  comparator metric                 Δ(ours−cmp)            95% CI    bootP    BH q  verdict
+  kofam      ALL mcc                      0.051     [0.040,0.063]   0.0000  0.0000  mcycle WINS
+  metabolic  ALL mcc                      0.052     [0.040,0.066]   0.0000  0.0000  mcycle WINS
+  dram       ALL mcc                      0.636     [0.573,0.695]   0.0000  0.0000  mcycle WINS
+  mcycdb     ALL mcc                      0.248     [0.216,0.287]   0.0000  0.0000  mcycle WINS
+  kofam      trap mcc                     0.244     [0.157,0.350]   0.0000  0.0000  mcycle WINS
+  metabolic  trap mcc                     0.223     [0.150,0.317]   0.0000  0.0000  mcycle WINS
+  dram       trap mcc                     0.525     [0.429,0.629]   0.0000  0.0000  mcycle WINS
+  mcycdb     trap mcc                     0.307     [0.217,0.416]   0.0000  0.0000  mcycle WINS
+
+wrote /home/dmin/Grants/Methane_Cycle/mcycle-pipeline/validation/benchmark/benchmark_results.tsv

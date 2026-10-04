@@ -35,7 +35,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M2 | Dual ground truth | DONE 2026-10-04 |
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | DONE 2026-10-04 |
 | M4 | Scoring, leak detection, trap independence, regression gate | DONE 2026-10-04 |
-| M5 | Pre-registration, then comparator benchmark | IN PROGRESS (comparators running) |
+| M5 | Pre-registration, then comparator benchmark | DONE 2026-10-04 |
 | M6 | GTDB-500 concordance | IN PROGRESS (mcycle + MCycDB running; METABOLIC on the 120 enriched pending) |
 | M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | scripts written, not run |
 | M8 | MAG realism study | roster fixed, genomes fetched, not run |
@@ -237,23 +237,18 @@ From the backlog in `../Info-methane.md`:
   counterpart of NCycDB / SCycDB) — confirm it exists and is obtainable, stage it
   untracked, write `build_mcycdb_tsv.py`.
 - Done when: `benchmark_results.tsv` and `COMPARISON_REPORT.md` exist for 4 comparators.
-- **IN PROGRESS (state at 2026-10-04 21:00).** Pre-registration committed at `3cc200c`
-  before any comparator ran (`validation/benchmark/prereg.md`: family = 4 comparators x
-  {trap precision, ALL micro-F1}; `mcrA_anme` of a comparator = its mcrA call, with the
-  trap set also scored without it; METABOLIC decided by its gene-named worksheet rows
-  for 13 targets). Ported: `adapters.py`, `benchmark_stats.py` (smoke-tested).
-  - MCycDB: DONE -> `validation/benchmark/mcycdb.tsv` (`comparators/build_mcycdb_tsv.py`;
-    database under `comparators/MCyc/`, untracked; the split zip needs the stream
-    inflated by hand — see the script header).
-  - METABOLIC: `comparators/run_metabolic_panel.sh`, 5 batches of 10, ~21 min each;
-    outputs in `comparators/metabolic_out/{kegg_all,worksheet1}`. When finished:
-    `python comparators/build_metabolic_tsv.py`.
-  - DRAM: `comparators/run_dram_panel.sh`, 7 parallel batches of 7 (DRAM does one genome
-    per ~15 min). When finished: `python comparators/build_dram_tsv.py`.
-  - Then: `python validation/benchmark/benchmark_stats.py --metabolic
-    validation/benchmark/metabolic.tsv --dram validation/benchmark/dram.tsv --mcycdb
-    validation/benchmark/mcycdb.tsv > validation/benchmark/benchmark_final.txt`, write
-    `COMPARISON_REPORT.md`, port `plot_benchmark.py`.
+- **DONE 2026-10-04.** Pre-registration committed at `3cc200c` before any comparator
+  ran; benchmark run as registered (B = 10,000). mcycle better on all 8 contrasts of
+  the family (BH q < 0.0001), also without `mcrA_anme` and on the hold-out alone.
+  `validation/benchmark/{prereg.md, adapters.py, benchmark_stats.py, benchmark_final.txt,
+  benchmark_results.tsv, COMPARISON_REPORT.md, figures/}`; normalized comparator tables
+  `metabolic.tsv`, `dram.tsv`, `mcycdb.tsv`; runners and builders under `comparators/`.
+  - METABOLIC: 5 batches of 10, ~22 min each. DRAM: 7 parallel batches of 7 with 4
+    threads finished in ~70 min (one sequential run would have taken ~14 h).
+  - MCycDB lives under `comparators/MCyc/` (untracked); the split zip has to be
+    inflated by hand (see `comparators/build_mcycdb_tsv.py`).
+  - `plot_benchmark.py` is the sister file, unchanged; its figures 2 and 3 expect the
+    sister schema of CONCORDANCE / DIR_ACCURACY and are skipped for methane.
   - Never overwrite a shell script that a running bash is executing (bash reads the
     file as it goes): the DRAM runner was replaced mid-run and the old process carried
     on into the new text. The outcome was the intended batched run, but by accident.

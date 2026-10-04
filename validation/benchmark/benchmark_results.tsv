@@ -1,0 +1,626 @@
+resolution	tool	subset	metric	value	ci_lo	ci_hi	delta_vs_mcycle	d_lo	d_hi	boot_p	mcnemar_p
+subunit	mcycle	ALL	precision	0.976	0.965	0.985					
+subunit	mcycle	ALL	recall	0.970	0.956	0.982					
+subunit	mcycle	ALL	specificity	0.991	0.986	0.995					
+subunit	mcycle	ALL	f1	0.973	0.963	0.981					
+subunit	mcycle	ALL	mcc	0.963	0.950	0.974					
+subunit	kofam	ALL	precision	0.922	0.897	0.941	0.054	0.038	0.075	0.0000	0.0000
+subunit	kofam	ALL	recall	0.952	0.934	0.968	0.018	0.011	0.027	0.0000	0.0000
+subunit	kofam	ALL	specificity	0.969	0.960	0.977	0.022	0.015	0.029	0.0000	0.0000
+subunit	kofam	ALL	f1	0.937	0.920	0.950	0.037	0.028	0.047	0.0000	0.0000
+subunit	kofam	ALL	mcc	0.912	0.893	0.928	0.051	0.040	0.063	0.0000	0.0000
+subunit	metabolic	ALL	precision	0.921	0.893	0.941	0.055	0.039	0.078	0.0000	0.0000
+subunit	metabolic	ALL	recall	0.952	0.934	0.967	0.018	0.011	0.027	0.0000	0.0000
+subunit	metabolic	ALL	specificity	0.969	0.957	0.978	0.022	0.015	0.032	0.0000	0.0000
+subunit	metabolic	ALL	f1	0.936	0.918	0.950	0.037	0.028	0.049	0.0000	0.0000
+subunit	metabolic	ALL	mcc	0.911	0.889	0.929	0.052	0.040	0.066	0.0000	0.0000
+subunit	dram	ALL	precision	0.765	0.673	0.849	0.211	0.129	0.299	0.0000	0.0000
+subunit	dram	ALL	recall	0.227	0.186	0.279	0.743	0.690	0.783	0.0000	0.0000
+subunit	dram	ALL	specificity	0.973	0.961	0.984	0.017	0.007	0.029	0.0008	0.0000
+subunit	dram	ALL	f1	0.350	0.298	0.411	0.623	0.561	0.675	0.0000	0.0000
+subunit	dram	ALL	mcc	0.327	0.268	0.392	0.636	0.573	0.695	0.0000	0.0000
+subunit	mcycdb	ALL	precision	0.710	0.644	0.763	0.266	0.216	0.328	0.0000	0.0000
+subunit	mcycdb	ALL	recall	0.904	0.885	0.921	0.066	0.045	0.089	0.0000	0.0000
+subunit	mcycdb	ALL	specificity	0.859	0.842	0.874	0.132	0.117	0.147	0.0000	0.0000
+subunit	mcycdb	ALL	f1	0.795	0.749	0.831	0.178	0.143	0.219	0.0000	0.0000
+subunit	mcycdb	ALL	mcc	0.715	0.674	0.748	0.248	0.216	0.287	0.0000	0.0000
+subunit	mcycle	trap	precision	1.000	1.000	1.000					
+subunit	mcycle	trap	recall	1.000	1.000	1.000					
+subunit	mcycle	trap	specificity	1.000	1.000	1.000					
+subunit	mcycle	trap	f1	1.000	1.000	1.000					
+subunit	mcycle	trap	mcc	1.000	1.000	1.000					
+subunit	kofam	trap	precision	0.664	0.513	0.792	0.336	0.210	0.488	0.0000	0.0000
+subunit	kofam	trap	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	kofam	trap	specificity	0.861	0.812	0.907	0.139	0.092	0.188	0.0000	0.0000
+subunit	kofam	trap	f1	0.798	0.679	0.882	0.202	0.117	0.320	0.0000	0.0000
+subunit	kofam	trap	mcc	0.756	0.651	0.844	0.244	0.157	0.350	0.0000	0.0000
+subunit	metabolic	trap	precision	0.689	0.557	0.797	0.311	0.202	0.446	0.0000	0.0000
+subunit	metabolic	trap	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	metabolic	trap	specificity	0.876	0.828	0.917	0.124	0.083	0.171	0.0000	0.0000
+subunit	metabolic	trap	f1	0.816	0.709	0.888	0.184	0.111	0.288	0.0000	0.0000
+subunit	metabolic	trap	mcc	0.777	0.684	0.852	0.223	0.150	0.317	0.0000	0.0000
+subunit	dram	trap	precision	0.527	0.380	0.667	0.473	0.333	0.616	0.0000	0.0000
+subunit	dram	trap	recall	0.690	0.603	0.782	0.310	0.216	0.393	0.0000	0.0000
+subunit	dram	trap	specificity	0.830	0.770	0.884	0.170	0.116	0.229	0.0000	0.0000
+subunit	dram	trap	f1	0.598	0.490	0.686	0.402	0.317	0.512	0.0000	0.0000
+subunit	dram	trap	mcc	0.475	0.373	0.573	0.525	0.429	0.629	0.0000	0.0000
+subunit	mcycdb	trap	precision	0.626	0.478	0.750	0.374	0.250	0.526	0.0000	0.0000
+subunit	mcycdb	trap	recall	0.944	0.877	0.988	0.056	0.012	0.121	0.0288	0.0000
+subunit	mcycdb	trap	specificity	0.846	0.802	0.887	0.154	0.113	0.199	0.0000	0.0000
+subunit	mcycdb	trap	f1	0.753	0.628	0.843	0.247	0.160	0.373	0.0000	0.0000
+subunit	mcycdb	trap	mcc	0.693	0.585	0.785	0.307	0.217	0.416	0.0000	0.0000
+subunit	mcycle	nontrap	precision	0.974	0.962	0.984					
+subunit	mcycle	nontrap	recall	0.968	0.952	0.981					
+subunit	mcycle	nontrap	specificity	0.990	0.985	0.994					
+subunit	mcycle	nontrap	f1	0.971	0.960	0.980					
+subunit	mcycle	nontrap	mcc	0.959	0.946	0.972					
+subunit	kofam	nontrap	precision	0.956	0.941	0.969	0.018	0.011	0.024	0.0000	0.0000
+subunit	kofam	nontrap	recall	0.948	0.928	0.964	0.020	0.011	0.029	0.0000	0.0000
+subunit	kofam	nontrap	specificity	0.983	0.975	0.989	0.007	0.004	0.011	0.0000	0.0000
+subunit	kofam	nontrap	f1	0.952	0.938	0.964	0.019	0.014	0.024	0.0000	0.0000
+subunit	kofam	nontrap	mcc	0.933	0.916	0.949	0.026	0.018	0.034	0.0000	0.0000
+subunit	metabolic	nontrap	precision	0.950	0.932	0.965	0.024	0.015	0.034	0.0000	0.0000
+subunit	metabolic	nontrap	recall	0.948	0.928	0.964	0.020	0.011	0.029	0.0000	0.0000
+subunit	metabolic	nontrap	specificity	0.980	0.972	0.987	0.009	0.005	0.014	0.0000	0.0000
+subunit	metabolic	nontrap	f1	0.949	0.934	0.961	0.022	0.016	0.028	0.0000	0.0000
+subunit	metabolic	nontrap	mcc	0.929	0.910	0.945	0.030	0.022	0.040	0.0000	0.0000
+subunit	dram	nontrap	precision	0.898	0.808	0.974	0.076	0.002	0.159	0.0410	0.0000
+subunit	dram	nontrap	recall	0.186	0.153	0.230	0.782	0.734	0.818	0.0000	0.0000
+subunit	dram	nontrap	specificity	0.992	0.984	0.998	-0.002	-0.009	0.006	0.6160	0.0000
+subunit	dram	nontrap	f1	0.308	0.261	0.367	0.662	0.601	0.711	0.0000	0.0000
+subunit	dram	nontrap	mcc	0.341	0.288	0.400	0.619	0.560	0.669	0.0000	0.0000
+subunit	mcycdb	nontrap	precision	0.719	0.649	0.776	0.255	0.201	0.321	0.0000	0.0000
+subunit	mcycdb	nontrap	recall	0.901	0.879	0.918	0.067	0.044	0.092	0.0000	0.0000
+subunit	mcycdb	nontrap	specificity	0.861	0.843	0.877	0.129	0.113	0.145	0.0000	0.0000
+subunit	mcycdb	nontrap	f1	0.800	0.750	0.837	0.171	0.136	0.218	0.0000	0.0000
+subunit	mcycdb	nontrap	mcc	0.717	0.673	0.752	0.242	0.207	0.283	0.0000	0.0000
+subunit	mcycle	trap_no_anme	precision	1.000	1.000	1.000					
+subunit	mcycle	trap_no_anme	recall	1.000	1.000	1.000					
+subunit	mcycle	trap_no_anme	specificity	1.000	1.000	1.000					
+subunit	mcycle	trap_no_anme	f1	1.000	1.000	1.000					
+subunit	mcycle	trap_no_anme	mcc	1.000	1.000	1.000					
+subunit	kofam	trap_no_anme	precision	0.756	0.589	0.896	0.244	0.100	0.415	0.0008	0.0000
+subunit	kofam	trap_no_anme	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	kofam	trap_no_anme	specificity	0.897	0.833	0.956	0.103	0.045	0.168	0.0002	0.0000
+subunit	kofam	trap_no_anme	f1	0.861	0.738	0.945	0.139	0.055	0.262	0.0004	0.0000
+subunit	kofam	trap_no_anme	mcc	0.823	0.701	0.925	0.177	0.075	0.297	0.0002	0.0000
+subunit	metabolic	trap_no_anme	precision	0.810	0.667	0.919	0.190	0.081	0.333	0.0000	0.0000
+subunit	metabolic	trap_no_anme	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	metabolic	trap_no_anme	specificity	0.925	0.871	0.968	0.075	0.032	0.129	0.0000	0.0000
+subunit	metabolic	trap_no_anme	f1	0.895	0.800	0.958	0.105	0.044	0.200	0.0000	0.0000
+subunit	metabolic	trap_no_anme	mcc	0.865	0.770	0.942	0.135	0.059	0.232	0.0000	0.0000
+subunit	dram	trap_no_anme	precision	0.622	0.446	0.803	0.378	0.200	0.561	0.0000	0.0000
+subunit	dram	trap_no_anme	recall	0.676	0.593	0.769	0.324	0.232	0.410	0.0000	0.0000
+subunit	dram	trap_no_anme	specificity	0.869	0.795	0.938	0.131	0.063	0.207	0.0000	0.0000
+subunit	dram	trap_no_anme	f1	0.648	0.527	0.748	0.352	0.254	0.471	0.0000	0.0000
+subunit	dram	trap_no_anme	mcc	0.530	0.400	0.666	0.470	0.339	0.604	0.0000	0.0000
+subunit	mcycdb	trap_no_anme	precision	0.719	0.562	0.843	0.281	0.157	0.439	0.0000	0.0000
+subunit	mcycdb	trap_no_anme	recall	0.941	0.873	0.988	0.059	0.012	0.128	0.0334	0.0000
+subunit	mcycdb	trap_no_anme	specificity	0.883	0.831	0.929	0.117	0.070	0.168	0.0000	0.0000
+subunit	mcycdb	trap_no_anme	f1	0.815	0.692	0.899	0.185	0.103	0.308	0.0000	0.0000
+subunit	mcycdb	trap_no_anme	mcc	0.758	0.637	0.852	0.242	0.149	0.357	0.0000	0.0000
+subunit	mcycle	holdout_ALL	precision	0.966	0.942	0.984					
+subunit	mcycle	holdout_ALL	recall	0.956	0.928	0.979					
+subunit	mcycle	holdout_ALL	specificity	0.988	0.980	0.995					
+subunit	mcycle	holdout_ALL	f1	0.961	0.940	0.976					
+subunit	mcycle	holdout_ALL	mcc	0.947	0.924	0.966					
+subunit	kofam	holdout_ALL	precision	0.908	0.861	0.939	0.058	0.034	0.092	0.0000	0.0000
+subunit	kofam	holdout_ALL	recall	0.946	0.910	0.974	0.010	0.000	0.024	0.0808	0.0000
+subunit	kofam	holdout_ALL	specificity	0.966	0.951	0.978	0.022	0.013	0.032	0.0000	0.0000
+subunit	kofam	holdout_ALL	f1	0.927	0.893	0.948	0.034	0.023	0.053	0.0000	0.0000
+subunit	kofam	holdout_ALL	mcc	0.900	0.863	0.925	0.047	0.032	0.068	0.0000	0.0000
+subunit	metabolic	holdout_ALL	precision	0.910	0.856	0.944	0.056	0.031	0.093	0.0000	0.0000
+subunit	metabolic	holdout_ALL	recall	0.946	0.909	0.973	0.010	0.000	0.024	0.0860	0.0000
+subunit	metabolic	holdout_ALL	specificity	0.967	0.948	0.981	0.021	0.011	0.035	0.0000	0.0000
+subunit	metabolic	holdout_ALL	f1	0.928	0.892	0.950	0.033	0.021	0.054	0.0000	0.0000
+subunit	metabolic	holdout_ALL	mcc	0.902	0.860	0.929	0.046	0.030	0.069	0.0000	0.0000
+subunit	dram	holdout_ALL	precision	0.735	0.585	0.867	0.231	0.101	0.374	0.0002	0.0000
+subunit	dram	holdout_ALL	recall	0.222	0.168	0.305	0.734	0.647	0.790	0.0000	0.0000
+subunit	dram	holdout_ALL	specificity	0.971	0.952	0.987	0.017	0.001	0.035	0.0474	0.0000
+subunit	dram	holdout_ALL	f1	0.341	0.269	0.439	0.620	0.518	0.693	0.0000	0.0000
+subunit	dram	holdout_ALL	mcc	0.315	0.230	0.422	0.632	0.530	0.715	0.0000	0.0000
+subunit	mcycdb	holdout_ALL	precision	0.699	0.590	0.781	0.267	0.191	0.365	0.0000	0.0000
+subunit	mcycdb	holdout_ALL	recall	0.917	0.888	0.939	0.039	0.008	0.071	0.0190	0.0000
+subunit	mcycdb	holdout_ALL	specificity	0.859	0.832	0.884	0.129	0.104	0.155	0.0000	0.0000
+subunit	mcycdb	holdout_ALL	f1	0.793	0.712	0.848	0.168	0.119	0.237	0.0000	0.0000
+subunit	mcycdb	holdout_ALL	mcc	0.719	0.647	0.772	0.229	0.181	0.290	0.0000	0.0000
+subunit	mcycle	holdout_trap	precision	1.000	1.000	1.000					
+subunit	mcycle	holdout_trap	recall	1.000	1.000	1.000					
+subunit	mcycle	holdout_trap	specificity	1.000	1.000	1.000					
+subunit	mcycle	holdout_trap	f1	1.000	1.000	1.000					
+subunit	mcycle	holdout_trap	mcc	1.000	1.000	1.000					
+subunit	kofam	holdout_trap	precision	0.617	0.381	0.807	0.383	0.193	0.619	0.0000	0.0000
+subunit	kofam	holdout_trap	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	kofam	holdout_trap	specificity	0.857	0.789	0.922	0.143	0.078	0.213	0.0000	0.0000
+subunit	kofam	holdout_trap	f1	0.763	0.554	0.894	0.237	0.105	0.444	0.0000	0.0000
+subunit	kofam	holdout_trap	mcc	0.727	0.560	0.858	0.273	0.143	0.437	0.0000	0.0000
+subunit	metabolic	holdout_trap	precision	0.644	0.421	0.807	0.356	0.191	0.571	0.0000	0.0000
+subunit	metabolic	holdout_trap	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+subunit	metabolic	holdout_trap	specificity	0.873	0.808	0.930	0.127	0.071	0.195	0.0000	0.0000
+subunit	metabolic	holdout_trap	f1	0.784	0.600	0.893	0.216	0.107	0.400	0.0000	0.0000
+subunit	metabolic	holdout_trap	mcc	0.750	0.600	0.861	0.250	0.140	0.401	0.0000	0.0000
+subunit	dram	holdout_trap	precision	0.476	0.267	0.694	0.524	0.300	0.732	0.0000	0.0000
+subunit	dram	holdout_trap	recall	0.690	0.542	0.867	0.310	0.143	0.462	0.0082	0.0000
+subunit	dram	holdout_trap	specificity	0.825	0.739	0.906	0.175	0.096	0.262	0.0000	0.0000
+subunit	dram	holdout_trap	f1	0.563	0.377	0.698	0.437	0.304	0.619	0.0000	0.0000
+subunit	dram	holdout_trap	mcc	0.452	0.291	0.599	0.548	0.400	0.715	0.0000	0.0000
+subunit	mcycdb	holdout_trap	precision	0.587	0.343	0.780	0.413	0.221	0.659	0.0000	0.0000
+subunit	mcycdb	holdout_trap	recall	0.931	0.792	1.000	0.069	0.000	0.211	0.2484	0.0000
+subunit	mcycdb	holdout_trap	specificity	0.849	0.782	0.911	0.151	0.087	0.218	0.0000	0.0000
+subunit	mcycdb	holdout_trap	f1	0.720	0.500	0.857	0.280	0.143	0.509	0.0000	0.0000
+subunit	mcycdb	holdout_trap	mcc	0.666	0.466	0.805	0.334	0.192	0.535	0.0000	0.0000
+subunit	mcycle	covered:kofam	precision	0.976	0.965	0.985					
+subunit	mcycle	covered:kofam	recall	0.970	0.956	0.982					
+subunit	mcycle	covered:kofam	specificity	0.991	0.986	0.995					
+subunit	mcycle	covered:kofam	f1	0.973	0.963	0.981					
+subunit	mcycle	covered:kofam	mcc	0.963	0.950	0.974					
+subunit	kofam	covered:kofam	precision	0.936	0.910	0.955	0.040	0.024	0.061	0.0000	0.0000
+subunit	kofam	covered:kofam	recall	0.952	0.934	0.967	0.018	0.011	0.027	0.0000	0.0000
+subunit	kofam	covered:kofam	specificity	0.975	0.967	0.982	0.016	0.010	0.022	0.0000	0.0000
+subunit	kofam	covered:kofam	f1	0.944	0.927	0.957	0.029	0.021	0.041	0.0000	0.0000
+subunit	kofam	covered:kofam	mcc	0.922	0.903	0.938	0.041	0.030	0.054	0.0000	0.0000
+subunit	metabolic	covered:kofam	precision	0.937	0.909	0.956	0.039	0.024	0.061	0.0000	0.0000
+subunit	metabolic	covered:kofam	recall	0.952	0.935	0.967	0.018	0.010	0.027	0.0000	0.0000
+subunit	metabolic	covered:kofam	specificity	0.975	0.965	0.983	0.016	0.010	0.023	0.0000	0.0000
+subunit	metabolic	covered:kofam	f1	0.944	0.926	0.958	0.029	0.020	0.040	0.0000	0.0000
+subunit	metabolic	covered:kofam	mcc	0.923	0.900	0.940	0.040	0.029	0.054	0.0000	0.0000
+subunit	dram	covered:kofam	precision	0.813	0.709	0.904	0.163	0.075	0.262	0.0000	0.0000
+subunit	dram	covered:kofam	recall	0.224	0.185	0.276	0.746	0.695	0.787	0.0000	0.0000
+subunit	dram	covered:kofam	specificity	0.980	0.968	0.990	0.011	0.000	0.022	0.0554	0.0000
+subunit	dram	covered:kofam	f1	0.352	0.299	0.415	0.621	0.559	0.673	0.0000	0.0000
+subunit	dram	covered:kofam	mcc	0.344	0.287	0.404	0.619	0.559	0.674	0.0000	0.0000
+subunit	mcycdb	covered:kofam	precision	0.719	0.650	0.776	0.257	0.204	0.324	0.0000	0.0000
+subunit	mcycdb	covered:kofam	recall	0.904	0.885	0.921	0.066	0.044	0.089	0.0000	0.0000
+subunit	mcycdb	covered:kofam	specificity	0.863	0.847	0.878	0.128	0.113	0.143	0.0000	0.0000
+subunit	mcycdb	covered:kofam	f1	0.801	0.753	0.838	0.172	0.138	0.216	0.0000	0.0000
+subunit	mcycdb	covered:kofam	mcc	0.721	0.678	0.756	0.242	0.208	0.282	0.0000	0.0000
+subunit	mcycle	covered:metabolic	precision	0.976	0.965	0.985					
+subunit	mcycle	covered:metabolic	recall	0.970	0.956	0.982					
+subunit	mcycle	covered:metabolic	specificity	0.991	0.986	0.995					
+subunit	mcycle	covered:metabolic	f1	0.973	0.963	0.981					
+subunit	mcycle	covered:metabolic	mcc	0.963	0.950	0.974					
+subunit	kofam	covered:metabolic	precision	0.936	0.911	0.956	0.040	0.024	0.062	0.0000	0.0000
+subunit	kofam	covered:metabolic	recall	0.952	0.934	0.968	0.018	0.010	0.027	0.0000	0.0000
+subunit	kofam	covered:metabolic	specificity	0.975	0.967	0.982	0.016	0.010	0.022	0.0000	0.0000
+subunit	kofam	covered:metabolic	f1	0.944	0.926	0.957	0.029	0.021	0.040	0.0000	0.0000
+subunit	kofam	covered:metabolic	mcc	0.922	0.903	0.938	0.041	0.030	0.054	0.0000	0.0000
+subunit	metabolic	covered:metabolic	precision	0.937	0.910	0.956	0.039	0.023	0.060	0.0000	0.0000
+subunit	metabolic	covered:metabolic	recall	0.952	0.934	0.967	0.018	0.010	0.027	0.0000	0.0000
+subunit	metabolic	covered:metabolic	specificity	0.975	0.965	0.983	0.016	0.010	0.023	0.0000	0.0000
+subunit	metabolic	covered:metabolic	f1	0.944	0.926	0.958	0.029	0.020	0.040	0.0000	0.0000
+subunit	metabolic	covered:metabolic	mcc	0.923	0.900	0.940	0.040	0.029	0.054	0.0000	0.0000
+subunit	dram	covered:metabolic	precision	0.813	0.713	0.905	0.163	0.075	0.258	0.0000	0.0000
+subunit	dram	covered:metabolic	recall	0.224	0.185	0.276	0.746	0.694	0.785	0.0000	0.0000
+subunit	dram	covered:metabolic	specificity	0.980	0.968	0.990	0.011	0.000	0.022	0.0538	0.0000
+subunit	dram	covered:metabolic	f1	0.352	0.300	0.412	0.621	0.561	0.673	0.0000	0.0000
+subunit	dram	covered:metabolic	mcc	0.344	0.288	0.405	0.619	0.559	0.674	0.0000	0.0000
+subunit	mcycdb	covered:metabolic	precision	0.719	0.650	0.775	0.257	0.204	0.322	0.0000	0.0000
+subunit	mcycdb	covered:metabolic	recall	0.904	0.885	0.921	0.066	0.044	0.089	0.0000	0.0000
+subunit	mcycdb	covered:metabolic	specificity	0.863	0.847	0.879	0.128	0.113	0.143	0.0000	0.0000
+subunit	mcycdb	covered:metabolic	f1	0.801	0.753	0.839	0.172	0.138	0.215	0.0000	0.0000
+subunit	mcycdb	covered:metabolic	mcc	0.721	0.677	0.756	0.242	0.208	0.282	0.0000	0.0000
+subunit	mcycle	covered:dram	precision	0.986	0.963	1.000					
+subunit	mcycle	covered:dram	recall	0.976	0.955	0.995					
+subunit	mcycle	covered:dram	specificity	0.995	0.986	1.000					
+subunit	mcycle	covered:dram	f1	0.981	0.967	0.993					
+subunit	mcycle	covered:dram	mcc	0.974	0.955	0.990					
+subunit	kofam	covered:dram	precision	0.874	0.802	0.935	0.112	0.053	0.183	0.0000	0.0000
+subunit	kofam	covered:dram	recall	0.957	0.930	0.982	0.019	0.005	0.036	0.0314	0.0000
+subunit	kofam	covered:dram	specificity	0.950	0.924	0.974	0.045	0.021	0.070	0.0000	0.0000
+subunit	kofam	covered:dram	f1	0.914	0.870	0.949	0.067	0.035	0.109	0.0000	0.0000
+subunit	kofam	covered:dram	mcc	0.882	0.830	0.929	0.092	0.049	0.140	0.0000	0.0000
+subunit	metabolic	covered:dram	precision	0.893	0.825	0.951	0.092	0.037	0.164	0.0000	0.0000
+subunit	metabolic	covered:dram	recall	0.957	0.934	0.979	0.019	0.005	0.036	0.0322	0.0000
+subunit	metabolic	covered:dram	specificity	0.958	0.928	0.982	0.036	0.014	0.065	0.0004	0.0000
+subunit	metabolic	covered:dram	f1	0.924	0.883	0.957	0.057	0.027	0.095	0.0000	0.0000
+subunit	metabolic	covered:dram	mcc	0.896	0.846	0.939	0.078	0.037	0.127	0.0000	0.0000
+subunit	dram	covered:dram	precision	0.813	0.712	0.905	0.172	0.081	0.278	0.0000	0.0000
+subunit	dram	covered:dram	recall	0.933	0.899	0.963	0.043	0.019	0.070	0.0004	0.0000
+subunit	dram	covered:dram	specificity	0.922	0.876	0.961	0.073	0.034	0.120	0.0000	0.0000
+subunit	dram	covered:dram	f1	0.869	0.801	0.926	0.112	0.057	0.179	0.0000	0.0000
+subunit	dram	covered:dram	mcc	0.821	0.737	0.892	0.153	0.079	0.239	0.0000	0.0000
+subunit	mcycdb	covered:dram	precision	0.730	0.646	0.803	0.255	0.182	0.342	0.0000	0.0000
+subunit	mcycdb	covered:dram	recall	0.876	0.846	0.904	0.100	0.067	0.135	0.0000	0.0000
+subunit	mcycdb	covered:dram	specificity	0.882	0.847	0.911	0.112	0.083	0.147	0.0000	0.0000
+subunit	mcycdb	covered:dram	f1	0.797	0.739	0.843	0.184	0.138	0.241	0.0000	0.0000
+subunit	mcycdb	covered:dram	mcc	0.719	0.657	0.773	0.255	0.200	0.321	0.0000	0.0000
+subunit	mcycle	covered:mcycdb	precision	0.977	0.965	0.987					
+subunit	mcycle	covered:mcycdb	recall	0.971	0.956	0.983					
+subunit	mcycle	covered:mcycdb	specificity	0.991	0.987	0.995					
+subunit	mcycle	covered:mcycdb	f1	0.974	0.964	0.982					
+subunit	mcycle	covered:mcycdb	mcc	0.964	0.951	0.975					
+subunit	kofam	covered:mcycdb	precision	0.934	0.907	0.955	0.042	0.026	0.065	0.0000	0.0000
+subunit	kofam	covered:mcycdb	recall	0.953	0.934	0.969	0.018	0.010	0.027	0.0000	0.0000
+subunit	kofam	covered:mcycdb	specificity	0.975	0.967	0.982	0.016	0.010	0.023	0.0000	0.0000
+subunit	kofam	covered:mcycdb	f1	0.943	0.926	0.957	0.030	0.021	0.043	0.0000	0.0000
+subunit	kofam	covered:mcycdb	mcc	0.922	0.902	0.939	0.042	0.031	0.057	0.0000	0.0000
+subunit	metabolic	covered:mcycdb	precision	0.935	0.908	0.956	0.041	0.025	0.064	0.0000	0.0000
+subunit	metabolic	covered:mcycdb	recall	0.953	0.934	0.968	0.018	0.010	0.027	0.0000	0.0000
+subunit	metabolic	covered:mcycdb	specificity	0.975	0.965	0.984	0.016	0.010	0.024	0.0000	0.0000
+subunit	metabolic	covered:mcycdb	f1	0.944	0.925	0.958	0.030	0.021	0.042	0.0000	0.0000
+subunit	metabolic	covered:mcycdb	mcc	0.923	0.900	0.940	0.041	0.030	0.056	0.0000	0.0000
+subunit	dram	covered:mcycdb	precision	0.792	0.682	0.891	0.185	0.086	0.292	0.0000	0.0000
+subunit	dram	covered:mcycdb	recall	0.208	0.167	0.262	0.763	0.708	0.804	0.0000	0.0000
+subunit	dram	covered:mcycdb	specificity	0.979	0.967	0.990	0.012	0.001	0.024	0.0334	0.0000
+subunit	dram	covered:mcycdb	f1	0.329	0.273	0.397	0.644	0.578	0.700	0.0000	0.0000
+subunit	dram	covered:mcycdb	mcc	0.324	0.264	0.389	0.640	0.576	0.701	0.0000	0.0000
+subunit	mcycdb	covered:mcycdb	precision	0.719	0.651	0.775	0.258	0.204	0.323	0.0000	0.0000
+subunit	mcycdb	covered:mcycdb	recall	0.961	0.946	0.975	0.010	-0.009	0.030	0.3470	0.0000
+subunit	mcycdb	covered:mcycdb	specificity	0.859	0.842	0.874	0.133	0.117	0.148	0.0000	0.0000
+subunit	mcycdb	covered:mcycdb	f1	0.822	0.773	0.860	0.151	0.116	0.197	0.0000	0.0000
+subunit	mcycdb	covered:mcycdb	mcc	0.759	0.713	0.795	0.205	0.170	0.246	0.0000	0.0000
+step	mcycle	ALL	precision	0.987	0.966	1.000					
+step	mcycle	ALL	recall	1.000	1.000	1.000					
+step	mcycle	ALL	specificity	0.995	0.987	1.000					
+step	mcycle	ALL	f1	0.994	0.983	1.000					
+step	mcycle	ALL	mcc	0.991	0.977	1.000					
+step	kofam	ALL	precision	0.875	0.836	0.910	0.112	0.078	0.149	0.0000	0.0000
+step	kofam	ALL	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	kofam	ALL	specificity	0.945	0.927	0.962	0.050	0.033	0.068	0.0000	0.0000
+step	kofam	ALL	f1	0.933	0.911	0.953	0.060	0.042	0.082	0.0000	0.0000
+step	kofam	ALL	mcc	0.909	0.884	0.934	0.082	0.057	0.107	0.0000	0.0000
+step	metabolic	ALL	precision	0.856	0.800	0.900	0.132	0.091	0.180	0.0000	0.0000
+step	metabolic	ALL	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	metabolic	ALL	specificity	0.935	0.909	0.957	0.060	0.039	0.085	0.0000	0.0000
+step	metabolic	ALL	f1	0.922	0.890	0.947	0.071	0.048	0.101	0.0000	0.0000
+step	metabolic	ALL	mcc	0.894	0.856	0.927	0.097	0.066	0.132	0.0000	0.0000
+step	dram	ALL	precision	0.702	0.617	0.779	0.285	0.208	0.367	0.0000	0.0000
+step	dram	ALL	recall	0.429	0.386	0.478	0.571	0.523	0.614	0.0000	0.0000
+step	dram	ALL	specificity	0.930	0.904	0.951	0.065	0.043	0.091	0.0000	0.0000
+step	dram	ALL	f1	0.532	0.486	0.579	0.461	0.414	0.508	0.0000	0.0000
+step	dram	ALL	mcc	0.428	0.370	0.486	0.563	0.505	0.622	0.0000	0.0000
+step	mcycdb	ALL	precision	0.636	0.558	0.706	0.351	0.286	0.420	0.0000	0.0000
+step	mcycdb	ALL	recall	0.818	0.786	0.849	0.182	0.151	0.215	0.0000	0.0000
+step	mcycdb	ALL	specificity	0.820	0.782	0.855	0.175	0.142	0.211	0.0000	0.0000
+step	mcycdb	ALL	f1	0.716	0.661	0.761	0.278	0.236	0.329	0.0000	0.0000
+step	mcycdb	ALL	mcc	0.597	0.542	0.648	0.394	0.347	0.444	0.0000	0.0000
+step	mcycle	acetoclastic	precision	1.000	1.000	1.000					
+step	mcycle	acetoclastic	recall	1.000	1.000	1.000					
+step	mcycle	acetoclastic	specificity	1.000	1.000	1.000					
+step	mcycle	acetoclastic	f1	1.000	1.000	1.000					
+step	mcycle	acetoclastic	mcc	1.000	1.000	1.000					
+step	kofam	acetoclastic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	acetoclastic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	acetoclastic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	acetoclastic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	acetoclastic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	acetoclastic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	acetoclastic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	acetoclastic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	acetoclastic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	acetoclastic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	acetoclastic	precision	NA	NA	NA	NA	NA	NA	nan	0.0020
+step	dram	acetoclastic	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0020
+step	dram	acetoclastic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0020
+step	dram	acetoclastic	f1	NA	NA	NA	NA	NA	NA	nan	0.0020
+step	dram	acetoclastic	mcc	NA	NA	NA	NA	NA	NA	nan	0.0020
+step	mcycdb	acetoclastic	precision	0.833	0.600	1.000	0.167	0.000	0.400	0.2558	0.5000
+step	mcycdb	acetoclastic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.5000
+step	mcycdb	acetoclastic	specificity	0.926	0.815	1.000	0.074	0.000	0.185	0.2632	0.5000
+step	mcycdb	acetoclastic	f1	0.909	0.737	1.000	0.091	0.000	0.263	0.2574	0.5000
+step	mcycdb	acetoclastic	mcc	0.878	0.714	1.000	0.122	0.000	0.294	0.2516	0.5000
+step	mcycle	co2_to_methyl	precision	1.000	1.000	1.000					
+step	mcycle	co2_to_methyl	recall	1.000	1.000	1.000					
+step	mcycle	co2_to_methyl	specificity	1.000	1.000	1.000					
+step	mcycle	co2_to_methyl	f1	1.000	1.000	1.000					
+step	mcycle	co2_to_methyl	mcc	1.000	1.000	1.000					
+step	kofam	co2_to_methyl	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	co2_to_methyl	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	co2_to_methyl	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	co2_to_methyl	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	co2_to_methyl	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	co2_to_methyl	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	co2_to_methyl	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	co2_to_methyl	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	co2_to_methyl	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	co2_to_methyl	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	co2_to_methyl	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	co2_to_methyl	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	co2_to_methyl	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	co2_to_methyl	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	co2_to_methyl	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	co2_to_methyl	precision	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	mcycdb	co2_to_methyl	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0000
+step	mcycdb	co2_to_methyl	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	mcycdb	co2_to_methyl	f1	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	mcycdb	co2_to_methyl	mcc	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	mcycle	formaldehyde_h4mpt	precision	1.000	1.000	1.000					
+step	mcycle	formaldehyde_h4mpt	recall	1.000	1.000	1.000					
+step	mcycle	formaldehyde_h4mpt	specificity	1.000	1.000	1.000					
+step	mcycle	formaldehyde_h4mpt	f1	1.000	1.000	1.000					
+step	mcycle	formaldehyde_h4mpt	mcc	1.000	1.000	1.000					
+step	kofam	formaldehyde_h4mpt	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	formaldehyde_h4mpt	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	formaldehyde_h4mpt	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	formaldehyde_h4mpt	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	formaldehyde_h4mpt	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	formaldehyde_h4mpt	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	formaldehyde_h4mpt	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	formaldehyde_h4mpt	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	formaldehyde_h4mpt	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	formaldehyde_h4mpt	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	formaldehyde_h4mpt	precision	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	dram	formaldehyde_h4mpt	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0078
+step	dram	formaldehyde_h4mpt	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0078
+step	dram	formaldehyde_h4mpt	f1	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	dram	formaldehyde_h4mpt	mcc	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	mcycdb	formaldehyde_h4mpt	precision	0.667	0.375	0.917	0.333	0.083	0.625	0.0230	0.1250
+step	mcycdb	formaldehyde_h4mpt	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.1250
+step	mcycdb	formaldehyde_h4mpt	specificity	0.862	0.724	0.968	0.138	0.032	0.276	0.0276	0.1250
+step	mcycdb	formaldehyde_h4mpt	f1	0.800	0.545	0.957	0.200	0.043	0.455	0.0294	0.1250
+step	mcycdb	formaldehyde_h4mpt	mcc	0.758	0.537	0.939	0.242	0.061	0.465	0.0256	0.1250
+step	mcycle	heterodisulfide	precision	0.895	0.737	1.000					
+step	mcycle	heterodisulfide	recall	1.000	1.000	1.000					
+step	mcycle	heterodisulfide	specificity	0.905	0.762	1.000					
+step	mcycle	heterodisulfide	f1	0.944	0.848	1.000					
+step	mcycle	heterodisulfide	mcc	0.900	0.760	1.000					
+step	kofam	heterodisulfide	precision	0.895	0.737	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	heterodisulfide	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	heterodisulfide	specificity	0.905	0.762	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	heterodisulfide	f1	0.944	0.848	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	heterodisulfide	mcc	0.900	0.760	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	heterodisulfide	precision	0.895	0.737	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	heterodisulfide	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	heterodisulfide	specificity	0.905	0.760	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	heterodisulfide	f1	0.944	0.848	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	heterodisulfide	mcc	0.900	0.764	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	heterodisulfide	precision	NA	NA	NA	NA	NA	NA	nan	0.0007
+step	dram	heterodisulfide	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0007
+step	dram	heterodisulfide	specificity	1.000	1.000	1.000	-0.095	-0.240	0.000	0.2540	0.0007
+step	dram	heterodisulfide	f1	NA	NA	NA	NA	NA	NA	nan	0.0007
+step	dram	heterodisulfide	mcc	NA	NA	NA	NA	NA	NA	nan	0.0007
+step	mcycdb	heterodisulfide	precision	0.607	0.423	0.786	0.288	0.137	0.464	0.0000	0.0039
+step	mcycdb	heterodisulfide	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0039
+step	mcycdb	heterodisulfide	specificity	0.476	0.261	0.696	0.429	0.217	0.643	0.0000	0.0039
+step	mcycdb	heterodisulfide	f1	0.756	0.588	0.880	0.189	0.082	0.324	0.0002	0.0039
+step	mcycdb	heterodisulfide	mcc	0.538	0.363	0.721	0.362	0.187	0.549	0.0000	0.0039
+step	mcycle	mcr	precision	1.000	1.000	1.000					
+step	mcycle	mcr	recall	1.000	1.000	1.000					
+step	mcycle	mcr	specificity	1.000	1.000	1.000					
+step	mcycle	mcr	f1	1.000	1.000	1.000					
+step	mcycle	mcr	mcc	1.000	1.000	1.000					
+step	kofam	mcr	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mcr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mcr	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mcr	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mcr	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mcr	precision	0.895	0.733	1.000	0.105	0.000	0.263	0.2620	0.5000
+step	metabolic	mcr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.5000
+step	metabolic	mcr	specificity	0.926	0.815	1.000	0.074	0.000	0.185	0.2584	0.5000
+step	metabolic	mcr	f1	0.944	0.848	1.000	0.056	0.000	0.152	0.2390	0.5000
+step	metabolic	mcr	mcc	0.910	0.784	1.000	0.090	0.000	0.216	0.2628	0.5000
+step	dram	mcr	precision	0.895	0.737	1.000	0.105	0.000	0.263	0.2612	0.5000
+step	dram	mcr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.5000
+step	dram	mcr	specificity	0.926	0.815	1.000	0.074	0.000	0.188	0.2780	0.5000
+step	dram	mcr	f1	0.944	0.848	1.000	0.056	0.000	0.152	0.2574	0.5000
+step	dram	mcr	mcc	0.910	0.784	1.000	0.090	0.000	0.217	0.2498	0.5000
+step	mcycdb	mcr	precision	0.889	0.720	1.000	0.111	0.000	0.278	0.2620	0.2500
+step	mcycdb	mcr	recall	0.941	0.800	1.000	0.059	0.000	0.200	0.7318	0.2500
+step	mcycdb	mcr	specificity	0.926	0.810	1.000	0.074	0.000	0.190	0.2636	0.2500
+step	mcycdb	mcr	f1	0.914	0.800	1.000	0.086	0.000	0.211	0.0916	0.2500
+step	mcycdb	mcr	mcc	0.859	0.686	1.000	0.141	0.000	0.317	0.0872	0.2500
+step	mcycle	methanol_oxidation	precision	1.000	1.000	1.000					
+step	mcycle	methanol_oxidation	recall	1.000	1.000	1.000					
+step	mcycle	methanol_oxidation	specificity	1.000	1.000	1.000					
+step	mcycle	methanol_oxidation	f1	1.000	1.000	1.000					
+step	mcycle	methanol_oxidation	mcc	1.000	1.000	1.000					
+step	kofam	methanol_oxidation	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methanol_oxidation	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methanol_oxidation	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methanol_oxidation	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methanol_oxidation	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methanol_oxidation	precision	0.857	0.643	1.000	0.143	0.000	0.357	0.2532	0.5000
+step	metabolic	methanol_oxidation	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.5000
+step	metabolic	methanol_oxidation	specificity	0.926	0.815	1.000	0.074	0.000	0.185	0.2486	0.5000
+step	metabolic	methanol_oxidation	f1	0.923	0.783	1.000	0.077	0.000	0.217	0.2568	0.5000
+step	metabolic	methanol_oxidation	mcc	0.891	0.743	1.000	0.109	0.000	0.268	0.2606	0.5000
+step	dram	methanol_oxidation	precision	NA	NA	NA	NA	NA	NA	nan	0.0005
+step	dram	methanol_oxidation	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0005
+step	dram	methanol_oxidation	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0005
+step	dram	methanol_oxidation	f1	NA	NA	NA	NA	NA	NA	nan	0.0005
+step	dram	methanol_oxidation	mcc	NA	NA	NA	NA	NA	NA	nan	0.0005
+step	mcycdb	methanol_oxidation	precision	0.571	0.353	0.778	0.429	0.222	0.650	0.0002	0.0039
+step	mcycdb	methanol_oxidation	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0039
+step	mcycdb	methanol_oxidation	specificity	0.667	0.480	0.839	0.333	0.167	0.517	0.0000	0.0039
+step	mcycdb	methanol_oxidation	f1	0.727	0.519	0.875	0.273	0.125	0.481	0.0000	0.0039
+step	mcycdb	methanol_oxidation	mcc	0.617	0.439	0.804	0.383	0.196	0.564	0.0000	0.0039
+step	mcycle	methylotrophic	precision	1.000	1.000	1.000					
+step	mcycle	methylotrophic	recall	1.000	1.000	1.000					
+step	mcycle	methylotrophic	specificity	1.000	1.000	1.000					
+step	mcycle	methylotrophic	f1	1.000	1.000	1.000					
+step	mcycle	methylotrophic	mcc	1.000	1.000	1.000					
+step	kofam	methylotrophic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methylotrophic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methylotrophic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methylotrophic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	methylotrophic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methylotrophic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methylotrophic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methylotrophic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methylotrophic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	methylotrophic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	methylotrophic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	methylotrophic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	methylotrophic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	methylotrophic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	methylotrophic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	methylotrophic	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	methylotrophic	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	methylotrophic	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	methylotrophic	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	methylotrophic	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycle	mtr	precision	1.000	1.000	1.000					
+step	mcycle	mtr	recall	1.000	1.000	1.000					
+step	mcycle	mtr	specificity	1.000	1.000	1.000					
+step	mcycle	mtr	f1	1.000	1.000	1.000					
+step	mcycle	mtr	mcc	1.000	1.000	1.000					
+step	kofam	mtr	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mtr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mtr	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mtr	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	mtr	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mtr	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mtr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mtr	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mtr	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	mtr	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	mtr	precision	NA	NA	NA	NA	NA	NA	nan	0.0001
+step	dram	mtr	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0001
+step	dram	mtr	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0001
+step	dram	mtr	f1	NA	NA	NA	NA	NA	NA	nan	0.0001
+step	dram	mtr	mcc	NA	NA	NA	NA	NA	NA	nan	0.0001
+step	mcycdb	mtr	precision	0.933	0.778	1.000	0.067	0.000	0.222	0.7294	1.0000
+step	mcycdb	mtr	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	mtr	specificity	0.963	0.880	1.000	0.037	0.000	0.125	0.7120	1.0000
+step	mcycdb	mtr	f1	0.966	0.880	1.000	0.034	0.000	0.125	0.7244	1.0000
+step	mcycdb	mtr	mcc	0.948	0.834	1.000	0.052	0.000	0.166	0.7198	1.0000
+step	mcycle	nod	precision	1.000	1.000	1.000					
+step	mcycle	nod	recall	1.000	1.000	1.000					
+step	mcycle	nod	specificity	1.000	1.000	1.000					
+step	mcycle	nod	f1	1.000	1.000	1.000					
+step	mcycle	nod	mcc	1.000	1.000	1.000					
+step	kofam	nod	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	nod	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	nod	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	nod	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	nod	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	nod	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	nod	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	nod	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	nod	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	nod	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	nod	precision	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	dram	nod	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	1.0000
+step	dram	nod	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	nod	f1	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	dram	nod	mcc	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	mcycdb	nod	precision	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	mcycdb	nod	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	1.0000
+step	mcycdb	nod	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	nod	f1	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	mcycdb	nod	mcc	NA	NA	NA	NA	NA	NA	nan	1.0000
+step	mcycle	pmmo	precision	1.000	1.000	1.000					
+step	mcycle	pmmo	recall	1.000	1.000	1.000					
+step	mcycle	pmmo	specificity	1.000	1.000	1.000					
+step	mcycle	pmmo	f1	1.000	1.000	1.000					
+step	mcycle	pmmo	mcc	1.000	1.000	1.000					
+step	kofam	pmmo	precision	0.571	0.300	0.833	0.429	0.167	0.700	0.0024	0.0312
+step	kofam	pmmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0312
+step	kofam	pmmo	specificity	0.812	0.667	0.938	0.188	0.062	0.333	0.0024	0.0312
+step	kofam	pmmo	f1	0.727	0.462	0.909	0.273	0.091	0.545	0.0032	0.0312
+step	kofam	pmmo	mcc	0.681	0.463	0.882	0.319	0.125	0.537	0.0028	0.0312
+step	metabolic	pmmo	precision	0.667	0.375	0.923	0.333	0.077	0.625	0.0330	0.1250
+step	metabolic	pmmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.1250
+step	metabolic	pmmo	specificity	0.875	0.750	0.971	0.125	0.029	0.257	0.0246	0.1250
+step	metabolic	pmmo	f1	0.800	0.545	0.960	0.200	0.043	0.455	0.0284	0.1250
+step	metabolic	pmmo	mcc	0.764	0.545	0.941	0.236	0.057	0.455	0.0316	0.1250
+step	dram	pmmo	precision	0.500	0.250	0.750	0.500	0.250	0.750	0.0004	0.0078
+step	dram	pmmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0078
+step	dram	pmmo	specificity	0.750	0.594	0.889	0.250	0.107	0.412	0.0000	0.0078
+step	dram	pmmo	f1	0.667	0.400	0.857	0.333	0.143	0.600	0.0002	0.0078
+step	dram	pmmo	mcc	0.612	0.408	0.811	0.388	0.188	0.592	0.0004	0.0078
+step	mcycdb	pmmo	precision	0.727	0.429	1.000	0.273	0.000	0.571	0.0868	0.2500
+step	mcycdb	pmmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.2500
+step	mcycdb	pmmo	specificity	0.906	0.793	1.000	0.094	0.000	0.206	0.0834	0.2500
+step	mcycdb	pmmo	f1	0.842	0.600	1.000	0.158	0.000	0.400	0.0944	0.2500
+step	mcycdb	pmmo	mcc	0.812	0.596	1.000	0.188	0.000	0.395	0.0896	0.2500
+step	mcycle	reverse_methanogenesis	precision	1.000	1.000	1.000					
+step	mcycle	reverse_methanogenesis	recall	1.000	1.000	1.000					
+step	mcycle	reverse_methanogenesis	specificity	1.000	1.000	1.000					
+step	mcycle	reverse_methanogenesis	f1	1.000	1.000	1.000					
+step	mcycle	reverse_methanogenesis	mcc	1.000	1.000	1.000					
+step	kofam	reverse_methanogenesis	precision	0.176	0.000	0.381	0.824	0.615	0.947	0.0000	0.0001
+step	kofam	reverse_methanogenesis	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0001
+step	kofam	reverse_methanogenesis	specificity	0.696	0.556	0.826	0.304	0.178	0.444	0.0000	0.0001
+step	kofam	reverse_methanogenesis	f1	0.300	0.100	0.552	0.700	0.455	0.900	0.0000	0.0001
+step	kofam	reverse_methanogenesis	mcc	0.350	0.181	0.536	0.650	0.464	0.819	0.0000	0.0001
+step	metabolic	reverse_methanogenesis	precision	0.158	0.000	0.333	0.842	0.667	0.952	0.0000	0.0000
+step	metabolic	reverse_methanogenesis	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	metabolic	reverse_methanogenesis	specificity	0.652	0.511	0.787	0.348	0.213	0.489	0.0000	0.0000
+step	metabolic	reverse_methanogenesis	f1	0.273	0.091	0.514	0.727	0.500	0.909	0.0000	0.0000
+step	metabolic	reverse_methanogenesis	mcc	0.321	0.167	0.496	0.679	0.504	0.833	0.0000	0.0000
+step	dram	reverse_methanogenesis	precision	0.158	0.000	0.350	0.842	0.667	0.952	0.0000	0.0000
+step	dram	reverse_methanogenesis	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	dram	reverse_methanogenesis	specificity	0.652	0.511	0.786	0.348	0.217	0.489	0.0000	0.0000
+step	dram	reverse_methanogenesis	f1	0.273	0.091	0.519	0.727	0.500	0.909	0.0000	0.0000
+step	dram	reverse_methanogenesis	mcc	0.321	0.167	0.492	0.679	0.492	0.833	0.0000	0.0000
+step	mcycdb	reverse_methanogenesis	precision	0.167	0.000	0.357	0.833	0.632	0.950	0.0000	0.0001
+step	mcycdb	reverse_methanogenesis	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0001
+step	mcycdb	reverse_methanogenesis	specificity	0.674	0.533	0.804	0.326	0.191	0.467	0.0000	0.0001
+step	mcycdb	reverse_methanogenesis	f1	0.286	0.095	0.538	0.714	0.467	0.905	0.0000	0.0001
+step	mcycdb	reverse_methanogenesis	mcc	0.335	0.174	0.524	0.665	0.488	0.826	0.0000	0.0001
+step	mcycle	rump	precision	1.000	1.000	1.000					
+step	mcycle	rump	recall	1.000	1.000	1.000					
+step	mcycle	rump	specificity	1.000	1.000	1.000					
+step	mcycle	rump	f1	1.000	1.000	1.000					
+step	mcycle	rump	mcc	1.000	1.000	1.000					
+step	kofam	rump	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	rump	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	rump	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	rump	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	rump	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	rump	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	rump	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	rump	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	rump	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	rump	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	rump	precision	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	dram	rump	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0000
+step	dram	rump	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	dram	rump	f1	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	dram	rump	mcc	NA	NA	NA	NA	NA	NA	nan	0.0000
+step	mcycdb	rump	precision	0.773	0.579	0.944	0.227	0.053	0.412	0.0120	0.0312
+step	mcycdb	rump	recall	0.944	0.818	1.000	0.056	0.000	0.188	0.7308	0.0312
+step	mcycdb	rump	specificity	0.750	0.550	0.938	0.250	0.062	0.462	0.0116	0.0312
+step	mcycdb	rump	f1	0.850	0.710	0.952	0.150	0.048	0.294	0.0032	0.0312
+step	mcycdb	rump	mcc	0.702	0.474	0.899	0.298	0.101	0.530	0.0030	0.0312
+step	mcycle	serine_cycle	precision	1.000	1.000	1.000					
+step	mcycle	serine_cycle	recall	1.000	1.000	1.000					
+step	mcycle	serine_cycle	specificity	1.000	1.000	1.000					
+step	mcycle	serine_cycle	f1	1.000	1.000	1.000					
+step	mcycle	serine_cycle	mcc	1.000	1.000	1.000					
+step	kofam	serine_cycle	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	serine_cycle	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	serine_cycle	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	serine_cycle	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	serine_cycle	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	serine_cycle	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	serine_cycle	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	serine_cycle	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	serine_cycle	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	serine_cycle	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	serine_cycle	precision	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	dram	serine_cycle	recall	0.000	0.000	0.000	1.000	1.000	1.000	0.0000	0.0078
+step	dram	serine_cycle	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0078
+step	dram	serine_cycle	f1	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	dram	serine_cycle	mcc	NA	NA	NA	NA	NA	NA	nan	0.0078
+step	mcycdb	serine_cycle	precision	0.296	0.130	0.480	0.704	0.520	0.870	0.0000	0.0000
+step	mcycdb	serine_cycle	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.0000
+step	mcycdb	serine_cycle	specificity	0.345	0.179	0.520	0.655	0.481	0.821	0.0000	0.0000
+step	mcycdb	serine_cycle	f1	0.457	0.231	0.649	0.543	0.351	0.769	0.0000	0.0000
+step	mcycdb	serine_cycle	mcc	0.320	0.183	0.479	0.680	0.525	0.817	0.0000	0.0000
+step	mcycle	smmo	precision	1.000	1.000	1.000					
+step	mcycle	smmo	recall	1.000	1.000	1.000					
+step	mcycle	smmo	specificity	1.000	1.000	1.000					
+step	mcycle	smmo	f1	1.000	1.000	1.000					
+step	mcycle	smmo	mcc	1.000	1.000	1.000					
+step	kofam	smmo	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	smmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	smmo	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	smmo	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	kofam	smmo	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	smmo	precision	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	smmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	smmo	specificity	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	smmo	f1	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	metabolic	smmo	mcc	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	dram	smmo	precision	0.714	0.333	1.000	0.286	0.000	0.667	0.2588	0.5000
+step	dram	smmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	0.5000
+step	dram	smmo	specificity	0.941	0.853	1.000	0.059	0.000	0.147	0.2526	0.5000
+step	dram	smmo	f1	0.833	0.500	1.000	0.167	0.000	0.500	0.2564	0.5000
+step	dram	smmo	mcc	0.820	0.545	1.000	0.180	0.000	0.455	0.2492	0.5000
+step	mcycdb	smmo	precision	0.833	0.500	1.000	0.167	0.000	0.500	0.7433	1.0000
+step	mcycdb	smmo	recall	1.000	1.000	1.000	0.000	0.000	0.000	1.0000	1.0000
+step	mcycdb	smmo	specificity	0.971	0.906	1.000	0.029	0.000	0.094	0.7434	1.0000
+step	mcycdb	smmo	f1	0.909	0.667	1.000	0.091	0.000	0.333	0.7259	1.0000
+step	mcycdb	smmo	mcc	0.899	0.677	1.000	0.101	0.000	0.323	0.7390	1.0000

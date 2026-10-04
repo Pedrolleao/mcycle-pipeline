@@ -325,7 +325,7 @@ def main():
     # ── secondary (post-hoc) BH over the TN-inclusive MCC contrasts ──
     if secondary_p:
         q2 = bh(secondary_p)
-        print(f"\n{'='*70}\nSECONDARY FAMILY — MCC, BH-FDR corrected (post-hoc; subunit res.)\n{'='*70}")
+        print(f"\n{'='*70}\nEXPLORATORY FAMILY — MCC, BH-FDR corrected separately (subunit res.)\n{'='*70}")
         print(f"  {'comparator':<11}{'metric':<22}{'Δ(ours−cmp)':>12}{'95% CI':>18}{'bootP':>9}{'BH q':>8}  verdict")
         for (t, which, mname, d, dlo, dhi, bp), qi in zip(secondary_key, q2):
             sig = (qi < 0.05 and dlo > 0)
