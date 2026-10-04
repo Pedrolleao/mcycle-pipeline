@@ -51,13 +51,26 @@ build:
 
 
 
+
 samples:
+  ANME1_G37:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/ANME1_G37.fna
+    kind: nucleotide
+    prodigal_mode: single
   ANME1_G60:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/ANME1_G60.fna
     kind: nucleotide
     prodigal_mode: single
   Afulgidus_DSM4304:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Afulgidus_DSM4304.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Awoodii_DSM1030:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Awoodii_DSM1030.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Dautotrophicum_HRM2:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Dautotrophicum_HRM2.fna
     kind: nucleotide
     prodigal_mode: single
   Dvulgaris_Hildenborough:
@@ -72,12 +85,56 @@ samples:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Ethanoperedens_E50.fna
     kind: nucleotide
     prodigal_mode: single
+  Fplacidus_DSM10642:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Fplacidus_DSM10642.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Goxydans_621H:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Goxydans_621H.fna
+    kind: nucleotide
+    prodigal_mode: single
   Macetivorans_C2A:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Macetivorans_C2A.fna
     kind: nucleotide
     prodigal_mode: single
+  Malbum_BG8:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Malbum_BG8.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Malvi_Mx1201:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Malvi_Mx1201.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mbflagellatus_KT:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mbflagellatus_KT.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mbsmithii_ATCC35061:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mbsmithii_ATCC35061.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mburtonii_DSM6242:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mburtonii_DSM6242.fna
+    kind: nucleotide
+    prodigal_mode: single
   Mcapsulatus_Bath:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mcapsulatus_Bath.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mchubuense_NBB4:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mchubuense_NBB4.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mcmarinum_S8:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mcmarinum_S8.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mcpaludicola_SANAE:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mcpaludicola_SANAE.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Methylacidimicrobium_AP8:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Methylacidimicrobium_AP8.fna
     kind: nucleotide
     prodigal_mode: single
   Methylocystis_SC2:
@@ -88,8 +145,16 @@ samples:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mextorquens_AM1.fna
     kind: nucleotide
     prodigal_mode: single
+  Mfstellata_AR4:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mfstellata_AR4.fna
+    kind: nucleotide
+    prodigal_mode: single
   Mfumariolicum_SolV:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mfumariolicum_SolV.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Mhungatei_JF1:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mhungatei_JF1.fna
     kind: nucleotide
     prodigal_mode: single
   Mkandleri_AV19:
@@ -108,6 +173,10 @@ samples:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mnitroreducens_ANME2d.fna
     kind: nucleotide
     prodigal_mode: single
+  Mnthermophilum_AMET1:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Mnthermophilum_AMET1.fna
+    kind: nucleotide
+    prodigal_mode: single
   Moxyfera:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Moxyfera.fna
     kind: nucleotide
@@ -118,6 +187,10 @@ samples:
     prodigal_mode: single
   Msoehngenii_GP6:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Msoehngenii_GP6.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Msstadtmanae_DSM3091:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Msstadtmanae_DSM3091.fna
     kind: nucleotide
     prodigal_mode: single
   Mthermautotrophicus_DeltaH:
@@ -136,6 +209,14 @@ samples:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Neuropaea_ATCC19718.fna
     kind: nucleotide
     prodigal_mode: single
+  Ngterrae_TAO100:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Ngterrae_TAO100.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Ninopinata_ENR4:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Ninopinata_ENR4.fna
+    kind: nucleotide
+    prodigal_mode: single
   Nmaritimus_SCM1:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Nmaritimus_SCM1.fna
     kind: nucleotide
@@ -148,8 +229,16 @@ samples:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Noceani_ATCC19707.fna
     kind: nucleotide
     prodigal_mode: single
+  Nsmultiformis_ATCC25196:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Nsmultiformis_ATCC25196.fna
+    kind: nucleotide
+    prodigal_mode: single
   Pputida_KT2440:
     path: /home/dmin/Grants/Methane_Cycle/ref_panel/Pputida_KT2440.fna
+    kind: nucleotide
+    prodigal_mode: single
+  Sbutanivorans_BOX1:
+    path: /home/dmin/Grants/Methane_Cycle/ref_panel/Sbutanivorans_BOX1.fna
     kind: nucleotide
     prodigal_mode: single
   Spneumoniae_ref:

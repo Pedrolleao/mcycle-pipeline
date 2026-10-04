@@ -9,7 +9,7 @@
 
 PANEL := ../test_panel
 
-.PHONY: env panel ref-panel validate-panel ground-truth dbs smoke smoke-check clean clean_all
+.PHONY: env panel ref-panel validate-panel ground-truth regression regression-score dbs smoke smoke-check clean clean_all
 
 env:
 	@mamba env create -f envs/mcycle.yaml 2>/dev/null || conda env create -f envs/mcycle.yaml
@@ -31,6 +31,18 @@ validate-panel:
 ground-truth:
 	python validation/build_ground_truth.py
 	python validation/build_curated_function_gt.py
+
+# Accuracy regression gate: run the 49-genome reference panel (own config and results
+# directory), re-check seed leakage, score, and fail below the floors of
+# validation/test_regression.py. `regression-score` re-scores existing results_ref/.
+regression: ref-panel
+	MCYCLE_CONFIG=config/config_ref.yaml python run.py --input ../ref_panel --prodigal-mode single --cores 8 --skip-db-setup
+	$(MAKE) regression-score
+
+regression-score:
+	python validation/detect_seed_leakage.py
+	python validation/score_mcycle.py
+	python validation/test_regression.py
 
 # (Re)build the HMM and BLAST databases from config/targets.yaml.
 dbs:
