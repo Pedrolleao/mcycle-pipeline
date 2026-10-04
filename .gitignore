@@ -30,3 +30,19 @@ results/
 
 # ---- Validation runs (one results dir per study) ----
 results_*/
+
+# ---- Comparators: third-party databases and run scratch (normalized TSVs are kept) ----
+# MCycDB (Qian et al. 2022) is not redistributed; build_mcycdb_tsv.py regenerates mcycdb.tsv.
+comparators/MCyc/
+comparators/panel_faa/
+comparators/metabolic_in/
+comparators/metabolic_out/
+comparators/dram_in/
+comparators/dram_out/
+comparators/mcycdb_out/
+comparators/*.log
+comparators/gtdb500_m/gtdb_dl/
+comparators/gtdb500_m/proteomes/
+comparators/gtdb500_m/mcycdb_out/
+comparators/gtdb500_m/metabolic_in/
+comparators/gtdb500_m/metabolic_out/
