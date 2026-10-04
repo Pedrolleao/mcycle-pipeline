@@ -52,6 +52,17 @@ def training_genera() -> dict[str, set[str]]:
     return out
 
 
+def genome_role(accession: str) -> str:
+    """Did this very genome supply a sequence to the clade HMMs?"""
+    roles = []
+    for t in ("mcrA_anme", "pmoA"):
+        if accession in (ROOT / "targets" / t / "refs.fasta").read_text():
+            roles.append(f"{t}: training sequence")
+        elif accession in (ROOT / "targets" / t / "harvest.tsv").read_text():
+            roles.append(f"{t}: calibration sequence")
+    return "; ".join(roles) or "no"
+
+
 def metabolic() -> dict[str, dict[str, bool]]:
     ws = ROOT / "comparators" / "mags_metabolic_out" / "worksheet1" / "mags.tsv"
     out: dict[str, dict[str, bool]] = {}
@@ -111,6 +122,7 @@ def main() -> int:
             "mcycle_mcrB": calls["mcrB"]["status"] + ("" if "acr_like" not in calls["mcrB"]["evidence_source"] else " (alkyl-CoM reductase)"),
             "mcycle_verdict": verdict,
             "genus_in_hmm_training": ",".join(in_training) or "no",
+            "genome_in_hmm_sets": genome_role(r["source"]),
             "metabolic_mcrA": {True: "Present", False: "Absent"}.get(met.get(mag, {}).get("mcrA"), ""),
             "metabolic_pmoA": {True: "Present", False: "Absent"}.get(met.get(mag, {}).get("pmoA"), ""),
             "metabolic_amoA": {True: "Present", False: "Absent"}.get(met.get(mag, {}).get("amoA"), ""),

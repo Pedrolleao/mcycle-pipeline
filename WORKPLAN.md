@@ -37,8 +37,8 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M4 | Scoring, leak detection, trap independence, regression gate | DONE 2026-10-04 |
 | M5 | Pre-registration, then comparator benchmark | DONE 2026-10-04 |
 | M6 | GTDB-500 concordance | IN PROGRESS (mcycle + MCycDB running; METABOLIC on the 120 enriched pending) |
-| M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | scripts written, not run |
-| M8 | MAG realism study | roster fixed, genomes fetched, not run |
+| M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | DONE 2026-10-04 |
+| M8 | MAG realism study | DONE 2026-10-04 |
 | M9 | Report, docs, contract, reproducibility pins | TODO |
 
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
@@ -279,12 +279,17 @@ From the backlog in `../Info-methane.md`:
   split by characterized genera vs candidate lineages; report which calls no sequence
   method resolves.
 - Done when: `DIR_ACCURACY` and `DIR_PLACEMENT` tables exist for both traps.
-- **Scripts written, not run** (need the M6 results): `validation/phylogeny/
-  clade_accuracy.py` (clade call vs the GTDB lineage of the genome — the independent
-  reference, since mcycle's call is itself sequence-based; stratified by training
-  genome / training genus / new genus) and `place_clades.py` (MAFFT, ClipKIT from
-  `Clipkit_env`, IQ-TREE 2 from `Iqtree_env`; says which calls no sequence method
-  resolves).
+- **DONE 2026-10-04.** `comparators/gtdb500_m/DIR_ACCURACY.{md,tsv}` (clade call vs
+  the GTDB lineage of the genome — the independent reference, since mcycle's call is
+  itself sequence-based) and `DIR_PLACEMENT{,_mcr,_pmo}.{md,tsv}` (gene trees;
+  `validation/phylogeny/place_clades.py`, ClipKIT from `Clipkit_env`, IQ-TREE 2 from
+  `Iqtree_env`). Direction 53 / 53 where an McrA is called; pmoA 34 / 36, 16 / 16 in
+  new genera. **Defect found:** an McrA truncated at a contig end (4 GTDB genomes) or
+  a full-length non-euryarchaeal McrA under the threshold (1) is not called, and
+  `gate_mcr_subunits` then disqualifies mcrB / mcrG as alkyl-CoM reductase subunits.
+  Not fixed — the tool stays at `9c39500` for the whole campaign. Fix sketch in
+  `ROADMAP.md` (bits per aligned position separate a fragment, ~1.8, from an alkyl-CoM
+  reductase, ~1.1); it must be followed by `make regression` and a changelog entry.
 
 ### M8 — MAG realism
 - Dossier of ≈ 8–10 published MAGs with a stated phenotype and CheckM quality: marine
@@ -295,14 +300,13 @@ From the backlog in `../Info-methane.md`:
   METABOLIC and DRAM alongside. Expect this phase to surface real bugs — in nitrogen it
   found one the isolate panel could not.
 - Done when: `mag_truth_vs_tool.tsv` and a short write-up exist.
-- **Roster fixed (commit `ad5a9ef`), not run.** `validation/metagenomes/mag_panel.tsv`:
-  12 inputs (ANME-1, -2a, -2c, -3, second ANME-2d genus, *Ca.* Methanomethylicus,
-  *Ca.* Methanoflorens, *Ca.* Methanoliparum, *Ca.* Argoarchaeum, USC-alpha, two
-  negatives) with expected direction / MMO and DOI. Genomes are in `../mag_panel/`.
-  To do: run with `--prodigal-mode meta` into its own results dir, CheckM
-  (`CheckM_env`, `--reduced_tree`), METABOLIC + DRAM alongside, truth-vs-tool table.
-  Several of these MAGs are of genera present in the clade-HMM training sets — say
-  which, per MAG (`targets/*/refs.fasta`).
+- **DONE 2026-10-04.** Roster and expectations committed (`ad5a9ef`) before the runs.
+  `validation/metagenomes/{mag_panel.tsv, mag_truth_vs_tool.tsv, MAG_REPORT.md,
+  checkm.tsv, build_mag_truth_vs_tool.py}`; genomes in `../mag_panel/`; mcycle results
+  in `results_mags/` (`config/config_mags.yaml`); METABOLIC in
+  `comparators/mags_metabolic_out/`, DRAM in `comparators/mags_dram_out/`. mcycle 10 / 12
+  as published, 2 with no Mcr gene in the assembly, 0 wrong. Two ANME MAGs were
+  training genomes of the model that calls them (column `genome_in_hmm_sets`).
 
 ### M9 — Close out
 - `validation/REPORT.md` with the full battery; update `README.md`, `ROADMAP.md`,

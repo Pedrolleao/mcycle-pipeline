@@ -108,3 +108,77 @@ with `mcrA_anme` removed from the trap set (+0.190 to +0.378, every interval exc
 which model pmoA separately from amoA, still report pmoA in the two gammaproteobacterial
 ammonia oxidizers and in the hydrocarbon-monooxygenase carriers; METABOLIC, DRAM and
 MCycDB report the alkyl-CoM reductases of the alkane oxidizers as McrA.
+
+## 3. GTDB-500 concordance (M6)
+
+500 GTDB r232 species representatives: the 380-genome backbone shared with the
+nitrogen and sulfur studies + 120 methane-enriched genomes (24 clades x 5;
+`comparators/gtdb500_m/selection.tsv`). No ground truth — agreement, not accuracy.
+Tables: `comparators/gtdb500_m/CONCORDANCE.{md,tsv}`; write-up `GTDB500_REPORT.md`.
+
+- In the 20 genomes of ammonia-oxidizer clades, `pmoA` is reported by raw KofamScan
+  in 13, by MCycDB in 5 (the five gammaproteobacterial AOB), by mcycle in 0.
+- mcycle calls the Mcr `reverse` in 14 genomes, all of ANME families, and
+  `methanogenic` in none of them; no comparator has a direction call.
+- mcycle vs raw KofamScan agree on 99.3 % of 41,000 cells (kappa 0.96); MCycDB reports
+  about twice as many present calls as either (9,028 vs 4,851 / 4,791), mostly broad
+  families (frmA, pta, mtkAB, fdhA).
+- METABOLIC at scale: see `GTDB500_REPORT.md` (the 120 enriched genomes were still
+  running when this section was first written).
+
+## 4. Clade calls against independent references (M7)
+
+**Against the genome's GTDB lineage** (`comparators/gtdb500_m/DIR_ACCURACY.{md,tsv}`,
+`validation/phylogeny/clade_accuracy.py`) — the reference is the marker-gene taxonomy
+of the genome, independent of the McrA / PmoA sequence the tool reads:
+
+| call | agree / n | agreement [95 % Wilson CI] |
+|---|---|---|
+| Mcr direction, genomes with an McrA call | 53 / 53 | 1.000 [0.932, 1.000] |
+| Mcr, all 67 genomes of lineages with a settled expectation | 56 / 67 | 0.836 [0.729, 0.906] |
+| — of which genera absent from the HMM training sets | 42 / 49 | 0.857 [0.733, 0.929] |
+| pmoA vs other Cu-monooxygenases | 34 / 36 | 0.944 [0.819, 0.985] |
+| — genera absent from the HMM training sets | 16 / 16 | 1.000 [0.806, 1.000] |
+
+No methanogen was called `reverse` and no ANME `methanogenic`; none of 14
+ammonia-oxidizer genomes was called pmoA. The 11 Mcr disagreements are all McrA that
+was not called: in 6 genomes there is no McrA in the assembly; in 4 it is a fragment
+cut at a contig end (243-411 residues, scores 430-764 against a threshold of 775.5);
+in 1 (*Ca.* Methanomethylicus) it is full-length and scores 578. **In the 5 genomes
+with a sub-threshold McrA the tool also disqualifies mcrB / mcrG as alkyl-CoM
+reductase subunits — a wrong label, produced by the M3 rule that recognizes alkane
+oxidizers.** This is a defect found by the validation and not yet fixed (the tool is
+frozen at `9c39500` for the campaign); `ROADMAP.md`, item 1. The 2 pmoA
+disagreements are MAGs whose only Cu-monooxygenase subunit A is a pxmA-type paralogue
+(K10944 366-374, every clade model 250-320).
+
+**Against the gene tree** (`DIR_PLACEMENT.md`, `validation/phylogeny/place_clades.py`;
+MAFFT, ClipKIT, IQ-TREE 2 with ModelFinder and 1,000 ultrafast bootstraps; typed
+references = the GTDB-typed sequences behind the clade models; queries = GTDB-500
+genomes that supplied none). Not independent of the HMM — both read the same protein
+— so this says where the two sequence methods agree and what neither resolves:
+
+| trap | queries | single-type clade, UFBoot >= 95: agree | lower support: agree | mixed clade |
+|---|---|---|---|---|
+| McrA | 45 | 22 / 25 | 2 / 2 | 18 |
+| PmoA / AmoA | 23 | 11 / 11 | 10 / 12 | 0 |
+
+- The 3 confident McrA "disagreements" are *Ca.* Methanofastidiosum, whose McrA sits
+  next to the ANME-1 references in the tree; the ANME-1 model does not accept them and
+  the genome lineage says methanogen. Nearest-clade placement would have called them
+  ANME — the calibrated threshold is what keeps them out.
+- 18 McrA queries fall in clades holding both ANME and methanogen references: for
+  those, tree placement gives no answer.
+- The 2 PmoA disagreements are *Methylacidimicrobium* (a hold-out genus) placed, with
+  UFBoot 58, beside the single hydrocarbon-monooxygenase reference; the lineage and
+  mcycle say pmoA.
+
+## 5. MAG study (M8)
+
+`validation/metagenomes/MAG_REPORT.md`, `mag_truth_vs_tool.tsv`. Twelve inputs from
+nucleotide sequence (`--prodigal-mode meta`), expectations fixed beforehand. mcycle:
+10 as published, 2 whose assembly holds no Mcr gene (57 % and 65 % complete ANME-2
+MAGs), 0 wrong. METABOLIC and DRAM report the ethane oxidizer *Ca.* Argoarchaeum as an
+McrA / methanogenesis carrier and cannot separate the three ANME from the three
+methanogens. Two of the ANME MAGs were themselves in the training set of the model
+that calls them (disclosed per MAG).
