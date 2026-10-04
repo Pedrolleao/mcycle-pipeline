@@ -44,8 +44,11 @@ RESULTS = ROOT / os.environ.get("MCYCLE_RESULTS", "results_ref")
 SCOPE = os.environ.get("MCYCLE_SCOPE", "all")
 TARGETS = ROOT / "config" / "targets.yaml"
 ROSTER = ROOT / "validation" / "panel.tsv"
-OUT_M = ROOT / "validation" / "mcycle_metrics.tsv"
-OUT_C = ROOT / "validation" / "mcycle_confusion.tsv"
+# one pair of output tables per ground truth, so that scoring the KEGG contrast does
+# not overwrite the tables of the default (curated-function) ground truth
+_TAG = "" if GT.name == "curated_function_gt.tsv" else "." + GT.stem
+OUT_M = ROOT / "validation" / f"mcycle_metrics{_TAG}.tsv"
+OUT_C = ROOT / "validation" / f"mcycle_confusion{_TAG}.tsv"
 
 PRESENT = {"confirmed", "domain-only"}
 
