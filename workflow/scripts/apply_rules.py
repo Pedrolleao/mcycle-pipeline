@@ -28,6 +28,7 @@ from pathlib import Path
 import yaml
 
 KO_RE = re.compile(r"^K\d{4,}$")
+PROFILE_LEN_KEY = "__profile_len__"
 
 
 # ───────────────────────────── parsers ───────────────────────────────────────
@@ -96,6 +97,9 @@ def parse_hmmscan_domtbl(path: Path, tc_cutoffs: dict[str, float],
                         query_name, [full_score, full_evalue, 10 ** 9, 0])
                     rec[2] = min(rec[2], int(parts[15]))
                     rec[3] = max(rec[3], int(parts[16]))
+                    # profile lengths, for gate_mcr_subunits (no threshold under
+                    # this key, so join_inframe_stops skips it)
+                    below.setdefault(PROFILE_LEN_KEY, {})[key] = int(parts[2])
                 continue
             # Apply per-target query-coverage filter (defends against
             # small-domain HMMs over-calling on multidomain proteins).
@@ -502,15 +506,37 @@ def gate_mcr_subunits(rows_by_id: dict[str, dict], below: dict[str, dict],
     Their alpha subunit fails K00399 (Ca. Ethanoperedens EcrA: 642, threshold 775.5)
     but the beta subunit passes K00401 (586, threshold 504.3). mcrB / mcrG are
     therefore demoted to `disqualified` when the genome has no McrA call AND
-    carries an McrA homologue under the threshold (>= half of it) — the signature
-    of an alkyl-CoM reductase. A genome with mcrB / mcrG and no McrA homologue at
-    all (a MAG that lost the contig) keeps its calls."""
+    carries an McrA homologue under the threshold (>= half of it) that looks like
+    an alkyl-CoM reductase.
+
+    "Looks like" matters since 2026-10-04 (amendment after the GTDB-500 check): an
+    McrA GENE FRAGMENT at a contig end of a MAG also scores under the threshold,
+    and it is not an alkyl-CoM reductase. The two are told apart by the score per
+    aligned profile position, with no fitted cut-off: a full-length McrA exactly at
+    the threshold scores threshold / profile length (775.5 / 556 = 1.39 bits per
+    position). A homologue at or above that rate over the part of the profile it
+    covers is a fragment of a canonical McrA (measured: 1.62-1.86) and is NOT
+    evidence of an alkyl-CoM reductase; one below it is (EcrA 1.17). The fragment
+    itself is still not called as mcrA — that, and non-euryarchaeal McrA that fall
+    under the threshold at full length, are left for a separate cycle (ROADMAP.md).
+
+    A genome with mcrB / mcrG and no McrA homologue at all (a MAG that lost the
+    contig) keeps its calls."""
     if _present(rows_by_id, "mcrA"):
         return []
     tc = tc_cutoffs.get("K00399")
-    homologue = tc is not None and any(
-        rec[0] >= ACR_MIN_FRACTION * tc for rec in below.get("K00399", {}).values())
-    return _demote(rows_by_id, ("mcrB", "mcrG"), "no_mcrA_acr_like") if homologue else []
+    plen = below.get(PROFILE_LEN_KEY, {}).get("K00399")
+    if tc is None:
+        return []
+    acr_like = False
+    for prot, rec in below.get("K00399", {}).items():
+        score, h_from, h_to = rec[0], rec[2], rec[3]
+        if score < ACR_MIN_FRACTION * tc:
+            continue
+        covered = max(1, h_to - h_from + 1)
+        if plen is None or score / covered < tc / plen:
+            acr_like = True          # under the threshold over the whole of what it covers
+    return _demote(rows_by_id, ("mcrB", "mcrG"), "no_mcrA_acr_like") if acr_like else []
 
 
 def gate_mmo_subunits(rows_by_id: dict[str, dict]) -> list[str]:
