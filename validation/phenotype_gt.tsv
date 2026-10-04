@@ -1,0 +1,57 @@
+# Published phenotype per genome (secondary endpoint: module and direction calls).
+# methanogenesis: hydrogenotrophic | acetoclastic | methylotrophic (methyl disproportionation)
+#   | methyl_reducing (methyl groups + H2 or formate) | none. methane_oxidation: aerobic_pmmo |
+#   aerobic_smmo | nitrite_dependent_pmmo | anaerobic_reverse_methanogenesis | none.
+# mcr_direction: methanogenic | reverse | none (no methyl-coenzyme M reductase).
+# Source: the paper cited for the genome in panel.tsv (Takeuchi 2014 states mmoX + pmoA for
+# M. marinum S8). Written 2026-10-04, before the pipeline was run on the reference panel.
+genome	split	methanogenesis	methane_oxidation	mcr_direction	citation	doi
+Mmaripaludis_S2	train	hydrogenotrophic	none	methanogenic	Hendrickson 2004	10.1128/jb.186.20.6956-6969.2004
+Mthermautotrophicus_DeltaH	train	hydrogenotrophic	none	methanogenic	Smith 1997	10.1128/jb.179.22.7135-7155.1997
+Macetivorans_C2A	train	acetoclastic;methylotrophic	none	methanogenic	Galagan 2002	10.1101/gr.223902
+Msoehngenii_GP6	train	acetoclastic	none	methanogenic	Barber 2011	10.1128/jb.05031-11
+Mluminyensis_B10	train	methyl_reducing	none	methanogenic	Dridi 2012	10.1099/ijs.0.033712-0
+Mnitroreducens_ANME2d	train	none	anaerobic_reverse_methanogenesis	reverse	Haroon 2013	10.1038/nature12375
+Mcapsulatus_Bath	train	none	aerobic_pmmo;aerobic_smmo	none	Ward 2004	10.1371/journal.pbio.0020303
+Mfumariolicum_SolV	train	none	aerobic_pmmo	none	Pol 2007	10.1038/nature06222
+Mtrichosporium_OB3b	train	none	aerobic_pmmo;aerobic_smmo	none	Stein 2010	10.1128/jb.01144-10
+Msilvestris_BL2	train	none	aerobic_smmo	none	Chen 2010	10.1128/jb.00506-10
+Mextorquens_AM1	train	none	none	none	Vuilleumier 2009	10.1371/journal.pone.0005584
+Neuropaea_ATCC19718	train	none	none	none	Chain 2003	10.1128/jb.185.21.6496.2003
+Noceani_ATCC19707	train	none	none	none	Klotz 2006	10.1128/aem.00463-06
+Nmaritimus_SCM1	train	none	none	none	Walker 2010	10.1073/pnas.0913533107
+Afulgidus_DSM4304	train	none	none	none	Klenk 1997	10.1038/37052
+Dvulgaris_Hildenborough	train	none	none	none	Heidelberg 2004	10.1038/nbt959
+Ecoli_K12_MG1655	train	none	none	none	Blattner 1997	10.1126/science.277.5331.1453
+Spneumoniae_ref	train	none	none	none	Tettelin 2001	10.1126/science.1061217
+Mkandleri_AV19	train	hydrogenotrophic	none	methanogenic	Kurr 1991	10.1007/bf00262992
+Mthermoacetophila_PT	train	acetoclastic	none	methanogenic	Kamagata 1991	10.1099/00207713-41-2-191
+ANME1_G60	train	none	anaerobic_reverse_methanogenesis	reverse	Krukenberg 2018	10.1111/1462-2920.14077
+Ethanoperedens_E50	train	none	none	none	Hahn 2020	10.1128/mbio.00600-20
+Methylocystis_SC2	train	none	aerobic_pmmo	none	Baani 2008	10.1073/pnas.0702643105
+Moxyfera	train	none	nitrite_dependent_pmmo	none	Ettwig 2010	10.1038/nature08883
+Tbutanivorans_NBRC103042	train	none	none	none	Cooley 2009	10.1099/mic.0.028175-0
+Nocardioides_CF8	train	none	none	none	Sayavedra-Soto 2011	10.1111/j.1758-2229.2010.00239.x
+Pputida_KT2440	train	none	none	none	Wehrmann 2017	10.1128/mbio.00570-17
+Mbsmithii_ATCC35061	holdout	hydrogenotrophic	none	methanogenic	Samuel 2007	10.1073/pnas.0704189104
+Msstadtmanae_DSM3091	holdout	methyl_reducing	none	methanogenic	Fricke 2006	10.1128/jb.188.2.642-658.2006
+Mhungatei_JF1	holdout	hydrogenotrophic	none	methanogenic	Gunsalus 2016	10.1186/s40793-015-0124-8
+Mcpaludicola_SANAE	holdout	hydrogenotrophic	none	methanogenic	Sakai 2008	10.1099/ijs.0.65571-0
+Mburtonii_DSM6242	holdout	methylotrophic	none	methanogenic	Allen 2009	10.1038/ismej.2009.45
+Malvi_Mx1201	holdout	methyl_reducing	none	methanogenic	Borrel 2012	10.1128/jb.01867-12
+Mnthermophilum_AMET1	holdout	methyl_reducing	none	methanogenic	Sorokin 2017	10.1038/nmicrobiol.2017.81
+ANME1_G37	holdout	none	anaerobic_reverse_methanogenesis	reverse	Krukenberg 2018	10.1111/1462-2920.14077
+Sbutanivorans_BOX1	holdout	none	none	none	Laso-Pérez 2016	10.1038/nature20152
+Malbum_BG8	holdout	none	aerobic_pmmo	none	Kits 2013	10.1128/genomea.00170-13
+Mcmarinum_S8	holdout	none	aerobic_pmmo;aerobic_smmo	none	Takeuchi 2014	10.1099/ijs.0.063503-0
+Mfstellata_AR4	holdout	none	aerobic_smmo	none	Vorobev 2011	10.1099/ijs.0.028118-0
+Methylacidimicrobium_AP8	holdout	none	aerobic_pmmo	none	Picone 2021	10.3389/fmicb.2021.637762
+Mbflagellatus_KT	holdout	none	none	none	Chistoserdova 2007	10.1128/jb.00045-07
+Nsmultiformis_ATCC25196	holdout	none	none	none	Norton 2008	10.1128/aem.02722-07
+Ngterrae_TAO100	holdout	none	none	none	Hayatsu 2017	10.1038/ismej.2016.191
+Ninopinata_ENR4	holdout	none	none	none	Daims 2015	10.1038/nature16461
+Mchubuense_NBB4	holdout	none	none	none	Coleman 2011	10.1038/ismej.2011.98
+Goxydans_621H	holdout	none	none	none	Prust 2005	10.1038/nbt1062
+Awoodii_DSM1030	holdout	none	none	none	Poehlein 2012	10.1371/journal.pone.0033439
+Dautotrophicum_HRM2	holdout	none	none	none	Strittmatter 2009	10.1111/j.1462-2920.2008.01825.x
+Fplacidus_DSM10642	holdout	none	none	none	Hafenbradl 1996	10.1007/s002030050388

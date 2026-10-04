@@ -2,17 +2,18 @@
 # train / holdout column must not change; later genomes are dated additions logged in
 # validation/CHANGELOG.md. All genomes are fetched as GENOME sequence (fna) by assembly
 # accession (fetch_ref_panel.sh). `kegg` = KEGG organism code whose genome entry names
-# this assembly (verified 2026-10-04); `-` = not in KEGG; `tbd` = to resolve in M2.
+# this assembly (verified 2026-10-04); `-` = not in KEGG. `mfh` is assembly GCA_949774925.1,
+# the same SolV sequence as GCA_000953475.1 (identical after rotation + reverse complement).
 # `taxa` = lower-case tokens validate_panel.py accepts in the FASTA deflines.
 name	source	input	split	guild	kegg	taxa	role	physiology	citation	doi
 Mmaripaludis_S2	GCF_000011585.1	fna	train	methanogen	mmp	methanococcus;maripaludis	hydrogenotrophic methanogen (Methanococcales)	CH4 from H2/CO2 and formate	Hendrickson 2004	10.1128/jb.186.20.6956-6969.2004
 Mthermautotrophicus_DeltaH	GCF_000008645.1	fna	train	methanogen	mth	methanothermobacter;thermautotrophicus	hydrogenotrophic methanogen (Methanobacteriales)	CH4 from H2/CO2	Smith 1997	10.1128/jb.179.22.7135-7155.1997
 Macetivorans_C2A	GCF_000007345.1	fna	train	methanogen	mac	methanosarcina;acetivorans	acetoclastic + methylotrophic methanogen (Methanosarcinales)	CH4 from acetate, methanol, methylamines; no growth on H2/CO2	Galagan 2002	10.1101/gr.223902
 Msoehngenii_GP6	GCF_000204415.1	fna	train	methanogen	mcj	methanothrix;methanosaeta;soehngenii;concilii	obligate acetoclastic methanogen	CH4 from acetate only	Barber 2011	10.1128/jb.05031-11
-Mluminyensis_B10	GCF_000308215.1	fna	train	methanogen	tbd	methanomassiliicoccus;luminyensis	H2-dependent methylotrophic methanogen (Methanomassiliicoccales)	CH4 from methanol + H2	Dridi 2012	10.1099/ijs.0.033712-0
+Mluminyensis_B10	GCF_000308215.1	fna	train	methanogen	-	methanomassiliicoccus;luminyensis	H2-dependent methylotrophic methanogen (Methanomassiliicoccales)	CH4 from methanol + H2	Dridi 2012	10.1099/ijs.0.033712-0
 Mnitroreducens_ANME2d	GCA_000685155.1	fna	train	anme	-	methanoperedens	anaerobic methanotroph (ANME-2d)	nitrate-dependent anaerobic methane oxidation; Mcr in reverse	Haroon 2013	10.1038/nature12375
 Mcapsulatus_Bath	GCF_000008325.1	fna	train	methanotroph	mca	methylococcus;capsulatus	aerobic methanotroph (gamma, type X); pmoA + mmoX seed strain	pMMO + sMMO; RuMP	Ward 2004	10.1371/journal.pbio.0020303
-Mfumariolicum_SolV	GCA_000953475.1	fna	train	methanotroph	tbd	methylacidiphilum;fumariolicum;fumarolicum	aerobic methanotroph (Verrucomicrobia)	pMMO; lanthanide methanol dehydrogenase only; no sMMO	Pol 2007	10.1038/nature06222
+Mfumariolicum_SolV	GCA_000953475.1	fna	train	methanotroph	mfh	methylacidiphilum;fumariolicum;fumarolicum	aerobic methanotroph (Verrucomicrobia)	pMMO; lanthanide methanol dehydrogenase only; no sMMO	Pol 2007	10.1038/nature06222
 Mtrichosporium_OB3b	GCF_002752655.1	fna	train	methanotroph	mtw	methylosinus;trichosporium	aerobic methanotroph (alpha, type II); mmoX seed species	pMMO + sMMO; serine cycle	Stein 2010	10.1128/jb.01144-10
 Msilvestris_BL2	GCF_000021745.1	fna	train	methanotroph	msl	methylocella;silvestris	facultative aerobic methanotroph (alpha), sMMO only	sMMO, no pMMO	Chen 2010	10.1128/jb.00506-10
 Mextorquens_AM1	GCF_000022685.1	fna	train	methylotroph	mea	methylorubrum;methylobacterium;extorquens	methylotroph, not a methanotroph	methanol and methylamine; no methane oxidation	Vuilleumier 2009	10.1371/journal.pone.0005584

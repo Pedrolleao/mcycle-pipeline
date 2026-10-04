@@ -9,7 +9,7 @@
 
 PANEL := ../test_panel
 
-.PHONY: env panel ref-panel validate-panel dbs smoke smoke-check clean clean_all
+.PHONY: env panel ref-panel validate-panel ground-truth dbs smoke smoke-check clean clean_all
 
 env:
 	@mamba env create -f envs/mcycle.yaml 2>/dev/null || conda env create -f envs/mcycle.yaml
@@ -25,6 +25,12 @@ ref-panel:
 
 validate-panel:
 	python validation/validate_panel.py --online --strict
+
+# Rebuild both ground truths: KEGG-derived, then curated-function (KEGG + the cells of
+# validation/curated_cells.tsv + mcrA_anme from validation/phenotype_gt.tsv).
+ground-truth:
+	python validation/build_ground_truth.py
+	python validation/build_curated_function_gt.py
 
 # (Re)build the HMM and BLAST databases from config/targets.yaml.
 dbs:

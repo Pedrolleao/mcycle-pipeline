@@ -32,7 +32,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 |---|---|---|
 | M0 | Housekeeping and decisions | DONE 2026-10-04 |
 | M1 | Reference panel: roster, identity QC, train / hold-out split (frozen) | DONE 2026-10-04 |
-| M2 | Dual ground truth | TODO |
+| M2 | Dual ground truth | DONE 2026-10-04 |
 | M3 | Hardening on the TRAINING genomes only (seeds, clade HMMs, thresholds) | TODO |
 | M4 | Scoring, leak detection, trap independence, regression gate | TODO |
 | M5 | Pre-registration, then comparator benchmark | TODO |
@@ -163,6 +163,19 @@ M1 before M3 is not negotiable: the hold-out must be frozen before anything is t
   methanogenesis type(s), methane-oxidation type and Mcr direction, for scoring the
   module and direction calls (secondary endpoint).
 - Done when: both files build reproducibly; every correction has a rationale row.
+- **DONE 2026-10-04** (`make ground-truth`). `ground_truth.tsv` = KEGG, 37 genomes,
+  3,034 cells. `curated_function_gt.tsv` = 3,173 cells over 49 genomes: KEGG + 21
+  corrections + 90 literature cells (`curated_cells.tsv`, evidence and DOI per row) +
+  49 `mcrA_anme` cells derived from `phenotype_gt.tsv`. Notes for later phases:
+  - The corrections are all `present -> absent` (pmoA/B/C in ammonia oxidizers and
+    *M. chubuense*): they favour a tool that separates pmo from amo. Report metrics on
+    BOTH ground truths, as sulfur does.
+  - KEGG needed no correction for mmoX, mxaF or xoxF in the decoys (it does not assign
+    K16157 / K14028 / K23995 to *Thauera*-type, PedH-type or *Gluconobacter* enzymes that
+    it holds) — those trap cells are plain KEGG `absent`.
+  - KEGG-less genomes carry 4-22 scored cells each; *S. pneumoniae* carries one.
+  - Disagreements found once the tool is run may only become corrections with
+    independent evidence, logged in `CHANGELOG.md` (three candidates are listed there).
 
 ### M3 — Hardening, on training genomes only
 From the backlog in `../Info-methane.md`:

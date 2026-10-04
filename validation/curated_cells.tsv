@@ -1,0 +1,117 @@
+# Hand-curated ground-truth cells, each with its evidence. Written 2026-10-04, before the
+# pipeline was run on the reference panel. kind = correction: overrides the KEGG cell where
+# KO presence is not the function; kind = literature: a genome KEGG does not hold.
+# Later edits are logged in CHANGELOG.md. mcrA_anme is derived in
+# build_curated_function_gt.py from phenotype_gt.tsv, not listed here.
+genome	target	expected	kind	evidence	doi
+Neuropaea_ATCC19718	pmoA	absent	correction	KEGG genes NE0943-NE0945, NE2062-NE2064, NE1411 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/jb.185.21.6496.2003
+Neuropaea_ATCC19718	pmoB	absent	correction	KEGG genes NE0943-NE0945, NE2062-NE2064, NE1411 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/jb.185.21.6496.2003
+Neuropaea_ATCC19718	pmoC	absent	correction	KEGG genes NE0943-NE0945, NE2062-NE2064, NE1411 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/jb.185.21.6496.2003
+Noceani_ATCC19707	pmoA	absent	correction	KEGG genes Noc_2501-Noc_2503 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1128/aem.00463-06
+Noceani_ATCC19707	pmoB	absent	correction	KEGG genes Noc_2501-Noc_2503 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1128/aem.00463-06
+Noceani_ATCC19707	pmoC	absent	correction	KEGG genes Noc_2501-Noc_2503 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1128/aem.00463-06
+Nmaritimus_SCM1	pmoA	absent	correction	KEGG genes Nmar_1500, Nmar_1502, Nmar_1503 carry K10944/K10945/K10946: the archaeal amoA/B/C of an ammonia-oxidizing archaeon	10.1073/pnas.0913533107
+Nmaritimus_SCM1	pmoB	absent	correction	KEGG genes Nmar_1500, Nmar_1502, Nmar_1503 carry K10944/K10945/K10946: the archaeal amoA/B/C of an ammonia-oxidizing archaeon	10.1073/pnas.0913533107
+Nmaritimus_SCM1	pmoC	absent	correction	KEGG genes Nmar_1500, Nmar_1502, Nmar_1503 carry K10944/K10945/K10946: the archaeal amoA/B/C of an ammonia-oxidizing archaeon	10.1073/pnas.0913533107
+Nsmultiformis_ATCC25196	pmoA	absent	correction	KEGG genes Nmul_A0798-A0800, A2324-A2326, A2764-A2766, A0177, A2467 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/aem.02722-07
+Nsmultiformis_ATCC25196	pmoB	absent	correction	KEGG genes Nmul_A0798-A0800, A2324-A2326, A2764-A2766, A0177, A2467 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/aem.02722-07
+Nsmultiformis_ATCC25196	pmoC	absent	correction	KEGG genes Nmul_A0798-A0800, A2324-A2326, A2764-A2766, A0177, A2467 carry K10944/K10945/K10946: the amoCAB operons of an obligate ammonia oxidizer	10.1128/aem.02722-07
+Ngterrae_TAO100	pmoA	absent	correction	KEGG genes TAO_1520-TAO_1522 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1038/ismej.2016.191
+Ngterrae_TAO100	pmoB	absent	correction	KEGG genes TAO_1520-TAO_1522 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1038/ismej.2016.191
+Ngterrae_TAO100	pmoC	absent	correction	KEGG genes TAO_1520-TAO_1522 carry K10944/K10945/K10946: the amoCAB operon of an obligate ammonia oxidizer	10.1038/ismej.2016.191
+Ninopinata_ENR4	pmoA	absent	correction	KEGG genes NITINOP_1852-1854, 0766, 1259 carry K10944/K10945/K10946: the amoCAB genes of a complete ammonia oxidizer	10.1038/nature16461
+Ninopinata_ENR4	pmoB	absent	correction	KEGG genes NITINOP_1852-1854, 0766, 1259 carry K10944/K10945/K10946: the amoCAB genes of a complete ammonia oxidizer	10.1038/nature16461
+Ninopinata_ENR4	pmoC	absent	correction	KEGG genes NITINOP_1852-1854, 0766, 1259 carry K10944/K10945/K10946: the amoCAB genes of a complete ammonia oxidizer	10.1038/nature16461
+Mchubuense_NBB4	pmoA	absent	correction	KEGG genes Mycch_5909-Mycch_5911 carry K10944/K10945/K10946: hmoCAB, a hydrocarbon monooxygenase active on C2-C4 alkanes with no detectable activity on methane	10.1038/ismej.2011.98
+Mchubuense_NBB4	pmoB	absent	correction	KEGG genes Mycch_5909-Mycch_5911 carry K10944/K10945/K10946: hmoCAB, a hydrocarbon monooxygenase active on C2-C4 alkanes with no detectable activity on methane	10.1038/ismej.2011.98
+Mchubuense_NBB4	pmoC	absent	correction	KEGG genes Mycch_5909-Mycch_5911 carry K10944/K10945/K10946: hmoCAB, a hydrocarbon monooxygenase active on C2-C4 alkanes with no detectable activity on methane	10.1038/ismej.2011.98
+Mluminyensis_B10	mcrA	present	literature	Borrel 2014: mcrABG present in the three Methanomassiliicoccales genomes (M. luminyensis B10 among them)	10.1186/1471-2164-15-679
+Mluminyensis_B10	mcrB	present	literature	Borrel 2014: mcrABG present in the three Methanomassiliicoccales genomes (M. luminyensis B10 among them)	10.1186/1471-2164-15-679
+Mluminyensis_B10	mcrG	present	literature	Borrel 2014: mcrABG present in the three Methanomassiliicoccales genomes (M. luminyensis B10 among them)	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtrA	absent	literature	Borrel 2014: the five genes for the Mtr subunits are absent from the three Methanomassiliicoccales genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtrB	absent	literature	Borrel 2014: the five genes for the Mtr subunits are absent from the three Methanomassiliicoccales genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtrC	absent	literature	Borrel 2014: the five genes for the Mtr subunits are absent from the three Methanomassiliicoccales genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtrD	absent	literature	Borrel 2014: the five genes for the Mtr subunits are absent from the three Methanomassiliicoccales genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtrE	absent	literature	Borrel 2014: the five genes for the Mtr subunits are absent from the three Methanomassiliicoccales genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtmB	present	literature	Borrel 2014: the Pyl-containing methylamine:corrinoid methyltransferases mtmB, mtbB and mttB were identified in the three genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mtbB	present	literature	Borrel 2014: the Pyl-containing methylamine:corrinoid methyltransferases mtmB, mtbB and mttB were identified in the three genomes	10.1186/1471-2164-15-679
+Mluminyensis_B10	mttB	present	literature	Borrel 2014: the Pyl-containing methylamine:corrinoid methyltransferases mtmB, mtbB and mttB were identified in the three genomes	10.1186/1471-2164-15-679
+Mnitroreducens_ANME2d	mcrA	present	literature	Haroon 2013: ANME-2d performs anaerobic methane oxidation through reverse methanogenesis (genome, transcriptome and labelling)	10.1038/nature12375
+Mnitroreducens_ANME2d	mcrB	present	literature	Haroon 2013: ANME-2d performs anaerobic methane oxidation through reverse methanogenesis (genome, transcriptome and labelling)	10.1038/nature12375
+Mnitroreducens_ANME2d	mcrG	present	literature	Haroon 2013: ANME-2d performs anaerobic methane oxidation through reverse methanogenesis (genome, transcriptome and labelling)	10.1038/nature12375
+ANME1_G60	mcrA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mcrB	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mcrG	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mtrA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mtd	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mch	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	ftr	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	fwdA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	fwdB	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G60	mer	absent	literature	Krukenberg 2018: both ANME-1a draft genomes do not contain mer	10.1111/1462-2920.14077
+ANME1_G37	mcrA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mcrB	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mcrG	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mtrA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mtd	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mch	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	ftr	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	fwdA	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	fwdB	present	literature	Krukenberg 2018: the ANME-1a genomes G37 and G60 encode the reverse methanogenesis pathway except mer; mcrA is among the most highly expressed genes	10.1111/1462-2920.14077
+ANME1_G37	mer	absent	literature	Krukenberg 2018: both ANME-1a draft genomes do not contain mer	10.1111/1462-2920.14077
+Ethanoperedens_E50	mcrA	absent	literature	Hahn 2020: the only Mcr-type enzyme is an ethane-activating reductase highly divergent from those of methanogens and methanotrophs (non-canonical, multi-carbon branch); function is ethyl-CoM formation, not methane	10.1128/mbio.00600-20
+Ethanoperedens_E50	mcrB	absent	literature	Hahn 2020: the only Mcr-type enzyme is an ethane-activating reductase highly divergent from those of methanogens and methanotrophs (non-canonical, multi-carbon branch); function is ethyl-CoM formation, not methane	10.1128/mbio.00600-20
+Ethanoperedens_E50	mcrG	absent	literature	Hahn 2020: the only Mcr-type enzyme is an ethane-activating reductase highly divergent from those of methanogens and methanotrophs (non-canonical, multi-carbon branch); function is ethyl-CoM formation, not methane	10.1128/mbio.00600-20
+Sbutanivorans_BOX1	mcrA	absent	literature	Laso-Perez 2016: the Mcr-like enzymes of Ca. Syntrophoarchaeum form butyl-CoM; butane, not methane, is the substrate	10.1038/nature20152
+Sbutanivorans_BOX1	mcrB	absent	literature	Laso-Perez 2016: the Mcr-like enzymes of Ca. Syntrophoarchaeum form butyl-CoM; butane, not methane, is the substrate	10.1038/nature20152
+Sbutanivorans_BOX1	mcrG	absent	literature	Laso-Perez 2016: the Mcr-like enzymes of Ca. Syntrophoarchaeum form butyl-CoM; butane, not methane, is the substrate	10.1038/nature20152
+Tbutanivorans_NBRC103042	mmoX	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Tbutanivorans_NBRC103042	mmoY	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Tbutanivorans_NBRC103042	mmoZ	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Tbutanivorans_NBRC103042	mmoB	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Tbutanivorans_NBRC103042	mmoC	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Tbutanivorans_NBRC103042	mmoD	absent	literature	Sluis 2002: bmoXYBZDC encode the soluble butane monooxygenase (up to 64 % identical to sMMO peptides); Cooley 2009: sBMO is specialized for C3-C5 alkanes and disfavours methane	10.1099/00221287-148-11-3617
+Nocardioides_CF8	pmoA	absent	literature	Sayavedra-Soto 2011: bmoCAB (single copy) encode a butane monooxygenase, a third lineage of the AMO/pMMO family, < 50 % similar to AMO and pMMO	10.1111/j.1758-2229.2010.00239.x
+Nocardioides_CF8	pmoB	absent	literature	Sayavedra-Soto 2011: bmoCAB (single copy) encode a butane monooxygenase, a third lineage of the AMO/pMMO family, < 50 % similar to AMO and pMMO	10.1111/j.1758-2229.2010.00239.x
+Nocardioides_CF8	pmoC	absent	literature	Sayavedra-Soto 2011: bmoCAB (single copy) encode a butane monooxygenase, a third lineage of the AMO/pMMO family, < 50 % similar to AMO and pMMO	10.1111/j.1758-2229.2010.00239.x
+Mnthermophilum_AMET1	mcrA	present	literature	Sorokin 2017: McrABCD present; methyl reduction involves the membrane-bound heterodisulfide reductase HdrED	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mcrB	present	literature	Sorokin 2017: McrABCD present; methyl reduction involves the membrane-bound heterodisulfide reductase HdrED	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mcrG	present	literature	Sorokin 2017: McrABCD present; methyl reduction involves the membrane-bound heterodisulfide reductase HdrED	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	hdrD	present	literature	Sorokin 2017: McrABCD present; methyl reduction involves the membrane-bound heterodisulfide reductase HdrED	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	hdrE	present	literature	Sorokin 2017: McrABCD present; methyl reduction involves the membrane-bound heterodisulfide reductase HdrED	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrA	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrB	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrC	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrD	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrE	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrF	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrG	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	mtrH	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	fwdA	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	fwdB	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	fwdC	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	fwdD	absent	literature	Sorokin 2017: both genomes (AMET1, HMET1) lack the genes of the Mtr complex and of the Fwd complex	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	ftr	absent	literature	Sorokin 2017: Mtr, the F420-reducing hydrogenase and Ftr were lost on the branch leading to Methanonatronarchaeia	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	frhA	absent	literature	Sorokin 2017: Mtr, the F420-reducing hydrogenase and Ftr were lost on the branch leading to Methanonatronarchaeia	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	frhB	absent	literature	Sorokin 2017: Mtr, the F420-reducing hydrogenase and Ftr were lost on the branch leading to Methanonatronarchaeia	10.1038/nmicrobiol.2017.81
+Mnthermophilum_AMET1	frhG	absent	literature	Sorokin 2017: Mtr, the F420-reducing hydrogenase and Ftr were lost on the branch leading to Methanonatronarchaeia	10.1038/nmicrobiol.2017.81
+Malbum_BG8	pmoA	present	literature	Kits 2013: one pmoCAB operon encoding particulate methane monooxygenase (plus a pxmABC operon of unknown function)	10.1128/genomea.00170-13
+Malbum_BG8	pmoB	present	literature	Kits 2013: one pmoCAB operon encoding particulate methane monooxygenase (plus a pxmABC operon of unknown function)	10.1128/genomea.00170-13
+Malbum_BG8	pmoC	present	literature	Kits 2013: one pmoCAB operon encoding particulate methane monooxygenase (plus a pxmABC operon of unknown function)	10.1128/genomea.00170-13
+Malbum_BG8	mxaF	present	literature	Kits 2013: mxaYDFGIRSACKL-mxaB and xoxFJ identified	10.1128/genomea.00170-13
+Malbum_BG8	mxaI	present	literature	Kits 2013: mxaYDFGIRSACKL-mxaB and xoxFJ identified	10.1128/genomea.00170-13
+Malbum_BG8	xoxF	present	literature	Kits 2013: mxaYDFGIRSACKL-mxaB and xoxFJ identified	10.1128/genomea.00170-13
+Malbum_BG8	hxlA	present	literature	Kits 2013: complete ribulose monophosphate pathway for formaldehyde assimilation	10.1128/genomea.00170-13
+Malbum_BG8	hxlB	present	literature	Kits 2013: complete ribulose monophosphate pathway for formaldehyde assimilation	10.1128/genomea.00170-13
+Mfstellata_AR4	mmoX	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	mmoY	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	mmoZ	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	mmoB	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	mmoC	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	mmoD	present	literature	Dedysh 2015: operon mmoXYBZDC encoding sMMO	10.1128/genomea.01555-14
+Mfstellata_AR4	pmoA	absent	literature	Dedysh 2015: absence of pMMO-encoding genes; Vorobev 2011: only a soluble methane monooxygenase	10.1128/genomea.01555-14
+Mfstellata_AR4	pmoB	absent	literature	Dedysh 2015: absence of pMMO-encoding genes; Vorobev 2011: only a soluble methane monooxygenase	10.1128/genomea.01555-14
+Mfstellata_AR4	pmoC	absent	literature	Dedysh 2015: absence of pMMO-encoding genes; Vorobev 2011: only a soluble methane monooxygenase	10.1128/genomea.01555-14
+Mfstellata_AR4	mxaF	present	literature	Dedysh 2015: one MxaFI methanol dehydrogenase and five XoxF methanol dehydrogenases	10.1128/genomea.01555-14
+Mfstellata_AR4	mxaI	present	literature	Dedysh 2015: one MxaFI methanol dehydrogenase and five XoxF methanol dehydrogenases	10.1128/genomea.01555-14
+Mfstellata_AR4	xoxF	present	literature	Dedysh 2015: one MxaFI methanol dehydrogenase and five XoxF methanol dehydrogenases	10.1128/genomea.01555-14

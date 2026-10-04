@@ -26,3 +26,4 @@ resources/blast_db/
 
 # ---- Pipeline run outputs ----
 results/
+/validation/.kegg_cache/
