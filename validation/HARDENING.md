@@ -10,7 +10,7 @@ until this log was closed (2026-10-04). Tools: `validation/score_mcycle.py`,
 | stage | cells | TP | FP | FN | micro-F1 [95 % CI] | trap P | trap R |
 |---|---|---|---|---|---|---|---|
 | baseline (pipeline as built) | 1,703 | 472 | 17 | 18 | 0.964 [0.951, 0.977] | 1.000 | 0.976 |
-| + rules and thresholds | 1,703 | 478 | 8 | 12 | 0.980 | 1.000 | 0.976 |
+| + rules and thresholds (measured with the frhB gate that was then reverted) | 1,703 | 478 | 6 | 12 | 0.982 [0.972, 0.990] | 1.000 | 0.976 |
 | + clade HMMs (final) | 1,703 | 481 | 8 | 9 | 0.983 [0.974, 0.991] | 1.000 | 1.000 |
 
 These are in-sample numbers: they say the changes do what they were meant to do, not
@@ -78,8 +78,8 @@ passing a clade model is `confirmed`; a family (KO) hit without one is `disquali
 | mcrA_anme__anme3 | 5 | 1 | 1227.2 | 1201.8 | 1251.7 | 3 / 5 (species) |
 
 Negatives: pmoA — AmoA of beta-AOB (13), gamma-AOB (6) and AOA (20), and the butane
-monooxygenase of *Nocardioides* sp. CF8. mcrA_anme — McrA of methanogens from 77
-genera and three alkyl-CoM reductases.
+monooxygenase of *Nocardioides* sp. CF8. mcrA_anme — 80 sequences: McrA of
+methanogens from families with described methanogens, and three alkyl-CoM reductases.
 
 Limits found here, to be carried into the report:
 - **ANME-3 is not cleanly separable** from methylotrophic Methanosarcinaceae
@@ -109,7 +109,8 @@ The mmoX margin is thin on the true side (1178-1201 against 1168.7).
 
 ### 6. Suspected KO-tier noise, examined
 `mtrA` in *N. maritimus*: KEGG assigns K00577 to the same genome — an agreement, not
-noise. `mtbC` in *M. maripaludis*: likewise in agreement with KEGG.
+noise. `mtbC` in *M. maripaludis*: the cell is scored against KEGG and is not among the
+disagreements. `mtsA` in *M. luminyensis*: not scored (the genome is not in KEGG).
 
 ## What is left wrong on the training genomes (17 cells)
 - fdhA / fdh in *Methanothrix* x 2 (KEGG assigns K22516 without an FdhB; the protein
