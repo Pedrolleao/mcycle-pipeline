@@ -1,0 +1,24 @@
+genome	clade	stratum	genus	mcycle	model	placement	clade_types	ufboot	confident	agree
+GCA_017879645_1	AOB_beta	enriched	Nitrosomonas	not pmoA	K28504	amoA	amoA	32	no	1
+GCA_019635175_1	AOB_beta	enriched	Nitrosomonas	not pmoA	K28504	amoA	amoA	32	no	1
+GCA_963745455_1	AOB_beta	enriched	Nitrosospira	not pmoA	K28504	amoA	amoA	32	no	1
+GCF_040240395_1	AOB_beta	enriched	Nitrosomonas	not pmoA	K28504	amoA	amoA	32	no	1
+GCF_002356115_1	AOB_gamma	enriched	Nitrosoglobus	not pmoA	K10944	amoA	amoA	98	yes	1
+GCA_028688525_1	MOB_Methylococcaceae	enriched	Methylococcus	pmoA	pmoA__gamma	pmoA	pmoA	100	yes	1
+GCA_903819965_1	MOB_Methylococcaceae	enriched	Methylumidiphilus	not pmoA	K10944	paralogue	paralogue	99	yes	1
+GCF_900155475_1	MOB_Methylococcaceae	enriched	Methylomagnum	pmoA	pmoA__gamma	pmoA	pmoA	100	yes	1
+GCA_002256465_1	MOB_Methylomonadaceae	enriched	Methylobacter_C	pmoA	pmoA__gamma	pmoA	pmoA	100	yes	1
+GCA_021647145_1	MOB_Methylomonadaceae	enriched	QPIN01	pmoA	pmoA__gamma	pmoA	pmoA	96	yes	1
+GCA_945903675_1	MOB_Methylomonadaceae	enriched	Methylobacter_C	pmoA	pmoA__gamma	pmoA	pmoA	94	no	1
+GCA_963804035_1	MOB_Methylomonadaceae	enriched	Methyloglobulus	pmoA	pmoA__gamma	pmoA	pmoA	80	no	1
+GCA_023249055_1	MOB_NC10	enriched	Methylomirabilis	pmoA	pmoA__nc10	pmoA	pmoA	99	yes	1
+GCA_035561835_1	MOB_NC10	enriched	Methylomirabilis	pmoA	pmoA__nc10	pmoA	pmoA	100	yes	1
+GCA_028710285_1	MOB_Verrucomicrobia	enriched	Methylacidimicrobium	pmoA	pmoA__verruco	hydrocarbon	hydrocarbon	58	no	0
+GCF_017310545_1	MOB_Verrucomicrobia	enriched	Methylacidimicrobium	pmoA	pmoA__verruco	hydrocarbon	hydrocarbon	58	no	0
+GCA_030948025_1	MOB_alpha	enriched	Methylocapsa	not pmoA	K10944,K28504	paralogue	paralogue	100	yes	1
+GCA_046349135_1	MOB_alpha	enriched	Methylocystis	pmoA	pmoA__alpha	pmoA	pmoA	98	yes	1
+GCF_049675845_1	MOB_alpha	enriched	Methylocystis	pmoA	pmoA__alpha	pmoA	pmoA	100	yes	1
+GCA_002331625_1	Nitrospira_comammox	enriched	Nitrospira_D	not pmoA	K28504	amoA	amoA	36	no	1
+GCA_965223625_1	Nitrospira_comammox	enriched	Nitrospira_D	not pmoA	K28504	amoA	amoA	36	no	1
+GCF_001458735_1	Nitrospira_comammox	enriched	Nitrospira_D	not pmoA	K28504	amoA	amoA	36	no	1
+GCA_002083355_1	p__Nitrospirota	backbone	Nitrospira_D	not pmoA	K28504	amoA	amoA	36	no	1

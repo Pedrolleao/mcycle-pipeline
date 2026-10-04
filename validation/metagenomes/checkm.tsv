@@ -1,0 +1,13 @@
+Bin Id	Marker lineage	# genomes	# markers	# marker sets	0	1	2	3	4	5+	Completeness	Contamination	Strain heterogeneity
+ANME1_Methanospirare_FWG175	p__Euryarchaeota (UID49)	95	228	153	84	72	72	0	0	0	64.07	37.25	100.00
+ANME2a_Methanocomedens_CONS7142H05b1	p__Euryarchaeota (UID49)	95	228	153	88	138	2	0	0	0	65.03	0.98	0.00
+ANME2c_Methanogaster_AMVER4-21	p__Euryarchaeota (UID49)	95	228	153	81	139	8	0	0	0	57.03	4.25	25.00
+ANME2d_HGW_Methanoperedenaceae_1	p__Euryarchaeota (UID49)	95	228	153	7	218	3	0	0	0	96.41	1.96	33.33
+ANME3_Methanovorans_HMMV	p__Euryarchaeota (UID49)	95	228	153	5	217	6	0	0	0	98.04	3.27	33.33
+Argoarchaeum_EthArch1	p__Euryarchaeota (UID49)	95	228	153	22	197	9	0	0	0	92.27	1.66	88.89
+Bfragilis_NCTC9343	o__Bacteroidales (UID2657)	160	492	269	2	490	0	0	0	0	99.26	0.00	0.00
+Mflorens_bog38	p__Euryarchaeota (UID49)	95	228	153	8	219	1	0	0	0	95.92	0.65	0.00
+Mliparum_NM1a	p__Euryarchaeota (UID49)	95	228	153	14	212	2	0	0	0	92.46	1.31	0.00
+Mmethylicus_V2	k__Archaea (UID2)	207	149	107	1	147	1	0	0	0	99.07	0.93	0.00
+Pmarinus_MED4	p__Cyanobacteria (UID2143)	129	472	368	2	469	1	0	0	0	99.46	0.27	0.00
+USCalpha_Mlahnbergensis	o__Rhizobiales (UID3654)	92	481	319	80	391	10	0	0	0	86.85	2.70	70.00

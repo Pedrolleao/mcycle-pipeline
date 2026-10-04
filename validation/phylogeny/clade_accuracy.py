@@ -60,6 +60,23 @@ def wilson(k: int, n: int) -> str:
     return f"{p:.3f} [{max(0, c - h):.3f}, {min(1, c + h):.3f}]"
 
 
+FAMILY_KO = {"mcr": ("K00399", 570), "pmo": ("K10944", 250)}   # profile, typical length
+
+
+def family_best(genome: str, ko: str) -> tuple[float, int]:
+    """Best full-sequence score of the genome on the family profile, and the length
+    of that protein (0, 0 when there is no hit)."""
+    best = (0.0, 0)
+    f = S.RESULTS / genome / "hmm" / f"{genome}.hmmscan.tsv"
+    if f.exists():
+        for line in open(f):
+            if not line.startswith("#"):
+                p = line.split()
+                if p[0] == ko and float(p[7]) > best[0]:
+                    best = (float(p[7]), int(p[5]))
+    return best
+
+
 def training_sets(target: str) -> tuple[set[str], set[str]]:
     """(assemblies, genera) behind the clade models of a target."""
     asm, genera = set(), set()
@@ -107,13 +124,27 @@ def main() -> int:
                 clade = calls["pmoA"]["pfam_hits"]
             if not family_hit:
                 continue
+            ko, plen = FAMILY_KO[trap]
+            score, qlen = family_best(g, ko)
+            agree_now = expect != "unknown" and expect == call
+            if agree_now or expect == "unknown":
+                cause = ""
+            elif score == 0:
+                cause = "family subunit A absent from the assembly"
+            elif qlen < 0.8 * plen:
+                cause = "subunit A truncated (gene fragment)"
+            elif trap == "pmo":
+                cause = "full-length Cu-MMO subunit A outside the pmoA clade models"
+            else:
+                cause = "full-length McrA homologue under the KO threshold"
             rel = ("training genome" if g in t_asm else
                    "training genus" if genus.split("_")[0] in t_gen else "new genus")
             named = bool(re.fullmatch(r"[A-Z][a-z]+(_[A-Z]+)?", genus))
             rows.append({"trap": trap, "genome": g, "stratum": r["stratum"], "clade": r["clade"],
                          "genus": genus, "named_genus": "yes" if named else "no",
                          "training_relation": rel, "expected": expect, "mcycle": call,
-                         "model": clade,
+                         "model": clade, "family_score": f"{score:.0f}", "protein_len": qlen,
+                         "cause": cause,
                          "agree": "" if expect == "unknown" else str(int(expect == call)),
                          "gtdb_taxonomy": lin})
 
@@ -154,11 +185,26 @@ def main() -> int:
             L.append(f"| {e} | " + " | ".join(
                 str(sum(r["expected"] == e and r["mcycle"] == c for r in sub)) for c in cats) + " |")
         bad = [r for r in scored if r["agree"] == "0"]
+        wrong_clade = [r for r in bad if not r["mcycle"].startswith("no") and
+                       not r["expected"].startswith("no")]
+        called = [r for r in scored if not r["mcycle"].startswith("no")
+                  and not r["expected"].startswith("no")] if trap == "mcr" else scored
+        if trap == "mcr":
+            k = sum(r["agree"] == "1" for r in called)
+            L.append(f"\n**Direction, where an McrA was called and the lineage has one: "
+                     f"{k} / {len(called)} ({wilson(k, len(called))}); wrong-direction calls: "
+                     f"{len(wrong_clade)}.** The other disagreements are McrA that was not called:")
         if bad:
-            L.append(f"\nDisagreements ({len(bad)}):\n")
+            causes = {}
             for r in bad:
-                L.append(f"- {r['genome']} ({r['clade']}; {r['genus']}; {r['training_relation']}): "
-                         f"expected {r['expected']}, mcycle {r['mcycle']}")
+                causes.setdefault(r["cause"] or "wrong clade", []).append(r)
+            L.append(f"\nDisagreements ({len(bad)}), by cause:\n")
+            for cause, rs in sorted(causes.items(), key=lambda kv: -len(kv[1])):
+                L.append(f"- **{cause}: {len(rs)}**")
+                for r in rs:
+                    L.append(f"  - {r['genome']} ({r['clade']}; {r['genus']}; {r['training_relation']}): "
+                             f"expected {r['expected']}, mcycle {r['mcycle']}; family score "
+                             f"{r['family_score']}, {r['protein_len']} aa")
         unk = [r for r in sub if r["agree"] == ""]
         if unk:
             L.append(f"\nNot scored — lineage of unsettled physiology ({len(unk)}):\n")

@@ -46,3 +46,7 @@ comparators/gtdb500_m/proteomes/
 comparators/gtdb500_m/mcycdb_out/
 comparators/gtdb500_m/metabolic_in/
 comparators/gtdb500_m/metabolic_out/
+comparators/mags_in/
+comparators/mags_metabolic_out/
+comparators/mags_dram_out/
+validation/metagenomes/checkm_out/

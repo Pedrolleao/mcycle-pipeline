@@ -1,0 +1,104 @@
+# config.yaml — mcycle-pipeline thresholds and paths.
+# The `samples:` block at the bottom is rewritten by run.py at each invocation.
+
+paths:
+  hmm_db:        resources/hmm/mcycle_targets.hmm
+  tc_cutoffs:    resources/hmm/tc_cutoffs.tsv
+  blast_unstable: resources/blast_db/unstable_refs
+  blast_gated:   resources/blast_db/blast_gated_refs
+  targets_yaml:  config/targets.yaml
+  results_dir:   results_mags
+
+thresholds:
+  hmmer:
+    use_tc_when_available: true     # use the KOfam adaptive per-KO score threshold
+    evalue: 1.0e-10                 # fallback when a profile has no threshold
+    dom_evalue: 1.0e-5
+
+  blast:
+    evalue: 1.0e-10
+    qcov_hsp_perc: 50
+    pident_min: 30                  # default; per-target blast_identity_min overrides
+
+build:
+  # KOfam profile HMMs + adaptive thresholds (primary detection backbone).
+  # Pinned release: the build (workflow/scripts/build_hmm_db.py) verifies the
+  # downloaded profiles.tar.gz against kofam_profiles_sha256 and warns on mismatch.
+  # KEGG's URL is rolling-latest (no embedded version) → we pin by content hash.
+  kofam_profiles_url:    "https://www.genome.jp/ftp/db/kofam/profiles.tar.gz"
+  kofam_ko_list_url:     "https://www.genome.jp/ftp/db/kofam/ko_list.gz"
+  kofam_release:         "2026-05-24 (genome.jp ftp latest at fetch time)"
+  kofam_profiles_sha256: "b03d20b96254d0f04652102ea538087ac36adadf0f807ee7278f8637810ca15a"
+  # Pfam fallback (only used for any target that has a `pfam:` but no KOfam profile).
+  hmm_source_url_template: "https://www.ebi.ac.uk/interpro/wwwapi/entry/pfam/{pf}/?annotation=hmm"
+  uniprot_search_url: "https://rest.uniprot.org/uniprotkb/search"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+samples:
+  ANME1_Methanospirare_FWG175:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME1_Methanospirare_FWG175.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  ANME2a_Methanocomedens_CONS7142H05b1:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME2a_Methanocomedens_CONS7142H05b1.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  ANME2c_Methanogaster_AMVER4-21:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME2c_Methanogaster_AMVER4-21.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  ANME2d_HGW_Methanoperedenaceae_1:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME2d_HGW_Methanoperedenaceae_1.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  ANME3_Methanovorans_HMMV:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME3_Methanovorans_HMMV.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Argoarchaeum_EthArch1:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Argoarchaeum_EthArch1.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Bfragilis_NCTC9343:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Bfragilis_NCTC9343.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Mflorens_bog38:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Mflorens_bog38.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Mliparum_NM1a:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Mliparum_NM1a.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Mmethylicus_V2:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Mmethylicus_V2.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  Pmarinus_MED4:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/Pmarinus_MED4.fna
+    kind: nucleotide
+    prodigal_mode: meta
+  USCalpha_Mlahnbergensis:
+    path: /home/dmin/Grants/Methane_Cycle/mag_panel/USCalpha_Mlahnbergensis.fna
+    kind: nucleotide
+    prodigal_mode: meta

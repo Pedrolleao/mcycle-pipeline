@@ -1,0 +1,46 @@
+genome	clade	stratum	genus	mcycle	model	placement	clade_types	ufboot	confident	agree
+GCA_034660415_1	ANME-1	enriched	Methanophaga	ANME	mcrA_anme__anme1	ANME	ANME	99	yes	1
+GCA_965370445_1	ANME-2ab	enriched	Methanocomedens_A	ANME	mcrA_anme__anme2ab	ANME	ANME	98	yes	1
+GCA_026552975_1	ANME-2d	enriched	Methanoperedens	ANME	mcrA_anme__anme2d	ANME	ANME	98	yes	1
+GCA_043729865_1	ANME-2d	enriched	Methanoperedens	ANME	mcrA_anme__anme2d	ANME	ANME	98	yes	1
+GCA_902386135_1	ANME-2d	enriched	Methanoperedens	ANME	mcrA_anme__anme2d	ANME	ANME	92	no	1
+GCA_963776515_1	Methanobacteria	enriched	Methanobacterium_B	methanogen	K00399	mixed	ANME,methanogen	78	no	
+GCA_964409285_1	Methanobacteria	enriched	Methanocatella	methanogen	K00399	mixed	ANME,methanogen	78	no	
+GCF_001477655_1	Methanobacteria	enriched	Methanocatella	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCA_049588055_1	Methanocellia	enriched	Methanocella_A	methanogen	K00399	methanogen	methanogen	98	yes	1
+GCF_000011005_1	Methanocellia	enriched	Methanocella	methanogen	K00399	methanogen	methanogen	98	yes	1
+GCF_021023085_1	Methanocellia	enriched	Methanooceanicella	methanogen	K00399	methanogen	methanogen	98	yes	1
+GCF_035506375_1	Methanocellia	enriched	Methanocella	methanogen	K00399	methanogen	methanogen	98	yes	1
+GCF_049676595_1	Methanocellia	enriched	Methanocella_A	methanogen	K00399	methanogen	methanogen	98	yes	1
+GCA_019561615_1	Methanococci	enriched	Methanofervidicoccus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_000376965_1	Methanococci	enriched	Methanothermococcus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_015523155_1	Methanococci	enriched	Methanofervidicoccus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_017875395_1	Methanococci	enriched	Methanococcus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCA_035404685_1	Methanofastidiosales	enriched	JAFGGT01	methanogen	K00399	ANME	ANME	99	yes	0
+GCA_039679445_1	Methanofastidiosales	enriched	Methanofastidiosum	methanogen	K00399	ANME	ANME	100	yes	0
+GCA_023402275_1	Methanomassiliicoccales	enriched	Methanoplasma	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_963586845_1	Methanomassiliicoccales	enriched	Methanoprimaticola	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_963594315_1	Methanomassiliicoccales	enriched	Methanarcanum	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_963789555_1	Methanomassiliicoccales	enriched	JACXTP01	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_001717005_1	Methanomethylicaceae	enriched	Methanomethylicus	methanogen	K00399	mixed	ANME,methanogen	88	no	
+GCA_004028775_1	Methanomethylicaceae	enriched	Methanosuratincola	methanogen	K00399	mixed	ANME,methanogen	88	no	
+GCA_029887795_1	Methanomethylicaceae	enriched	WYZ-LMO10	methanogen	K00399	mixed	ANME,methanogen	88	no	
+GCA_003251955_1	Methanomicrobia	enriched	Methanospirillum	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_964551875_1	Methanomicrobia	enriched	JACTUA01	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCF_000015825_1	Methanomicrobia	enriched	Methanoculleus	methanogen	K00399	methanogen	methanogen	99	yes	1
+GCA_001714685_2	Methanosarcinaceae	enriched	Methanosarcina	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_036504475_1	Methanosarcinaceae	enriched	Methanosarcina	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCF_900111645_1	Methanosarcinaceae	enriched	Methanococcoides	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_963803145_1	Methanotrichaceae	enriched	CAWBKV01	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_964506745_1	Methanotrichaceae	enriched	Methanothrix	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCF_016706325_1	Methanotrichaceae	enriched	Methanothrix	methanogen	K00399	methanogen	methanogen	100	yes	1
+GCA_013329575_1	alkane_AcrA	enriched	Methanoliparum	methanogen	K00399	mixed	ANME,methanogen	100	no	
+GCF_020885915_1	alkane_AcrA	enriched	Methanoliparum	methanogen	K00399	mixed	ANME,methanogen	100	no	
+GCF_000024625_1	p__AGJL01	backbone	Methanocaldococcus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_000739065_1	p__AGJL01	backbone	Methanocaldococcus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_000007185_1	p__JAADCQ01	backbone	Methanopyrus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCF_002201895_1	p__JAADCQ01	backbone	Methanopyrus	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCA_015062825_1	p__Methanobacteriota	backbone	Methanosphaera	methanogen	K00399	mixed	ANME,methanogen	84	no	
+GCA_003558335_1	p__Methanobacteriota_B	backbone	Methanofastidiosum	methanogen	K00399	ANME	ANME	100	yes	0
+GCA_015660995_1	p__Thermoproteota	backbone	JACTUC01	methanogen	K00399	mixed	ANME,methanogen	88	no	
+GCA_964398245_1	p__UBP6	backbone	CALITV01	methanogen	K00399	methanogen	methanogen	78	no	1
