@@ -5,22 +5,27 @@ methanogenesis (CO₂-reducing, acetoclastic, methylotrophic), anaerobic methane
 oxidation by reverse methanogenesis, aerobic methane oxidation, and the fate of the
 C1 units that follow. Third sister of `Nitrogen_Cycle/ncycle-pipeline` and
 `Sulfur_Cycle/scycle-pipeline`, on the same engine: detection is **KO-primary**
-(KOfam HMMs + adaptive per-KO thresholds) with DIAMOND-BLAST gating for the homology
-traps. Covers **83 targets** (across 7 process modules), **17 obligatory complexes**,
-and **11 process-completeness synergies**.
+(KOfam HMMs + adaptive per-KO thresholds), with **clade HMMs** for the two homology
+traps (pmoA vs amoA; ANME vs methanogen McrA) and curated seeds as corroboration.
+Covers **83 targets** (across 7 process modules), **17 obligatory complexes**, and
+**11 process-completeness synergies**.
 
-**Status: reference layer built, runs end-to-end, smoke-tested.** The engine is the
-sulfur pipeline's; the methane biology is authored fresh (`config/targets.yaml`,
-[`../Info-methane.md`](../Info-methane.md)). On the 18-genome smoke panel — run from
-genome sequence, so every genome has gene coordinates and locus maps — all 168
-expectations hold (`make smoke`): each of five methanogens is complete for its own
-methanogenesis type(s), the ANME-2d genome is called *reverse*, four aerobic
-methanotrophs are called by the right monooxygenase, a methylotroph without one is
-not, and three ammonia oxidizers have their amoABC **disqualified** as pmoABC.
-**This is not an accuracy estimate** — the panel is small and the two BLAST gates were
-calibrated on it. The validation campaign the sister tools went through (reference
-panel, ground truth, hold-out, comparators) has not been run; see
-[`ROADMAP.md`](ROADMAP.md).
+**Status: validated on a 49-genome reference panel (2026-10-04).** The validation
+campaign of the sister tools has been run for methane — frozen train / hold-out split,
+dual ground truth, regression gate, pre-registered comparator benchmark, GTDB-500
+concordance, MAG study. Headline numbers (95 % genome-cluster bootstrap CIs; full
+report in [`validation/REPORT.md`](validation/REPORT.md)):
+
+| | |
+|---|---|
+| hold-out micro-F1 (22 genomes of genera never used for seeds, models or thresholds) | **0.961 [0.940, 0.976]** |
+| full-panel micro-F1 (49 genomes, 3,173 cells) | 0.973 [0.963, 0.981] |
+| homology-trap precision | 1.000 — 71 true calls, 0 false in 259 trap negatives |
+| vs raw KofamScan / METABOLIC / DRAM / MCycDB, trap precision | +0.34 / +0.31 / +0.47 / +0.37, all BH q < 0.0001 |
+| Mcr direction on 500 GTDB genomes, where McrA is called | 53 / 53 agree with the genome's lineage |
+
+What these numbers do not cover is in *Known limits* below — in particular McrA genes
+truncated at contig ends in fragmented MAGs.
 
 ## Run
 
@@ -44,23 +49,31 @@ make smoke          # fetch the smoke panel, run it, check the expected calls (~
 ## How it works
 
 1. **Gene calls** — proteomes used directly; nucleotide assemblies → Prodigal.
-2. **HMM scan** — `hmmscan` against `resources/hmm/mcycle_targets.hmm`, the **KOfam
-   profile HMM for every KO in `config/targets.yaml`** (90 profiles). Thresholds
-   (KOfam `ko_list`, per-target `ko_tc` overrides) live in
-   `resources/hmm/tc_cutoffs.tsv`. The custom-HMM tier of the sister tools is wired
-   in but no methane clade HMM has been trained yet.
-3. **BLAST gating** — `diamond blastp` against **curated UniProt seeds**
-   (`resources/blast_db/`), per-target `blast_identity_min`, tagged `>{target_id}||{acc}`.
+2. **HMM scan** — `hmmscan` against `resources/hmm/mcycle_targets.hmm`: the **KOfam
+   profile HMM for every KO in `config/targets.yaml`** (90 profiles) plus **nine clade
+   HMMs** (`targets/pmoA/`, `targets/mcrA_anme/`). Thresholds (KOfam `ko_list`,
+   per-target `ko_tc` overrides with their `tc_rationale`, clade-model thresholds from
+   the manifests) live in `resources/hmm/tc_cutoffs.tsv`.
+3. **BLAST** — `diamond blastp` against **curated UniProt seeds**
+   (`resources/blast_db/`), tagged `>{target_id}||{acc}`; reported as the nearest
+   reference, and still the corroboration for `mcrA` and `mmoX`.
 4. **Calls** — `apply_rules.py` integrates evidence per target (signature precedence
-   custom HMM > KO > Pfam). Three things are methane-specific:
-   - **`pmoA`** needs a hit ≥ 70 % to a methanotroph pmoA seed, otherwise it is
-     `disqualified` — KOfam alone calls the amoA of *Nitrosococcus* a methane
-     monooxygenase. **`pmoB` / `pmoC`** share their KOs with amoB / amoC and follow
-     the pmoA call.
-   - **`mcrA_anme`** is McrA evaluated against ANME-clade seeds (≥ 80 %). If it
-     passes, the genome's Mcr direction is `reverse`, otherwise `methanogenic`; the
-     call is tagged on the mcrA / mcrB / mcrG `evidence_source`
-     (e.g. `ko|mcr_reverse`).
+   clade HMM > KO > Pfam). What is methane-specific:
+   - **`pmoA`** is decided by four clade HMMs (gamma, alpha, Verrucomicrobia, NC10),
+     each with a threshold set between the best-scoring ammonia / hydrocarbon
+     monooxygenase and the worst left-out methanotroph genus. A copper monooxygenase
+     subunit A that passes none is `disqualified` — KOfam alone calls the amoA of
+     *Nitrosococcus* a methane monooxygenase. **`pmoB` / `pmoC`** share their KOs
+     with amoB / amoC and follow the pmoA call.
+   - **`mcrA_anme`** is McrA evaluated against five ANME clade HMMs (ANME-1, -2a/b,
+     -2c, -2d, -3). If one passes, the genome's Mcr direction is `reverse`, otherwise
+     `methanogenic`; the call is tagged on the mcrA / mcrB / mcrG `evidence_source`
+     (e.g. `ko|mcr_reverse`) and names the clade model.
+   - **Subunits follow the subunit that defines the enzyme.** `mcrB` / `mcrG` are
+     `disqualified` when the genome has an McrA homologue that fails the McrA call
+     (alkyl-coenzyme M reductases of alkane oxidizers); `mmoY/Z/B/C/D` need `mmoX`.
+   - **`fdhA` vs `fdh`.** With the F420-binding `fdhB` in the genome, an FdhA-family
+     protein is the F420-dependent `fdhA` and not the NAD-linked `fdh`.
    - **`mcrA`** and **`mmoX`** are corroborated by seeds without being gated: a KO
      hit with no seed above the identity floor is reported as `domain-only`.
    - **Genes split at an in-frame stop** *(nucleotide input)*. Methanogens read UGA
@@ -152,22 +165,60 @@ the per-gene atlas, KO anchors, measured gate calibration and trap rationale):
 
 ## Known limits
 
-- **Marine ANME are called methanogenic.** Only ANME-2d (*Ca.* Methanoperedens) has
-  a seed; ANME-1 / -2a / -2c / -3 do not.
+Found or confirmed by the validation campaign (`validation/REPORT.md`):
+
+- **Truncated McrA in fragmented MAGs.** An McrA gene cut at a contig end scores under
+  the K00399 threshold; the genome then gets no `mcrA` call, and — worse — its `mcrB` /
+  `mcrG` are `disqualified` as alkyl-CoM reductase subunits, because the rule that
+  recognizes alkane oxidizers sees "an McrA homologue that failed". 4 of the 67 genomes of Mcr-carrying
+  lineages in the GTDB-500 set. Not fixed: the tool was frozen for the
+  validation. First item of `ROADMAP.md`.
+- **Non-euryarchaeal McrA** can fall under the KOfam threshold: the full-length McrA
+  of one *Ca.* Methanomethylicus genome of the GTDB-500 set scores 578 (threshold
+  775.5), while the *Ca.* M. mesodigestus V2 MAG of the MAG study is called.
+- **A MAG that lacks the gene cannot be called**: 6 GTDB genomes and 2 of the 12
+  study MAGs have no Mcr subunit A in the assembly.
+- **ANME-3 is not cleanly separable** from methylotrophic Methanosarcinaceae on McrA
+  sequence; the model is set for precision, and two of five left-out ANME-3 species
+  fell under its threshold. The direction call is about the clade, not about what the
+  cell is doing on the day.
+- **Divergent Cu-monooxygenase paralogues are not called**: pxmA (gammaproteobacteria,
+  *Methylocystis*) and verrucomicrobial pmoA3; a genome carrying only such a copy has
+  `pmoA` `disqualified`.
+- **Not tested out-of-genus** (every genus is a seed or training genus): ANME-2d,
+  NC10, alpha-proteobacterial pMMO, acetoclastic methanogenesis.
+- **Residual gene-level errors** (47 of 3,173 cells): `acs` against its paralogues,
+  `fdh` / `fdhA` adjudication and selenocysteine formate dehydrogenases whose halves
+  do not add up to the threshold, `frhB` (F420-binding subunits of other complexes),
+  `hdrD`, the broad `sgaA` / `hprA`, corrinoid proteins `mttC` / `mtbC`.
 - **Genomic potential, not physiology.** *Methanosarcina acetivorans* scores complete
   for hydrogenotrophic methanogenesis (it carries `frh` but does not grow on H₂ + CO₂).
 - **Recoded genes** (selenocysteine, pyrrolysine). From genome input they are called
-  when one half passes on its own or the two halves can be joined (above); a gene
-  whose halves do not add up to the threshold is still missed. From a proteome they
-  depend on the annotation — the NCBI proteome of *M. luminyensis* lacks `mtmB`,
-  `mtbB` and `mttB`, which are found from its genome sequence.
-- **Gene calls move a few scores.** Prodigal's start codon can differ from the
-  annotation's; `mtaA` of *M. luminyensis* lost 0.6 bit that way and needed a
-  threshold override (`ko_tc`). Expect the same at other knife-edge thresholds.
-- **Untested clades**: NC10 (`nod`, pmoA at the KO threshold), USC pmoA, alkane
-  oxidizers with alkyl-CoM reductase beyond the one sequence checked.
+  when one half passes on its own or the two halves can be joined (above). From a
+  proteome they depend on the annotation.
 - **Ubiquitous genes** (`ackA`, `pta`, `acs`, `fdh`, `frmAB`, `hdrA`) light up in most
   genomes; read them through the modules, which need Mcr or another key gene.
+
+## Validation
+
+| what | where |
+|---|---|
+| panel roster, split, rationale (frozen 2026-10-04) | `validation/panel.tsv`, `validation/PANEL_PLAN.md` |
+| ground truths (KEGG; curated function, with evidence per cell) | `validation/ground_truth.tsv`, `curated_function_gt.tsv`, `curated_cells.tsv`, `phenotype_gt.tsv` |
+| hardening log (training genomes only) | `validation/HARDENING.md` |
+| scoring, seed-leak and independence audits, gate | `validation/score_mcycle.py`, `detect_seed_leakage.py`, `trap_independence.py`, `test_regression.py` |
+| comparator benchmark (pre-registered) | `validation/benchmark/` |
+| GTDB-500 concordance and clade checks | `comparators/gtdb500_m/` |
+| MAG study | `validation/metagenomes/` |
+| every change after a freeze | `validation/CHANGELOG.md` |
+
+```bash
+make ref-panel validate-panel     # fetch the 49 genomes, check each is what the roster says
+make regression                   # run the panel, score, 8-row gate (14 checks)
+make regression-score             # re-score existing results_ref/
+MCYCLE_SCOPE=train python validation/score_mcycle.py    # one side of the split
+GT_FILE=ground_truth.tsv python validation/score_mcycle.py   # KEGG contrast
+```
 
 ## Build / test
 
