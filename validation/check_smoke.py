@@ -30,7 +30,7 @@ def read_tsv(path: Path) -> list[dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", type=Path, default=HERE.parent / "results")
+    ap.add_argument("--results", type=Path, default=HERE.parent / "mcycle_results")
     ap.add_argument("--expect", type=Path, default=HERE / "smoke_expectations.tsv")
     args = ap.parse_args()
 

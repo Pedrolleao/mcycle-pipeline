@@ -52,19 +52,24 @@ differently.
 ## Run
 
 ```bash
-python run.py --input <dir-of-.faa-or-.fna> --cores 8
-# Outside the conda env, run.py re-runs itself inside `cycle-pipeline` (and creates it
+python mcycle.py --input <dir-of-.faa-or-.fna> --cores 8                 # results in mcycle_results/
+python mcycle.py --input <dir> --output <results-dir> --cores 8          # results where you want them
+# Outside the conda env, mcycle.py re-runs itself inside `cycle-pipeline` (and creates it
 # from envs/mcycle.yaml if it does not exist). To use another env with the same
 # dependencies:
-#   MCYCLE_ENV=<env-name> python run.py --input <dir>
+#   MCYCLE_ENV=<env-name> python mcycle.py --input <dir>
 ```
 
-`run.py` auto-detects protein (`.faa`) vs nucleotide (`.fna`, → Prodigal) input,
+`mcycle.py` auto-detects protein (`.faa`) vs nucleotide (`.fna`, → Prodigal) input,
 builds the databases on first run (and again whenever `config/targets.yaml` is newer
 than them), then dispatches Snakemake. It asks whether nucleotide input is isolate
 genomes or metagenome assemblies unless `--prodigal-mode single|meta` is given, and
 writes the samples it found into the `samples:` block of `config/config.yaml` — so
 `git status` shows that file as modified after a run.
+
+Results go to `mcycle_results/` inside this directory unless `--output DIR` is given (a
+path relative to where you run the command). When the run finishes the launcher prints
+the results directory and the path of `mcycle_report.html`, the page to open first.
 
 ## How it works
 
@@ -107,11 +112,11 @@ writes the samples it found into the `samples:` block of `config/config.yaml` �
      sequence alone cannot tell recoding from a nonsense mutation.
 5. **Reports** — per-sample `calls/mcycle_calls.tsv`, `complex_completeness.tsv`,
    `synergy_completeness.tsv`, `report/gap_analysis.txt`, `report/mcycle_map.*`;
-   cross-sample `multisample_matrix.tsv`, figures, and an interactive `report.html`.
+   cross-sample `mcycle_matrix.tsv`, figures, and an interactive `mcycle_report.html`.
 
 ## Outputs
 
-All paths are under `paths.results_dir` (`results/` by default). Figures are written
+All paths are under the results directory (`mcycle_results/` by default, or `--output DIR`). Figures are written
 as SVG (vector) and PNG (300 DPI).
 
 **Per sample — `<sample>/`**
@@ -129,14 +134,14 @@ as SVG (vector) and PNG (300 DPI).
 
 | file | what it is |
 |---|---|
-| `multisample_matrix.tsv` | genomes × (targets, complexes, modules) |
-| `multisample_heatmap.svg/.png` | overview dot grid; genomes ordered by gene-content similarity |
+| `mcycle_matrix.tsv` | genomes × (targets, complexes, modules) |
+| `mcycle_heatmap.svg/.png` | overview dot grid; genomes ordered by gene-content similarity |
 | `figures/pathway_<pathway>.svg/.png` | one dot grid per pathway |
 | `figures/complexes.svg/.png`, `figures/synergies.svg/.png` | complex / process-module completeness |
 | `figures/mcycle_maps.svg/.png` | every genome's methane-cycle map side by side (up to 48 genomes) |
-| `report.html` | self-contained interactive report (no network needed): the gene grid and the complex / module grid with hover evidence, row search / ordering, and a per-genome panel with the cycle map, locus maps and the full calls table. Light and dark themes. Every figure in it (gene grid, complex / module grid, cycle map, each locus map) has a **Save PNG (300 dpi)** button: it downloads that figure as currently shown — row filter and order, hidden pathways, selected genome, light or dark theme — with its title and legend, rendered at 300 dpi (a grid too large for a browser canvas is saved at the highest resolution that fits, and says so). The page follows the group's *Simple Terminal* design system (`design/Simple`): JetBrains Mono, hairline `[ bracketed ]` frames, its dark palette or its Light variant according to the system theme, with a LIGHT / DARK selector in the top-right corner to pin either. The font is inlined from `workflow/scripts/fonts/` (SIL OFL 1.1, licence alongside), so the report looks the same offline and the PNG export uses it too; pathway colours stay the validated palette of the static figures. |
+| `mcycle_report.html` | self-contained interactive report (no network needed): the gene grid and the complex / module grid with hover evidence, row search / ordering, and a per-genome panel with the cycle map, locus maps and the full calls table. Light and dark themes. Every figure in it (gene grid, complex / module grid, cycle map, each locus map) has a **Save PNG (300 dpi)** button: it downloads that figure as currently shown — row filter and order, hidden pathways, selected genome, light or dark theme — with its title and legend, rendered at 300 dpi (a grid too large for a browser canvas is saved at the highest resolution that fits, and says so). The page follows the group's *Simple Terminal* design system (`design/Simple`): JetBrains Mono, hairline `[ bracketed ]` frames, its dark palette or its Light variant according to the system theme, with a LIGHT / DARK selector in the top-right corner to pin either. The font is inlined from `workflow/scripts/fonts/` (SIL OFL 1.1, licence alongside), so the report looks the same offline and the PNG export uses it too; pathway colours stay the validated palette of the static figures. |
 
-**Reading the glyphs** (same in every figure and in `report.html`): solid disc =
+**Reading the glyphs** (same in every figure and in `mcycle_report.html`): solid disc =
 confirmed; half-filled = domain-only (HMM signature, no BLAST support); ring with a
 cross = disqualified (failed the homology-trap gate); faint ring = absent. In the
 complex / module grids: solid = complete, ring with `n/N` = partial, faint ring with
@@ -248,7 +253,7 @@ GT_FILE=ground_truth.tsv python validation/score_mcycle.py   # KEGG contrast
 ```bash
 python workflow/scripts/build_hmm_db.py     # KOfam KO profiles (+ custom HMMs / Pfam fallbacks if any)
 python workflow/scripts/build_blast_db.py    # curated UniProt seeds → DIAMOND DBs
-python validation/check_smoke.py             # re-check existing results/ against the expectations
+python validation/check_smoke.py             # re-check existing mcycle_results/ against the expectations
 ```
 
 **KOfam is pinned in the repository.** The 90 KOfam profiles and their thresholds are

@@ -1,5 +1,5 @@
 # config.yaml — mcycle-pipeline thresholds and paths.
-# The `samples:` block at the bottom is rewritten by run.py at each invocation.
+# The `samples:` block at the bottom is rewritten by mcycle.py at each invocation.
 
 paths:
   hmm_db:        resources/hmm/mcycle_targets.hmm

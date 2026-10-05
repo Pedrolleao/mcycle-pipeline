@@ -14,6 +14,8 @@ CYCLE_LETTER = "CH₄"
 CYCLE_NAME = "methane"
 CALLS_TSV = "mcycle_calls.tsv"
 LOCI_TSV = "mcycle_loci.tsv"
+TOOL = "mcycle"
+REPORT_HTML = "mcycle_report.html"
 
 CAT_ORDER = [
     "mcr_core", "co2_reduction", "acetoclastic",

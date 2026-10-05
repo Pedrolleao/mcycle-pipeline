@@ -36,7 +36,7 @@ ground-truth:
 # directory), re-check seed leakage, score, and fail below the floors of
 # validation/test_regression.py. `regression-score` re-scores existing results_ref/.
 regression: ref-panel
-	MCYCLE_CONFIG=config/config_ref.yaml python run.py --input ../ref_panel --prodigal-mode single --cores 8 --skip-db-setup
+	MCYCLE_CONFIG=config/config_ref.yaml python mcycle.py --input ../ref_panel --prodigal-mode single --cores 8 --skip-db-setup
 	$(MAKE) regression-score
 
 regression-score:
@@ -51,15 +51,15 @@ dbs:
 	python workflow/scripts/build_blast_db.py --force
 
 smoke: panel
-	python run.py --input $(PANEL) --prodigal-mode single --cores 8
+	python mcycle.py --input $(PANEL) --prodigal-mode single --cores 8
 	python validation/check_smoke.py
 
-# Re-check the EXISTING results/ without running the pipeline.
+# Re-check the EXISTING mcycle_results/ without running the pipeline.
 smoke-check:
 	python validation/check_smoke.py
 
 clean:
-	rm -rf results/*
+	rm -rf mcycle_results/*
 
 clean_all: clean
 	rm -rf resources/hmm/* resources/blast_db/*

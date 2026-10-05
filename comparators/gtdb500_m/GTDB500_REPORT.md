@@ -92,7 +92,7 @@ genera absent from the training sets. Details in `../../validation/REPORT.md`, s
 ```bash
 python comparators/gtdb500_m/select_gtdb_mcyc.py
 python comparators/gtdb500_m/prepare_proteomes.py
-MCYCLE_CONFIG=config/config_gtdb500.yaml python run.py --input comparators/gtdb500_m/proteomes --cores 8 --skip-db-setup
+MCYCLE_CONFIG=config/config_gtdb500.yaml python mcycle.py --input comparators/gtdb500_m/proteomes --cores 8 --skip-db-setup
 python comparators/build_mcycdb_tsv.py --panel comparators/gtdb500_m/proteomes \
     --hits comparators/gtdb500_m/mcycdb_out --out comparators/gtdb500_m/mcycdb.tsv
 bash comparators/run_metabolic_queue.sh        # then run_metabolic_gtdb_b01.sh

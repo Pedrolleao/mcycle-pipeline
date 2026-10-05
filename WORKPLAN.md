@@ -134,14 +134,14 @@ itself sequence-based, so a sequence reference would be circular).
 - Data and results created by the campaign (none under version control):
   `../ref_panel/` (49 genomes; `../ref_panel_train/`, `../ref_panel_holdout/` are links),
   `../clade_refs/` (320 GTDB-typed genomes behind the clade HMMs), `../mag_panel/`
-  (12 MAGs); results in `results/` (smoke), `results_ref/` (panel), `results_gtdb500/`,
+  (12 MAGs); results in `mcycle_results/` (smoke), `results_ref/` (panel), `results_gtdb500/`,
   `results_mags/`, each with its config `config/config{,_ref,_gtdb500,_mags}.yaml`
   selected by `MCYCLE_CONFIG`; comparator scratch and MCycDB under `comparators/`.
   All result directories currently hold the AMENDED tool's calls (`c7bf634`).
 - Tool: `Methane_Cycle/mcycle-pipeline/` (local git repo, branch `main`, no remote). Atlas with every measured
   number so far: `../Info-methane.md`. Config: `config/targets.yaml` (83 targets,
   17 complexes, 11 modules). Smoke panel: `../test_panel/` (`panel.tsv`, `fetch_panel.sh`).
-- Run: `python run.py --input <dir> --prodigal-mode single --cores 8`; `make smoke`.
+- Run: `python mcycle.py --input <dir> --prodigal-mode single --cores 8`; `make smoke`.
   Conda env `cycle-pipeline` (shared by the three tools). `python` is not on PATH
   outside the env — activate it or call `~/miniconda3/envs/cycle-pipeline/bin/python`.
 - Templates to port from — the sulfur repo is the most recent and already harmonized:
@@ -161,7 +161,7 @@ itself sequence-based, so a sequence reference would be circular).
   in-frame stop are joined (`join_inframe_stops`, tag `joined:`).
 - The report template, `make_html_report.py` and `fonts/` are byte-identical in the
   three repos; a change to one must be copied to all three. Browser test for the report:
-  `node ~/tools/shotter/report-export-test.mjs <report.html> <outdir>`.
+  `node ~/tools/shotter/report-export-test.mjs <mcycle_report.html> <outdir>`.
 
 ## Ground rules (each one cost the sister campaigns real time)
 
@@ -183,10 +183,10 @@ itself sequence-based, so a sequence reference would be circular).
   into its input); never two METABOLIC runs at once; batches of ≤ 12 genomes at GTDB
   scale. After any adapter fix, re-run every consumer (panel benchmark, GTDB
   concordance, figures).
-- **Operational**: `run.py` overwrites `results/` and rewrites `config/config.yaml` —
+- **Operational**: `mcycle.py` overwrites `mcycle_results/` and rewrites `config/config.yaml` —
   use a separate config and results dir per study
   (`MCYCLE_CONFIG=config/config_<study>.yaml`, as `config_p3_mags.yaml` does in sulfur).
-  `run.py` runs Snakemake without `--keep-going`: one empty proteome aborts the DAG.
+  `mcycle.py` runs Snakemake without `--keep-going`: one empty proteome aborts the DAG.
   Network calls need the sandbox disabled.
 
 ## Phases
@@ -293,7 +293,7 @@ From the backlog in `../Info-methane.md`:
     `../clade_refs/` (320 genomes). These two scripts replace the UniRef90-based
     `build_custom_hmms.py expand` / `calibrate_tc.py` / `logo_cv.py` route of the
     sisters: leave-one-genus-out is built into `build_clade_hmms.py`.
-  - Runs: `MCYCLE_CONFIG=config/config_ref.yaml python run.py --input ../ref_panel_train
+  - Runs: `MCYCLE_CONFIG=config/config_ref.yaml python mcycle.py --input ../ref_panel_train
     ...` writes `results_ref/`; scoring with `MCYCLE_SCOPE=train`. `../ref_panel_holdout/`
     holds the 22 hold-out genomes and had NOT been run when M3 closed.
   - Known limits to report: ANME-3 not cleanly separable; no comammox / mycobacterial
@@ -435,7 +435,7 @@ thresholds are for full-length proteins), (b) a model for non-euryarchaeal McrA.
   gate 14 / 14, benchmark and hold-out numbers identical. Frozen tables kept;
   `comparators/gtdb500_m/{CONCORDANCE,DIR_ACCURACY}_amended.*` are the amended ones.
   Changelog, REPORT section 6, README, ROADMAP ("Next cycle"), Info-methane updated.
-  - For a protein-input study `run.py` does not notice deleted `calls/` (the final
+  - For a protein-input study `mcycle.py` does not notice deleted `calls/` (the final
     targets still exist): force with `MCYCLE_CONFIG=<cfg> snakemake --cores N
     --configfile <cfg> --snakefile workflow/Snakefile --forcerun apply_rules_protein`.
 
