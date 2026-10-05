@@ -55,3 +55,20 @@ the defect. Applied only after M6 was closed and committed with the frozen tool.
   GCA_024464205).
 - The post-amendment GTDB counts are in-sample for this rule: the genomes that showed
   the defect are the ones on which the repair is counted.
+
+## 2026-10-05 — KOfam built from a snapshot in the repository (no change to any call)
+Made when the repository was prepared for cloning (commit `b7ea805`).
+- **Why.** genome.jp serves KOfam from one rolling URL. The release now there
+  (`profiles.tar.gz` of 2026-09-29) has a different threshold for 85 of the tool's 90
+  KOs (K00399: 775.53 -> 741.47; K00192: 612.00 -> 423.30), so a database built from a
+  fresh download is not the validated one.
+- **Change.** `resources/kofam_pinned/` holds the 90 profiles and their `ko_list` rows
+  from the validated release (2026-05-24, SHA-256 `b03d20b9…` of the full tarball);
+  `build_hmm_db.py` builds from it and keeps the download as `--upstream` / fallback.
+  `apply_rules.py` and `config/targets.yaml` are untouched.
+- **Check, from a fresh clone.** `mcycle_targets.hmm`, `tc_cutoffs.tsv` and both seed
+  FASTAs (re-fetched from UniProt) are byte-identical to those of the validation; the
+  smoke panel meets 168 / 168 expectations and its 18 call tables are byte-identical
+  to the previous run; `make regression` passes its 14 checks with the numbers of the
+  report (hold-out micro-F1 0.961 [0.940, 0.976], full panel 0.973 [0.963, 0.981],
+  3,173 cells) and rewrites the committed score tables without a difference.
