@@ -1,0 +1,11 @@
+# every call that differs between the frozen tool (9c39500) and the amended tool (c7bf634),
+# over the smoke panel, the reference panel, the MAG study and the GTDB-500 set
+results_dir	genome	target	status_before	status_after	evidence_before	evidence_after
+results_gtdb500	GCA_009780795_1	mcrB	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_009780795_1	mcrG	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_012799835_1	mcrB	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_012799835_1	mcrG	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_015662225_1	mcrB	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_015662225_1	mcrG	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_035391185_1	mcrB	disqualified	confirmed	ko|no_mcrA_acr_like	ko
+results_gtdb500	GCA_035391185_1	mcrG	disqualified	confirmed	ko|no_mcrA_acr_like	ko

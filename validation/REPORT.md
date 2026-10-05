@@ -184,3 +184,24 @@ MAGs), 0 wrong. METABOLIC and DRAM report the ethane oxidizer *Ca.* Argoarchaeum
 McrA / methanogenesis carrier and cannot separate the three ANME from the three
 methanogens. Two of the ANME MAGs were themselves in the training set of the model
 that calls them (disclosed per MAG).
+
+## 6. Amendment after the campaign: truncated McrA (M10, 2026-10-05)
+
+Sections 1-5 describe the tool frozen at commit `9c39500`. The defect of section 4 —
+mcrB / mcrG of a genuine methanogen labelled as alkyl-CoM reductase subunits when the
+MAG's McrA is truncated — was then repaired minimally (commit `c7bf634`; rationale and
+every changed call in `CHANGELOG.md` and `amendments/`).
+
+| | frozen `9c39500` | amended `c7bf634` |
+|---|---|---|
+| calls compared (smoke + panel + MAGs + GTDB-500) | 48,057 | 8 differ |
+| reference panel: hold-out F1, full-panel F1, trap precision, gate, benchmark | as sections 1-2 | identical (0 calls changed) |
+| MAG study | 10 / 12 as published | identical (0 calls changed) |
+| GTDB-500: non-alkane-oxidizer genomes with mcrB / mcrG labelled alkyl-CoM | 5 | 1 |
+| GTDB-500: alkane-oxidizer genomes so labelled | 3 | 3 |
+| GTDB-500: Mcr direction where McrA is called | 53 / 53 | 53 / 53 |
+
+Still open, deliberately: the truncated McrA itself is not called (4 genomes), and a
+full-length non-euryarchaeal McrA under the threshold is neither called nor spared the
+label (1 genome). Both need new call semantics or a new model and get their own
+validation cycle.

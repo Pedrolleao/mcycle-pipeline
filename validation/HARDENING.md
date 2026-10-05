@@ -119,3 +119,9 @@ disagreements. `mtsA` in *M. luminyensis*: not scored (the genome is not in KEGG
   not add up to the K00123 threshold — 2 cells.
 - Near-threshold or overlapping KOs: sgaA x 3, hprA, hdrD, frhB x 2, mvhA, mvhD
   (*M. kandleri*), acs x 2.
+
+## Addendum, 2026-10-05
+Rule 1 above (`gate_mcr_subunits`) was amended after the campaign: a gene fragment of a
+canonical McrA no longer counts as the "McrA homologue under the threshold". See
+`CHANGELOG.md` (M10) and `REPORT.md` section 6. Everything else in this log is the
+frozen tool of commit `9c39500`.

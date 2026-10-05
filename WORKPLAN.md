@@ -39,7 +39,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M6 | GTDB-500 concordance | DONE 2026-10-05 |
 | M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | DONE 2026-10-04 |
 | M8 | MAG realism study | DONE 2026-10-04 |
-| M10 | Amendment: minimal fix of the truncated-McrA mislabel (user decision 2026-10-04) | PREPARED — apply only after M6 is closed and committed |
+| M10 | Amendment: minimal fix of the truncated-McrA mislabel (user decision 2026-10-04) | DONE 2026-10-05 |
 | M9 | Report, docs, contract, reproducibility pins | IN PROGRESS — docs, CI, lock file, archive done; contract column and M6 numbers pending |
 
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
@@ -332,11 +332,15 @@ thresholds are for full-length proteins), (b) a model for non-euryarchaeal McrA.
   500 GTDB): 8 calls change, all mcrB / mcrG `disqualified -> confirmed` in the 4 GTDB
   genomes with a truncated McrA (GCA_009780795, GCA_012799835, GCA_015662225,
   GCA_035391185). Zero changes on the panel and the MAGs.
-- Order: (1) close and commit M6 with the frozen tool; (2) apply the patch, commit;
-  (3) re-run panel, MAGs and GTDB-500 (`rm -rf results_*/*/calls` first), `make
-  regression-score`, `check_smoke.py`; (4) re-run `clade_accuracy.py` into
-  `DIR_ACCURACY_amended.*`, keep the frozen tables; (5) changelog entry with before /
-  after, REPORT section 6, README / ROADMAP / Info-methane limits updated.
+- **DONE 2026-10-05.** M6 closed first (`8281f71`, frozen tool); patch applied as
+  `c7bf634`; smoke, panel, MAGs and GTDB-500 re-run. 8 of 48,057 calls differ
+  (`validation/amendments/2026-10-05_truncated_mcra_changes.tsv`), none on the panel:
+  gate 14 / 14, benchmark and hold-out numbers identical. Frozen tables kept;
+  `comparators/gtdb500_m/{CONCORDANCE,DIR_ACCURACY}_amended.*` are the amended ones.
+  Changelog, REPORT section 6, README, ROADMAP ("Next cycle"), Info-methane updated.
+  - For a protein-input study `run.py` does not notice deleted `calls/` (the final
+    targets still exist): force with `MCYCLE_CONFIG=<cfg> snakemake --cores N
+    --configfile <cfg> --snakefile workflow/Snakefile --forcerun apply_rules_protein`.
 
 ## Decisions (answered by the user 2026-10-04)
 

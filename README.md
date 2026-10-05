@@ -24,8 +24,9 @@ report in [`validation/REPORT.md`](validation/REPORT.md)):
 | vs raw KofamScan / METABOLIC / DRAM / MCycDB, trap precision | +0.34 / +0.31 / +0.47 / +0.37, all BH q < 0.0001 |
 | Mcr direction on 500 GTDB genomes, where McrA is called | 53 / 53 agree with the genome's lineage |
 
-What these numbers do not cover is in *Known limits* below — in particular McrA genes
-truncated at contig ends in fragmented MAGs.
+These numbers are those of the tool frozen for the validation (commit `9c39500`); one
+minimal fix was applied afterwards and changes none of them (`validation/REPORT.md`,
+section 6). What they do not cover is in *Known limits* below.
 
 ## Run
 
@@ -70,8 +71,9 @@ make smoke          # fetch the smoke panel, run it, check the expected calls (~
      `methanogenic`; the call is tagged on the mcrA / mcrB / mcrG `evidence_source`
      (e.g. `ko|mcr_reverse`) and names the clade model.
    - **Subunits follow the subunit that defines the enzyme.** `mcrB` / `mcrG` are
-     `disqualified` when the genome has an McrA homologue that fails the McrA call
-     (alkyl-coenzyme M reductases of alkane oxidizers); `mmoY/Z/B/C/D` need `mmoX`.
+     `disqualified` when the genome has no McrA call and carries a full McrA homologue
+     under the threshold (alkyl-coenzyme M reductases of alkane oxidizers; a gene
+     fragment of a canonical McrA does not count); `mmoY/Z/B/C/D` need `mmoX`.
    - **`fdhA` vs `fdh`.** With the F420-binding `fdhB` in the genome, an FdhA-family
      protein is the F420-dependent `fdhA` and not the NAD-linked `fdh`.
    - **`mcrA`** and **`mmoX`** are corroborated by seeds without being gated: a KO
@@ -167,15 +169,17 @@ the per-gene atlas, KO anchors, measured gate calibration and trap rationale):
 
 Found or confirmed by the validation campaign (`validation/REPORT.md`):
 
-- **Truncated McrA in fragmented MAGs.** An McrA gene cut at a contig end scores under
-  the K00399 threshold; the genome then gets no `mcrA` call, and — worse — its `mcrB` /
-  `mcrG` are `disqualified` as alkyl-CoM reductase subunits, because the rule that
-  recognizes alkane oxidizers sees "an McrA homologue that failed". 4 of the 67 genomes of Mcr-carrying
-  lineages in the GTDB-500 set. Not fixed: the tool was frozen for the
-  validation. First item of `ROADMAP.md`.
+- **Truncated McrA in fragmented MAGs is not called.** An McrA gene cut at a contig
+  end scores under the K00399 threshold, so the genome gets no `mcrA` call and no
+  direction (4 of the 67 genomes of Mcr-carrying lineages in the GTDB-500 set). Its
+  `mcrB` / `mcrG` are reported normally since the amendment of 2026-10-05 (before it
+  they were mislabelled as alkyl-CoM reductase subunits; `validation/CHANGELOG.md`).
+  Calling the fragment itself needs a "direction unresolved" state and is left for a
+  separate cycle.
 - **Non-euryarchaeal McrA** can fall under the KOfam threshold: the full-length McrA
   of one *Ca.* Methanomethylicus genome of the GTDB-500 set scores 578 (threshold
-  775.5), while the *Ca.* M. mesodigestus V2 MAG of the MAG study is called.
+  775.5) and its `mcrB` / `mcrG` are then labelled as alkyl-CoM reductase subunits,
+  while the *Ca.* M. mesodigestus V2 MAG of the MAG study is called. Separate cycle.
 - **A MAG that lacks the gene cannot be called**: 6 GTDB genomes and 2 of the 12
   study MAGs have no Mcr subunit A in the assembly.
 - **ANME-3 is not cleanly separable** from methylotrophic Methanosarcinaceae on McrA

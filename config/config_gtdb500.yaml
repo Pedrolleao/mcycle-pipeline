@@ -53,6 +53,7 @@ build:
 
 
 
+
 samples:
   GCA_000403075_1:
     path: /home/dmin/Grants/Nitrogen_Cycle/ncycle-pipeline/comparators/gtdb500/proteomes/GCA_000403075_1.faa

@@ -49,6 +49,7 @@ build:
 
 
 
+
 samples:
   Afulgidus_DSM4304:
     path: /home/dmin/Grants/Methane_Cycle/test_panel/Afulgidus_DSM4304.fna

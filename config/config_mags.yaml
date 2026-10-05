@@ -53,6 +53,7 @@ build:
 
 
 
+
 samples:
   ANME1_Methanospirare_FWG175:
     path: /home/dmin/Grants/Methane_Cycle/mag_panel/ANME1_Methanospirare_FWG175.fna
