@@ -52,10 +52,30 @@ re-run of the gate and of the GTDB check.
 
 ## Open, smaller
 
-1. **Ground-truth review of the hold-out candidates** listed in the changelog
-   (`mtmB` / `mtbB` of *M. burtonii*, `ftr` of *M. thermophilum*), with independent
-   evidence only.
+1. **Ground-truth review of the flagged cells**, with independent evidence only and a
+   changelog entry: `mtmB` / `mtbB` of *M. burtonii*, `ftr` of *M. thermophilum* (called
+   by the tool, absent in the ground truth); `mmoX` of *M. album* BG8 (unscored).
 2. **pxmA / pmoA3**: decide whether to report them as their own target.
-3. **Residual KO-level confusions** (`acs`, `fdh` / `fdhA` without FdhB, `frhB`, `hdrD`).
-4. Archive `resources/blast_db/` and the clade-reference genome list with a release
-   (`../mcycle_blast_db_2026-10-04.tar.gz`, SHA-256 beside it).
+3. **Residual KO-level confusions** — most of the 47 panel errors: `acs`, `fdh` / `fdhA`
+   without FdhB, `frhB`, `hdrD`, `sgaA` / `hprA`, `mttC` / `mtbC`.
+4. **Benchmark figures 2 and 3**: `validation/benchmark/plot_benchmark.py` (the sister
+   file, unchanged) skips them for methane — the concordance and direction tables have
+   another layout.
+
+## Waiting on a decision
+
+- **Deposit** `../mcycle_blast_db_2026-10-04.tar.gz` (SHA-256 beside it) and the list of
+  the 320 clade-reference genomes with a release.
+- **CI**: `.github/workflows/regression.yml` needs a remote; the repository is local and
+  private.
+- **Manuscript**: methane is in the sister-tool contract, not in the `Unify_Tools`
+  manuscript.
+- **Merging the three engines** into one.
+
+## Limits only new genomes can close
+
+- No out-of-genus test for ANME-2d, NC10, alpha-proteobacterial pMMO or acetoclastic
+  methanogenesis.
+- ANME-3 vs methylotrophic Methanosarcinaceae on McrA sequence.
+- The trap-precision interval is degenerate; with 29 hold-out trap positives the lower
+  bound on recall is about 0.90.

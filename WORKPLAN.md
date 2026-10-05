@@ -1,13 +1,13 @@
 # WORKPLAN — bring mcycle-pipeline to the validation level of ncycle / scycle
 
-**Living document.** A new session reads this first, picks the first phase that is not
-DONE, and updates the status table and the phase notes before it ends. Written
-2026-10-04; execution started the same day.
+**Living document.** Written 2026-10-04, executed 2026-10-04 / 05.
 
-**All phases are DONE (2026-10-05).** Results: `validation/REPORT.md`. What comes next
-is not in this plan: `ROADMAP.md`, "Next cycle" (calling a truncated McrA; a model for
-non-euryarchaeal McrA) — each to be planned as its own validated cycle, per the user's
-decision of 2026-10-04.
+**The campaign is complete: every phase below is DONE.** A new session should read, in
+this order: "What was done" (next section), "Possible next steps", then the phase notes
+of whatever it is about to touch — they hold the operational lessons. Results are in
+`validation/REPORT.md`. Nothing here is waiting to be picked up automatically: new work
+starts from "Possible next steps" and needs the user's go-ahead (see "How to start a
+new cycle").
 
 ## Goal and definition of done
 
@@ -50,8 +50,94 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
 M1 before M3 is not negotiable: the hold-out must be frozen before anything is tuned.
 
+## What was done (summary; details in the phase notes and in `validation/REPORT.md`)
+
+Two tool states matter. **Frozen: commit `9c39500`** — the tool as it left hardening;
+every number of the campaign refers to it. **Amended: commit `c7bf634`** — one minimal
+fix applied after the campaign; it changes no panel number. Current `main` = amended.
+
+| Phase | Outcome | Main artefacts |
+|---|---|---|
+| M0 | Repo under git (local, private, no remote); 7 decisions recorded | "Decisions" below |
+| M1 | 49-genome panel, 27 training / 22 hold-out, frozen before any ground truth; identity QC 49 / 49 | `validation/panel.tsv`, `PANEL_PLAN.md`, `validate_panel.py`, `../ref_panel/` |
+| M2 | KEGG ground truth (37 genomes, 3,034 cells) + curated-function ground truth (3,173 cells: 21 corrections, 90 literature cells, 49 direction cells) | `validation/ground_truth.tsv`, `curated_function_gt.tsv`, `curated_cells.tsv`, `phenotype_gt.tsv` |
+| M3 | Hardening on training genomes only: subunit gates, fdhA / fdh resolution, mvhD coverage floor, 5 threshold overrides, 9 clade HMMs (pmoA x 4, ANME McrA x 5) from GTDB-typed genomes | `validation/HARDENING.md`, `targets/pmoA/`, `targets/mcrA_anme/`, `workflow/scripts/{harvest_clade_refs,build_clade_hmms}.py` |
+| M4 | Hold-out micro-F1 0.961 [0.940, 0.976]; full panel 0.973 [0.963, 0.981]; trap precision 1.000 (71 TP, 0 FP); gate 14 / 14 | `validation/score_mcycle.py`, `test_regression.py`, `detect_seed_leakage.py`, `trap_independence.py`, `compare_kofam.py` |
+| M5 | Pre-registered benchmark: better than raw KofamScan, METABOLIC, DRAM, MCycDB on trap precision (+0.31 to +0.47) and ALL-F1 (+0.037 to +0.62); 8 / 8 contrasts, BH q < 0.0001 | `validation/benchmark/` (`prereg.md`, `COMPARISON_REPORT.md`, `benchmark_results.tsv`), `comparators/` |
+| M6 | GTDB-500, four tools: pmoA in the 20 ammonia-oxidizer genomes — mcycle 0, KofamScan 13, METABOLIC 5, MCycDB 5 | `comparators/gtdb500_m/` (`GTDB500_REPORT.md`, `CONCORDANCE.*`) |
+| M7 | Clade calls vs genome lineage: Mcr direction 53 / 53 where McrA is called; pmoA 34 / 36 (16 / 16 in new genera); gene-tree placements. Found the truncated-McrA defect | `comparators/gtdb500_m/DIR_ACCURACY.*`, `DIR_PLACEMENT*.md`, `validation/phylogeny/` |
+| M8 | 12 MAGs from nucleotide input: 10 as published, 2 with no Mcr gene in the assembly, 0 wrong; METABOLIC and DRAM alongside | `validation/metagenomes/` (`MAG_REPORT.md`, `mag_truth_vs_tool.tsv`), `../mag_panel/` |
+| M10 | Minimal fix of the truncated-McrA mislabel: 8 of 48,057 calls change (4 GTDB genomes), none on the panel | `validation/CHANGELOG.md`, `validation/amendments/`, REPORT section 6 |
+| M9 | Report with battery table, README / ROADMAP / atlas updated, env lock file, BLAST-seed archive, CI template, methane column in the sister-tool contract | `validation/REPORT.md`, `envs/mcycle.lock.yaml`, `.github/workflows/regression.yml` |
+
+Deviations from the original plan, all disclosed where they matter: 49 genomes instead
+of ~45; ANME-2d second lineage and marine ANME-2 / -3 went to the MAG study instead of
+the panel; clade HMMs built from GTDB-typed genomes instead of the UniRef90 route of
+the sisters; the M7 reference is the genome's GTDB lineage (mcycle's clade call is
+itself sequence-based, so a sequence reference would be circular).
+
+## Possible next steps (none started; each needs the user's go-ahead)
+
+**A. Next cycle — changes what the tool reports; own design and validation each**
+(user decision 2026-10-04; detail in `ROADMAP.md`, "Next cycle")
+1. **Call a truncated McrA.** Fragments at contig ends are not called, so those MAGs get
+   no `mcrA` and no direction (4 GTDB-500 genomes). Needs a "direction unresolved"
+   state — the ANME clade thresholds assume full-length proteins, and a naive fix would
+   create wrong-direction calls, of which there are none today.
+2. **Model for non-euryarchaeal McrA.** One *Ca.* Methanomethylicus genome
+   (GCA_024464205; full-length McrA at 578, threshold 775.5) is not called and is still
+   mislabelled as carrying alkyl-CoM reductase subunits. Build a canonical-McrA clade
+   model with `harvest_clade_refs.py` / `build_clade_hmms.py`.
+
+**B. Smaller items**
+3. **Ground-truth review**, independent evidence only, logged in `validation/CHANGELOG.md`:
+   `mtmB` / `mtbB` of *M. burtonii* and `ftr` of *M. thermophilum* (tool calls them,
+   ground truth says absent); `mmoX` of *M. album* BG8 (unscored).
+4. **pxmA / pmoA3**: report as their own target, or keep as recognized-and-not-called.
+5. **Residual gene-level confusions** — most of the 47 panel errors: `acs`, `fdh` /
+   `fdhA` without FdhB, `frhB`, `hdrD`, `sgaA` / `hprA`, `mttC` / `mtbC`.
+6. **Benchmark figures 2 and 3**: `plot_benchmark.py` (the sister file, unchanged) skips
+   them because the methane CONCORDANCE / DIR_ACCURACY tables have another layout.
+
+**C. Decisions that are the user's**
+7. **Deposit the archives**: `../mcycle_blast_db_2026-10-04.tar.gz` (+ `.sha256`) is
+   local only; the list of the 320 clade-reference genomes (`targets/*/harvest.tsv`
+   names those that gave a sequence) is not archived as genomes.
+8. **CI**: `.github/workflows/regression.yml` cannot run without a remote. The repo is
+   local and private by the user's instruction — do not create a remote or push
+   without asking.
+9. **Manuscript**: methane is in the contract table, not in the `Unify_Tools`
+   manuscript; that was explicitly left for a later decision.
+10. **Merging the three engines**: out of scope from the start, never discussed.
+
+**D. Limits that only new genomes can close**
+- No out-of-genus test for ANME-2d, NC10, alpha-proteobacterial pMMO, acetoclastic
+  methanogenesis (every available genus is a seed or training genus).
+- ANME-3 vs methylotrophic Methanosarcinaceae is at the limit of what McrA sequence
+  resolves (model set for precision).
+- The trap-precision interval is degenerate (no error): with 29 hold-out trap
+  positives the honest lower bound on recall is ~0.90; more trap genomes tighten it.
+
+### How to start a new cycle
+- The 22 hold-out genomes have been scored once. They stay banned as seed, HMM-training
+  and calibration sources, and any later change to rules, thresholds or models is a
+  post-hold-out change: say so, keep the frozen numbers, report before / after.
+- For a change of kind A: write the design and choose the test genomes BEFORE running
+  them (new genomes, not the ones that exposed the problem — the M10 repair count is
+  in-sample for that reason); then re-run `make regression`, `check_smoke.py`,
+  `clade_accuracy.py` on the GTDB-500 set, and add a dated `CHANGELOG.md` entry.
+- For a small fix, follow M10: patch tested by a dry run over every existing result set
+  (`validation/amendments/`), applied only after the current phase is committed.
+
 ## Where things are
 
+- Data and results created by the campaign (none under version control):
+  `../ref_panel/` (49 genomes; `../ref_panel_train/`, `../ref_panel_holdout/` are links),
+  `../clade_refs/` (320 GTDB-typed genomes behind the clade HMMs), `../mag_panel/`
+  (12 MAGs); results in `results/` (smoke), `results_ref/` (panel), `results_gtdb500/`,
+  `results_mags/`, each with its config `config/config{,_ref,_gtdb500,_mags}.yaml`
+  selected by `MCYCLE_CONFIG`; comparator scratch and MCycDB under `comparators/`.
+  All result directories currently hold the AMENDED tool's calls (`c7bf634`).
 - Tool: `Methane_Cycle/mcycle-pipeline/` (local git repo, branch `main`, no remote). Atlas with every measured
   number so far: `../Info-methane.md`. Config: `config/targets.yaml` (83 targets,
   17 complexes, 11 modules). Smoke panel: `../test_panel/` (`panel.tsv`, `fetch_panel.sh`).
