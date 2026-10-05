@@ -3,6 +3,23 @@
 Living report; sections are added as the campaign phases close (see `../WORKPLAN.md`).
 All intervals are genome-cluster percentile bootstrap 95 % CIs (B = 10,000, seed 1234).
 
+## Metric battery (shared with the nitrogen and sulfur tools)
+
+Tool frozen at commit `9c39500` for every row; the one later amendment (section 6)
+changes none of them.
+
+| # | metric | result | section |
+|---|---|---|---|
+| 1 | de-leaked hold-out micro-F1 (22 genomes) | **0.961 [0.940, 0.976]** | 1 |
+| 2 | full-panel micro-F1 (49 genomes, 3,173 cells) | 0.973 [0.963, 0.981] | 1 |
+| 3 | independent-only trap precision | 1.000 [1.000, 1.000] — 46 TP, 0 FP, 259 trap negatives | 1 |
+| 4 | per-pathway F1 (7 pathways) | 0.920 - 1.000; lowest methylotrophic methanogenesis 0.920 [0.857, 0.972] | 1 |
+| 5 | GTDB-500 concordance and trap divergence | pmoA in 20 ammonia-oxidizer genomes: mcycle 0, KofamScan 13, METABOLIC 5, MCycDB 5; direction 53 / 53 vs lineage | 3, 4 |
+| 6 | MAG realism (12 inputs, nucleotide) | 10 as published, 2 without the Mcr operon in the assembly, 0 wrong | 5 |
+| 7 | comparator benchmark, pre-registered, BH-FDR | better than KofamScan, METABOLIC, DRAM, MCycDB on trap precision (+0.31 to +0.47) and ALL-F1 (+0.037 to +0.62); 8 / 8, q < 0.0001 | 2 |
+
+Regression gate: 14 / 14 (`make regression`).
+
 ## 1. Reference-panel accuracy (M4, 2026-10-04)
 
 Panel: 49 genomes, 27 training / 22 hold-out, frozen before any ground truth

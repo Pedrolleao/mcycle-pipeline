@@ -4,6 +4,11 @@
 DONE, and updates the status table and the phase notes before it ends. Written
 2026-10-04; execution started the same day.
 
+**All phases are DONE (2026-10-05).** Results: `validation/REPORT.md`. What comes next
+is not in this plan: `ROADMAP.md`, "Next cycle" (calling a truncated McrA; a model for
+non-euryarchaeal McrA) — each to be planned as its own validated cycle, per the user's
+decision of 2026-10-04.
+
 ## Goal and definition of done
 
 `mcycle-pipeline` is built and smoke-tested (18 genomes, 168 expectations, thresholds
@@ -40,7 +45,7 @@ trap-independence-precision CI-lo · hold-out-F1 CI-lo · per-pathway-F1 CI-lo.
 | M7 | Orthogonal (phylogeny-anchored) validation of the two clade calls | DONE 2026-10-04 |
 | M8 | MAG realism study | DONE 2026-10-04 |
 | M10 | Amendment: minimal fix of the truncated-McrA mislabel (user decision 2026-10-04) | DONE 2026-10-05 |
-| M9 | Report, docs, contract, reproducibility pins | IN PROGRESS — docs, CI, lock file, archive done; contract column and M6 numbers pending |
+| M9 | Report, docs, contract, reproducibility pins | DONE 2026-10-05 |
 
 Order: M0 → M1 → M2 → M3 → M4 → M5; then M6, M7 (needs M6), M8 in any order; M9 last.
 M1 before M3 is not negotiable: the hold-out must be frozen before anything is tuned.
@@ -316,6 +321,12 @@ From the backlog in `../Info-methane.md`:
 - Reproducibility: lock file for the env, archive of `resources/blast_db/`, CI workflow
   adapted from the sister template.
 - Add a methane column to the sister-tool contract if the user wants it there.
+- **DONE 2026-10-05.** `validation/REPORT.md` (battery table + sections 1-6);
+  `README.md`, `ROADMAP.md`, `../Info-methane.md`, `../README.md`, `../targets.yaml`
+  (mirror) updated; `envs/mcycle.lock.yaml`; `../mcycle_blast_db_2026-10-04.tar.gz` +
+  `.sha256`; `.github/workflows/regression.yml` (template until the repository has a
+  remote — it stays local and private). Methane column added to
+  `Unify_Tools/shared/sister-tool-contract.md`; the manuscript was not touched.
 
 ### M10 — Amendment after the campaign: truncated McrA (decided by the user 2026-10-04)
 The user chose the MINIMAL fix: stop `gate_mcr_subunits` from disqualifying mcrB / mcrG
