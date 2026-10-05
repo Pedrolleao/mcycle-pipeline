@@ -42,7 +42,7 @@ def main() -> None:
             cdir = args.results / g / "calls"
             if not (cdir / "mcycle_calls.tsv").exists():
                 sys.exit(f"FAIL: no calls for {g} under {args.results} — run the "
-                         "pipeline on ../test_panel first (make smoke)")
+                         "pipeline on test_panel first (make smoke)")
             cache[g] = (
                 {r["target_id"]: r for r in read_tsv(cdir / "mcycle_calls.tsv")},
                 {r["synergy_id"]: r for r in read_tsv(cdir / "synergy_completeness.tsv")})

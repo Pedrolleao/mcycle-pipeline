@@ -52,3 +52,7 @@ comparators/mags_dram_out/
 validation/metagenomes/checkm_out/
 comparators/gtdb500_m/metabolic_backbone/
 comparators/gtdb500_m/metabolic_all/
+
+# ---- Smoke panel: roster and fetch script are tracked, the genomes are downloaded ----
+test_panel/*.fna
+test_panel/*.faa

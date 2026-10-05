@@ -3,8 +3,8 @@
 Maps MAGs / isolate proteomes to their participation in the **methane cycle**:
 methanogenesis (CO₂-reducing, acetoclastic, methylotrophic), anaerobic methane
 oxidation by reverse methanogenesis, aerobic methane oxidation, and the fate of the
-C1 units that follow. Third sister of `Nitrogen_Cycle/ncycle-pipeline` and
-`Sulfur_Cycle/scycle-pipeline`, on the same engine: detection is **KO-primary**
+C1 units that follow. Third sister of the nitrogen (`ncycle-pipeline`) and sulfur
+(`scycle-pipeline`) tools, on the same engine: detection is **KO-primary**
 (KOfam HMMs + adaptive per-KO thresholds), with **clade HMMs** for the two homology
 traps (pmoA vs amoA; ANME vs methanogen McrA) and curated seeds as corroboration.
 Covers **83 targets** (across 7 process modules), **17 obligatory complexes**, and
@@ -28,24 +28,43 @@ These numbers are those of the tool frozen for the validation (commit `9c39500`)
 minimal fix was applied afterwards and changes none of them (`validation/REPORT.md`,
 section 6). What they do not cover is in *Known limits* below.
 
+## Install
+
+Developed and validated on Linux (x86-64). Needs `git`, conda or mamba, `curl` and
+`unzip`; about 3 GB of disk for the environment. Network access is needed for the install,
+for the first database build (28 seed sequences from UniProt) and for fetching the
+test genomes from NCBI; the pipeline itself runs offline.
+
+```bash
+git clone https://github.com/Pedrolleao/mcycle-pipeline.git
+cd mcycle-pipeline
+conda env create -f envs/mcycle.yaml      # env `cycle-pipeline`; or: mamba env create …
+conda activate cycle-pipeline
+make smoke          # fetch 18 genomes (59 MB), build the databases, run, check 168 expected calls
+```
+
+`make smoke` ending in `OK: 168 smoke expectations met on 18 genomes` means the
+install reproduces the reference calls.
+`envs/mcycle.lock.yaml` is the exact environment of the validation (linux-64), for
+when the open version ranges of `envs/mcycle.yaml` resolve to something that behaves
+differently.
+
 ## Run
 
 ```bash
-cd mcycle-pipeline
 python run.py --input <dir-of-.faa-or-.fna> --cores 8
-# First run creates the `cycle-pipeline` conda env from envs/mcycle.yaml if it does
-# not exist yet (shared with the nitrogen and sulfur sister tools). To use another
-# env with the same dependencies:
-#   MCYCLE_ENV=<env-name> python run.py --input <dir> --skip-db-setup
+# Outside the conda env, run.py re-runs itself inside `cycle-pipeline` (and creates it
+# from envs/mcycle.yaml if it does not exist). To use another env with the same
+# dependencies:
+#   MCYCLE_ENV=<env-name> python run.py --input <dir>
 ```
 
 `run.py` auto-detects protein (`.faa`) vs nucleotide (`.fna`, → Prodigal) input,
 builds the databases on first run (and again whenever `config/targets.yaml` is newer
-than them), then dispatches Snakemake.
-
-```bash
-make smoke          # fetch the smoke panel, run it, check the expected calls (~1 min)
-```
+than them), then dispatches Snakemake. It asks whether nucleotide input is isolate
+genomes or metagenome assemblies unless `--prodigal-mode single|meta` is given, and
+writes the samples it found into the `samples:` block of `config/config.yaml` — so
+`git status` shows that file as modified after a run.
 
 ## How it works
 
@@ -153,7 +172,7 @@ the ruled-out message in `make_gap_analysis.py`.
 
 ## Pathways & targets
 
-Seven process modules / 83 markers (see [`../Info-methane.md`](../Info-methane.md) for
+Seven process modules / 83 markers (see [`Info-methane.md`](Info-methane.md) for
 the per-gene atlas, KO anchors, measured gate calibration and trap rationale):
 
 1. **Mcr / Mtr core** — mcrABG(CD), mcrA_anme, mtrA–H
@@ -232,6 +251,19 @@ python workflow/scripts/build_blast_db.py    # curated UniProt seeds → DIAMOND
 python validation/check_smoke.py             # re-check existing results/ against the expectations
 ```
 
-The KOfam cache (`resources/.cache/`) is symlinked to the ncycle-pipeline download
-(~1.5 GB profiles.tar.gz, pinned release 2026-05-24, verified by SHA-256 at build
-time) to avoid a re-fetch; delete the links to make the build download its own copy.
+**KOfam is pinned in the repository.** The 90 KOfam profiles and their thresholds are
+built from `resources/kofam_pinned/`, the release of 2026-05-24 the tool was validated
+on. genome.jp serves KOfam from a rolling URL and keeps no old releases — the release
+of 2026-09-29 has a different threshold for 85 of the 90 KOs — so a database built
+from a fresh download is not the validated one. `build_hmm_db.py --upstream` downloads
+the current release (~1.5 GB) anyway; re-validate (`make regression`) before trusting it.
+
+**What a clone does not contain.** Pipeline results, the downloaded genomes, and the
+third-party tools and databases of the comparator benchmark (METABOLIC, DRAM, MCycDB,
+GTDB proteomes). `make ref-panel` downloads the 49 reference genomes into `../ref_panel`,
+next to the clone. The scripts under `comparators/`, the study configs
+`config/config_{ref,gtdb500,mags}.yaml` and the clade-model builders
+(`harvest_clade_refs.py`, `build_clade_hmms.py`) are the record of how the validation
+was run: they carry paths of the machine it ran on and need editing to be re-run
+elsewhere. Their outputs — the tables under `validation/` and `comparators/`, and the
+clade HMMs under `targets/` — are committed.

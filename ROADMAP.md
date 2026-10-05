@@ -8,7 +8,7 @@ Where the methane tool stands against the sister-tool contract
 | Dimension | State |
 |---|---|
 | Launcher (`run.py`, shared env, no legacy modes) | done; `MCYCLE_CONFIG` selects a per-study config |
-| KOfam cache, SHA-pinned (same release as N and S) | done — cache is a symlink to the nitrogen download |
+| KOfam pinned (same release as N and S) | done — snapshot of the 90 profiles and thresholds in `resources/kofam_pinned/` |
 | DB staleness guard (`_stale()` vs targets.yaml) | done |
 | Custom-HMM provenance (`targets/<id>/manifest.yaml`) | done — 9 clade HMMs (pmoA x 4, mcrA_anme x 5) from GTDB-typed genomes |
 | Smoke panel + expectations (`make smoke`) | done — 18 genomes, 168 expectations |

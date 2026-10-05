@@ -1,0 +1,24 @@
+# Smoke panel for mcycle-pipeline. Every genome is fetched from NCBI by assembly
+# accession (fetch_panel.sh) as GENOME sequence (`input` = fna), so the pipeline calls
+# the genes itself (Prodigal) and every genome gets gene coordinates and locus maps.
+# `input` = faa would fetch the annotated proteome instead; `source` may also be a
+# path, relative to this directory, to a local file to copy.
+name	source	input	role	expected
+Mmaripaludis_S2	GCF_000011585.1	fna	hydrogenotrophic methanogen	CO2-reducing methanogenesis complete; mcr methanogenic
+Mthermautotrophicus_DeltaH	GCF_000008645.1	fna	hydrogenotrophic methanogen	CO2-reducing methanogenesis complete; hmd present
+Macetivorans_C2A	GCF_000007345.1	fna	acetoclastic + methylotrophic methanogen	acetoclastic (ack+pta+cdh) and methanol/methylamine methanogenesis; no pmo/mmo
+Msoehngenii_GP6	GCF_000204415.1	fna	obligate acetoclastic methanogen	acetoclastic via acs; no methyltransferase systems
+Mluminyensis_B10	GCF_000308215.1	fna	H2-dependent methylotrophic methanogen	mcr + mta/mtm/mtb/mtt; no mtr, no fwd
+Mnitroreducens_ANME2d	GCA_000685155.1	fna	anaerobic methanotroph (ANME-2d)	mcr reverse; reverse methanogenesis module
+Mcapsulatus_Bath	GCF_000008325.1	fna	aerobic methanotroph (gamma, type X)	pMMO + sMMO, mxaFI, RuMP; pmoA seed strain (in-sample)
+Mfumariolicum_SolV	GCA_000953475.1	fna	aerobic methanotroph (Verrucomicrobia)	pMMO, xoxF only (no mxaFI), no sMMO
+Mtrichosporium_OB3b	GCF_002752655.1	fna	aerobic methanotroph (alpha, type II)	pMMO + sMMO, serine cycle
+Msilvestris_BL2	GCF_000021745.1	fna	aerobic methanotroph (sMMO only)	sMMO, no pMMO
+Mextorquens_AM1	GCF_000022685.1	fna	methylotroph, not a methanotroph	mxaFI + xoxF, H4MPT formaldehyde oxidation, serine cycle; no pmo/mmo/mcr
+Neuropaea_ATCC19718	GCF_000009145.1	fna	decoy: beta-AOB (amoCAB)	pmoA/B/C NOT called
+Noceani_ATCC19707	GCF_000012805.1	fna	decoy: gamma-AOB (closest amoA to pmoA)	pmoA/B/C NOT called
+Nmaritimus_SCM1	GCF_000018465.1	fna	decoy: AOA (archaeal amoA)	pmoA/B/C NOT called
+Afulgidus_DSM4304	GCF_000008665.1	fna	decoy: sulfate reducer with H4MPT C1 genes + CODH/ACS, no mcr	no methanogenesis module complete
+Dvulgaris_Hildenborough	GCF_000195755.1	fna	decoy: sulfate reducer (Hdr-like, CODH)	no methane-cycle module complete
+Ecoli_K12_MG1655	GCF_000005845.2	fna	decoy: ack/pta/acs + frmAB only	no methane-cycle module complete
+Spneumoniae_ref	GCF_001457635.1	fna	negative (NCBI reference genome, strain NCTC7465)	nothing beyond housekeeping

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Populate ../ref_panel/ from validation/panel.tsv: one genome FASTA per roster row,
 # downloaded from NCBI by assembly accession (datasets API). A genome the smoke panel
-# already holds under the same name is copied from ../test_panel/ instead (same
+# already holds under the same name is copied from test_panel/ instead (same
 # accession in both rosters). Network access is needed for the downloads.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 out="${1:-$here/../../ref_panel}"
-smoke="$here/../../test_panel"
+smoke="$here/../test_panel"
 mkdir -p "$out"
 API=https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession
 fail=0

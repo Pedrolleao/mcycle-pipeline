@@ -1,8 +1,8 @@
 # Human-readable env spec for the `cycle-pipeline` conda env, which is SHARED by the
 # nitrogen (ncycle-pipeline), sulfur (scycle-pipeline) and methane (mcycle-pipeline)
 # sister tools — the same spec ships in all three (envs/{n,s,m}cycle.yaml).
-# For an EXACT reproduction of the validated baseline, use the pinned lockfile in
-# the nitrogen repo instead:  conda env create -f envs/ncycle.lock.yml
+# For an EXACT reproduction of the validated baseline, use the pinned lockfile
+# instead (linux-64):  conda env create -f envs/mcycle.lock.yaml
 # The three tools below are PINNED to exact versions because their minor releases
 # change bitscores/heuristics, and the regression gate is threshold-sensitive
 # (HMMER trusted cutoffs, DIAMOND identity gates). The rest keep `>=` floors.
