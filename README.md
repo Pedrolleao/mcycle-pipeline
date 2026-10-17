@@ -132,12 +132,12 @@ as SVG (vector) and PNG (300 DPI).
 
 | file | what it is |
 |---|---|
-| `calls/mcycle_calls.tsv` | one row per target: status, evidence source, protein, HMM hit + E-value, BLAST reference + identity. For nucleotide input the columns `contig`, `start`, `end`, `strand` locate the called gene (empty for a pre-called proteome). One protein is reported per target; `other_copies` lists further proteins that reach the same status |
+| `calls/mcycle_calls.tsv` | one row per target: status, evidence source, protein, HMM hit + E-value, BLAST reference + identity. The columns `contig`, `start`, `end`, `strand` locate the called gene when the input had coordinates (nucleotide input, or a proteome whose FASTA headers carry Prodigal coordinates); empty otherwise. One protein is reported per target; `other_copies` lists further proteins that reach the same status |
 | `calls/complex_completeness.tsv`, `calls/synergy_completeness.tsv` | completeness of the 17 complexes and 11 process modules |
 | `calls/mcycle_loci.tsv` | *(nucleotide input only)* called genes grouped into loci: genes on one contig with at most 5 other genes between them |
 | `report/gap_analysis.txt` | plain-text summary |
 | `report/mcycle_map.svg/.png` | the genome's calls drawn on the methane cycle (see below) |
-| `report/loci.svg/.png` | *(nucleotide input only)* gene-arrow maps of every locus, grouped by pathway, to a common bp scale |
+| `report/loci.svg/.png` | *(input with gene coordinates: nucleotide, or a proteome with Prodigal headers)* gene-arrow maps of every locus, filed under the pathway of most of its called genes, each arrow filled with its own gene's pathway, to a common bp scale |
 
 **Across samples**
 

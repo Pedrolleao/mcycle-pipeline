@@ -173,8 +173,9 @@ rule mcycle_maps_figure:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Per-sample figures: the genome's methane-cycle map, and (nucleotide / MAG input
-# only — it needs gene coordinates) the gene-neighbourhood maps.
+# Per-sample figures: the genome's methane-cycle map, and — when the genes have
+# coordinates: nucleotide / MAG input, or a proteome with Prodigal headers — the
+# gene-neighbourhood maps.
 # ─────────────────────────────────────────────────────────────────────────────
 
 rule mcycle_map:
@@ -209,7 +210,7 @@ rule locus_maps:
     params:
         results_dir=str(RESULTS),
     wildcard_constraints:
-        sample=NUCLEOTIDE_SAMPLES_RE,
+        sample=COORD_SAMPLES_RE,
     shell:
         r"""
         python workflow/scripts/make_locus_maps.py \
@@ -229,7 +230,7 @@ rule html_report:
         complexes=[str(RESULTS / s / "calls" / "complex_completeness.tsv") for s in SAMPLES],
         synergies=[str(RESULTS / s / "calls" / "synergy_completeness.tsv") for s in SAMPLES],
         coords=[str(RESULTS / s / "prodigal" / f"{s}.{ext}")
-                for s in NUCLEOTIDE_SAMPLES for ext in ("faa", "gff")],
+                for s in COORD_SAMPLES for ext in ("faa", "gff")],
         targets=config["paths"]["targets_yaml"],
         template="workflow/scripts/report_template.html",
     output:

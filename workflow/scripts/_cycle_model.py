@@ -170,7 +170,7 @@ STEPS = [
      "arrows": [("CH4", "MEOH", 0.0, (0, 0), (0, 0))],
      "routes": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"]],
      "lines": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"],
-               ["mmoB", "mmoC", "nod"]],
+               ["mmoB", "mmoC", "mmoD", "nod"]],
      "label": (50.0, 10.6, "right")},
     {"id": "mdh", "name": "CH₃OH → HCHO (MxaFI or XoxF methanol dehydrogenase)",
      "pathway": _O,
@@ -216,15 +216,16 @@ def _slot_genes(slot) -> list[str]:
     return [slot] if isinstance(slot, str) else list(slot)
 
 
-def _token(slot, codes: dict[str, int], muted: bool = False) -> dict:
+def _token(slot, codes: dict[str, int]) -> dict:
     """The gene to print for a slot: the best-supported alternative (first one
-    when none is present). `muted` prints it as absent (the step is switched
-    off in this genome's mode and the gene is shown on another step)."""
+    when none is present). The code is always the gene's real call — also on a
+    step that is switched off in this genome's mode (see `off` in evaluate()),
+    so the map never shows a called gene as absent."""
     genes = _slot_genes(slot)
     rank = {2: 0, 1: 1, -1: 2, 0: 3}
     best = min(genes, key=lambda g: (rank[codes.get(g, 0)], genes.index(g)))
     return {"gene": best, "label": DISPLAY.get(best, best),
-            "code": 0 if muted else codes.get(best, 0)}
+            "code": codes.get(best, 0)}
 
 
 _PRESENT = ("confirmed", "domain-only", "narrow-no-IPR")
@@ -265,23 +266,33 @@ def context_note(ctx: dict) -> str:
 
 
 def evaluate(codes: dict[str, int], ctx: dict | None = None) -> dict[str, dict]:
-    """{step_id: {state, reversed, lines:[[token,…],…]}} for one genome."""
+    """{step_id: {state, reversed, off, lines:[[token,…],…]}} for one genome.
+
+    `off` is '' for a step evaluated normally, otherwise the reason the step is
+    not drawn as active in this genome's mode (hide_in / only_in). An off step
+    has state `absent` whatever its genes, but its gene tokens keep their real
+    calls — a present gene is never printed as absent; the renderers mark the
+    step and state the reason instead."""
     mode = (ctx or {}).get("mode")
     out: dict[str, dict] = {}
     for st in STEPS:
         def present(slot) -> bool:
             return any(codes.get(g, 0) in (1, 2) for g in _slot_genes(slot))
-        off = (mode in st.get("hide_in", ())
-               or ("only_in" in st and mode not in st["only_in"]))
+        off = ""
+        if mode in st.get("hide_in", ()):
+            off = f"not drawn in a {mode} genome"
+        elif "only_in" in st and mode not in st["only_in"]:
+            off = "drawn only in " + " / ".join(f"{m} genomes" for m in sorted(st["only_in"]))
         route_full = any(all(present(s) for s in r) for r in st["routes"])
         any_gene = any(present(s) for r in st["routes"] for s in r)
         state = ("absent" if off else "complete" if route_full
                  else "partial" if any_gene else "absent")
         out[st["id"]] = {
             "state": state,
+            "off": off,
             "reversed": bool((st.get("reversible") and mode == "reverse")
                              or mode in st.get("up_in", ())),
-            "lines": [[_token(s, codes, off) for s in line] for line in st["lines"]],
+            "lines": [[_token(s, codes) for s in line] for line in st["lines"]],
         }
     return out
 
