@@ -61,6 +61,10 @@ python mcycle.py --input <dir> --plain > run.log 2>&1                    # plain
 #   MCYCLE_ENV=<env-name> python mcycle.py --input <dir>
 ```
 
+On a cluster or in any batch job, pass both `--input` and `--prodigal-mode`: without a
+terminal the launcher asks nothing — a missing `--input` is an error, a missing
+`--prodigal-mode` falls back to `single` with a warning.
+
 `mcycle.py` auto-detects protein (`.faa`) vs nucleotide (`.fna`, → Prodigal) input,
 builds the databases on first run (and again whenever `config/targets.yaml` is newer
 than them), then dispatches Snakemake. It asks whether nucleotide input is isolate
