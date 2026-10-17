@@ -54,6 +54,7 @@ differently.
 ```bash
 python mcycle.py --input <dir-of-.faa-or-.fna> --cores 8                 # results in mcycle_results/
 python mcycle.py --input <dir> --output <results-dir> --cores 8          # results where you want them
+python mcycle.py --input <dir> --plain > run.log 2>&1                    # plain text, Snakemake output verbatim
 # Outside the conda env, mcycle.py re-runs itself inside `cycle-pipeline` (and creates it
 # from envs/mcycle.yaml if it does not exist). To use another env with the same
 # dependencies:
@@ -70,6 +71,14 @@ writes the samples it found into the `samples:` block of `config/config.yaml` â€
 Results go to `mcycle_results/` inside this directory unless `--output DIR` is given (a
 path relative to where you run the command). When the run finishes the launcher prints
 the results directory and the path of `mcycle_report.html`, the page to open first.
+
+On a terminal the launcher shows four stages (environment, input, databases, pipeline),
+the samples it found as a table, Snakemake's job plan, and one progress bar over the
+jobs; a failing job is shown as an error panel with the path of Snakemake's complete log
+(`.snakemake/log/`). `--plain`, the `NO_COLOR` environment variable, or a stdout that is
+not a terminal (a log file, CI) switch to plain text with Snakemake's own output passed
+through unchanged. The presentation lives in `cycle_ui.py` (`rich`, Vee Lab colours)
+and does not touch inputs, databases or calls.
 
 ## How it works
 
