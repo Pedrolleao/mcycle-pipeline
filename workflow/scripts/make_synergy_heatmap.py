@@ -35,7 +35,7 @@ from _viz import RULED_OUT_LABEL
 
 
 def render(samples: list[str], sample_data: dict[str, dict],
-           synergies: list[dict], out: Path) -> None:
+           synergies: list[dict], outs: list[Path]) -> None:
     plain = [s for s in synergies if not s.get("forbids")]
     flags = [s for s in synergies if s.get("forbids")]
     groups = [("process modules — required steps only" if flags else "process modules",
@@ -56,9 +56,9 @@ def render(samples: list[str], sample_data: dict[str, dict],
                 ("ruled_out", "", RULED_OUT_LABEL),
                 ("absent", "", "absent")],
         key=key, key_title="What each module means",
-        out=out,
+        outs=outs,
     )
-    print(f"[synergy_heatmap] wrote {out}  ({len(samples)} samples, "
+    print(f"[synergy_heatmap] wrote {', '.join(map(str, outs))}  ({len(samples)} samples, "
           f"{len(synergies)} synergies)")
 
 
@@ -67,7 +67,8 @@ def main() -> None:
     ap.add_argument("--results-dir", required=True, type=Path)
     ap.add_argument("--targets",     required=True, type=Path)
     ap.add_argument("--samples",     required=True)
-    ap.add_argument("--out",         required=True, type=Path)
+    ap.add_argument("--out",         required=True, type=Path, nargs="+",
+                    help="one or more paths; the extension picks the format")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))

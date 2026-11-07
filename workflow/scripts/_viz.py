@@ -46,6 +46,18 @@ STATUS_LABEL = {
 STATUS_SHORT = {2: "confirmed", 1: "domain-only", -1: "disqualified", 0: "absent"}
 
 
+def save_all(fig, outs, **savefig_kw) -> None:
+    """Save one rendered figure to every path in `outs` — the format follows the
+    extension (PNG at 300 DPI, SVG vector) — and close it. One render, two files:
+    the rules used to call a script twice, once per extension."""
+    import matplotlib.pyplot as plt
+    for out in outs:
+        out = Path(out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(out, dpi=300 if out.suffix.lower() == ".png" else 100, **savefig_kw)
+    plt.close(fig)
+
+
 def load_calls(path: Path) -> dict[str, dict]:
     """{target_id: row} from a per-sample calls table."""
     out: dict[str, dict] = {}

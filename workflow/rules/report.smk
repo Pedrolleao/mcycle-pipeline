@@ -63,13 +63,7 @@ rule cross_sample_report:
             --results-dir {params.results_dir} \
             --targets {input.targets} \
             --matrix-out {output.matrix} \
-            --heatmap-out {output.heatmap_svg}
-        python workflow/scripts/make_cross_sample_report.py \
-            --samples {params.samples} \
-            --results-dir {params.results_dir} \
-            --targets {input.targets} \
-            --matrix-out {output.matrix} \
-            --heatmap-out {output.heatmap_png}
+            --heatmap-out {output.heatmap_svg} {output.heatmap_png}
         """
 
 
@@ -85,8 +79,8 @@ FIGURES_DIR = RESULTS / "figures"
 
 
 rule pathway_heatmap:
-    """One categorical heatmap per pathway category. Co-renders SVG (vector,
-    paper-grade) and PNG (300 DPI, quick preview)."""
+    """One categorical heatmap per pathway category. SVG (vector, paper-grade)
+    and PNG (300 DPI, quick preview) from one render."""
     input:
         matrix=RESULTS / "mcycle_matrix.tsv",
         targets=config["paths"]["targets_yaml"],
@@ -99,10 +93,7 @@ rule pathway_heatmap:
         r"""
         python workflow/scripts/make_pathway_heatmap.py \
             --matrix {input.matrix} --targets {input.targets} \
-            --pathway {wildcards.pathway} --out {output.svg}
-        python workflow/scripts/make_pathway_heatmap.py \
-            --matrix {input.matrix} --targets {input.targets} \
-            --pathway {wildcards.pathway} --out {output.png}
+            --pathway {wildcards.pathway} --out {output.svg} {output.png}
         """
 
 
@@ -122,10 +113,7 @@ rule complex_heatmap_figure:
         r"""
         python workflow/scripts/make_complex_heatmap.py \
             --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.svg}
-        python workflow/scripts/make_complex_heatmap.py \
-            --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.png}
+            --samples {params.samples} --out {output.svg} {output.png}
         """
 
 
@@ -145,10 +133,7 @@ rule synergy_heatmap_figure:
         r"""
         python workflow/scripts/make_synergy_heatmap.py \
             --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.svg}
-        python workflow/scripts/make_synergy_heatmap.py \
-            --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.png}
+            --samples {params.samples} --out {output.svg} {output.png}
         """
 
 

@@ -29,7 +29,7 @@ def render(
     samples: list[str],
     sample_data: dict[str, dict[str, dict]],
     complexes: list[tuple[str, list[str], bool, str]],   # (id, members, obligatory, application)
-    out: Path,
+    outs: list[Path],
 ) -> None:
     cells = {s: {cid: (v["state"], v["text"])
                  for cid, v in sample_data.get(s, {}).items()}
@@ -51,9 +51,9 @@ def render(
                 ("partial", "2/3", "partial — n of N subunits found"),
                 ("absent", "", "absent")],
         key=key, key_title="What each complex does",
-        out=out,
+        outs=outs,
     )
-    print(f"[complex_heatmap] wrote {out}  ({len(samples)} samples, "
+    print(f"[complex_heatmap] wrote {', '.join(map(str, outs))}  ({len(samples)} samples, "
           f"{len(complexes)} complexes)")
 
 
@@ -62,7 +62,8 @@ def main() -> None:
     ap.add_argument("--results-dir", required=True, type=Path)
     ap.add_argument("--targets",     required=True, type=Path)
     ap.add_argument("--samples",     required=True, help="comma-separated names")
-    ap.add_argument("--out",         required=True, type=Path)
+    ap.add_argument("--out",         required=True, type=Path, nargs="+",
+                    help="one or more paths; the extension picks the format")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))

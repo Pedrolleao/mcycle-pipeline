@@ -25,7 +25,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import yaml
 
-from _viz import (CALLS_TSV, CAT_ORDER, CYCLE_LETTER, GRID, INK, INK2, MUTED, PATHWAY_COLOR,
+from _viz import (CALLS_TSV, CAT_ORDER, CYCLE_LETTER, GRID, INK, INK2, MUTED, PATHWAY_COLOR, save_all,
                   PATHWAY_SHORT, PRESENT_CODES, STATUS_CODE,
                   draw_status_glyph, draw_status_legend, order_by_profile)
 
@@ -52,13 +52,13 @@ def load_completeness(path: Path) -> dict[str, float]:
 # Palette and status glyphs live in _viz.py (shared with every other figure).
 
 def render_circle_grid(samples, ordered_targets, cat_boundaries,
-                       target_codes, out) -> None:
+                       target_codes, outs) -> None:
     """Render the cross-sample gene grid as a publication-style dot grid.
 
     Genes run left→right grouped by pathway (colour band + label above each
     block); genomes are rows, ordered so that similar gene content sits
     together. Status is carried by glyph shape (see _viz.draw_status_glyph).
-    Co-renders to whichever extension `out` carries (PNG 300 DPI, SVG vector).
+    Saved to every path in `outs` (PNG 300 DPI, SVG vector; see _viz.save_all).
     """
     order = order_by_profile(
         samples, [[1 if v in PRESENT_CODES else 0 for v in row]
@@ -157,10 +157,7 @@ def render_circle_grid(samples, ordered_targets, cat_boundaries,
     draw_status_legend(ax, 0.0, -0.8 - 3.6, "#6b6a66", fontsize=8,
                        horizontal=True, char_w=0.205)
 
-    out.parent.mkdir(parents=True, exist_ok=True)
-    dpi = 300 if out.suffix.lower() == ".png" else 100
-    fig.savefig(out, dpi=dpi)
-    plt.close(fig)
+    save_all(fig, outs)
 
 
 # ───────────────────────────── main ──────────────────────────────────────────
@@ -171,7 +168,8 @@ def main() -> None:
     ap.add_argument("--results-dir", required=True, type=Path)
     ap.add_argument("--targets", required=True, type=Path)
     ap.add_argument("--matrix-out", required=True, type=Path)
-    ap.add_argument("--heatmap-out", required=True, type=Path)
+    ap.add_argument("--heatmap-out", required=True, type=Path, nargs="+",
+                    help="one or more paths; the extension picks the format")
     args = ap.parse_args()
 
     samples = [s for s in args.samples.split(",") if s]
@@ -242,9 +240,10 @@ def main() -> None:
         ordered_targets=ordered_targets,
         cat_boundaries=cat_boundaries,
         target_codes=target_codes,
-        out=args.heatmap_out,
+        outs=args.heatmap_out,
     )
-    print(f"[cross_sample_report] wrote {args.matrix_out} and {args.heatmap_out}")
+    print(f"[cross_sample_report] wrote {args.matrix_out} and "
+          + ", ".join(str(o) for o in args.heatmap_out))
 
 
 if __name__ == "__main__":

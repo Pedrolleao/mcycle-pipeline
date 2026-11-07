@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 import yaml
 
 
-from _viz import (GRID, INK, INK2, MUTED, PATHWAY_COLOR, PATHWAY_LABEL,
+from _viz import (GRID, INK, INK2, MUTED, PATHWAY_COLOR, PATHWAY_LABEL, save_all,
                   draw_status_glyph, draw_status_legend)
 
 COMPLEX_BAND = INK2      # neutral, so it never reads as a pathway hue
@@ -62,7 +62,7 @@ def render(
     targets: list[dict],
     pathway: str,
     complex_members: set[str],
-    out: Path,
+    outs: list[Path],
 ) -> None:
     target_ids = [t["id"] for t in targets]
     target_names = [t["name"] for t in targets]
@@ -96,10 +96,8 @@ def render(
         fig.text(0.04, 0.32, f"No gene of this pathway was found in any of the "
                  f"{len(absent_samples)} genomes.", fontsize=9, color=INK2,
                  va="center")
-        out.parent.mkdir(parents=True, exist_ok=True)
-        fig.savefig(out, dpi=300 if out.suffix.lower() == ".png" else 100)
-        plt.close(fig)
-        print(f"[pathway_heatmap] wrote {out}  (0 active rows, "
+        save_all(fig, outs)
+        print(f"[pathway_heatmap] wrote {', '.join(map(str, outs))}  (0 active rows, "
               f"{len(absent_samples)} all-absent)")
         return
 
@@ -212,12 +210,9 @@ def render(
             fig.text(left_margin / fig_w, y, line,
                      fontsize=7, color="#666666", va="top")
 
-    out.parent.mkdir(parents=True, exist_ok=True)
-    # Format inferred from extension. SVG is vector (DPI irrelevant); PNG at 300 DPI for paper-grade rasters.
-    dpi = 300 if out.suffix.lower() == ".png" else 100
-    fig.savefig(out, bbox_inches="tight", dpi=dpi)
-    plt.close(fig)
-    print(f"[pathway_heatmap] wrote {out}  ({n_rows} active rows, "
+    # Format by extension: SVG vector, PNG at 300 DPI (see _viz.save_all).
+    save_all(fig, outs, bbox_inches="tight")
+    print(f"[pathway_heatmap] wrote {', '.join(map(str, outs))}  ({n_rows} active rows, "
           f"{len(absent_samples)} all-absent)")
 
 
@@ -226,7 +221,8 @@ def main() -> None:
     ap.add_argument("--matrix",   required=True, type=Path)
     ap.add_argument("--targets",  required=True, type=Path)
     ap.add_argument("--pathway",  required=True)
-    ap.add_argument("--out",      required=True, type=Path)
+    ap.add_argument("--out",      required=True, type=Path, nargs="+",
+                    help="one or more paths; the extension picks the format")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))
