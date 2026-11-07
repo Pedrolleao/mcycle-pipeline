@@ -383,8 +383,51 @@ _RE_STEPS = re.compile(r"^(\d+) of (\d+) steps \((\d+)%\) done")
 _RE_RULE = re.compile(r"^(?:local)?rule (\w+):")
 _RE_FINISHED = re.compile(r"^Finished jobid: \d+ \(Rule: (\w+)\)")
 _RE_STAT_ROW = re.compile(r"^(\w+)\s+(\d+)$")
-_RE_LOG = re.compile(r"Complete log(?: file)?:\s*(\S+)")
+# Snakemake 9 prints "Complete log(s):", older versions "Complete log:".
+_RE_LOG = re.compile(r"Complete log(?:\(s\)| file)?:\s*(\S+)")
 _RE_ERROR = re.compile(r"^(Error in rule \w+|\w*Error\b|\w*Exception\b|Shutting down|Exiting because)")
+_RE_ERROR_IN_RULE = re.compile(r"^Error in rule \w+")
+_RE_JOB_LOG = re.compile(r"^\s*log:\s*(\S+)")
+# Snakemake's job header lines: no cause in them, dropped from the context shown.
+_RE_CHATTER = re.compile(r"^(\s+(input|output|log|jobid|reason|wildcards|threads|resources):|"
+                         r"(local)?rule \w+:|\[\w{3} \w{3}|Select jobs|Execute \d|\s*$)")
+
+
+def failure_report(error_block: list[str], context: list[str]) -> tuple[str, str]:
+    """(head line, panel body) for a failed run. The cause of a failed shell job is in
+    the job's log file, not in Snakemake's block (which repeats the command), so the
+    body starts with the last lines of that log when the rule has one; for a rule
+    without `log:` the tool's own output arrived on the pipe just before the block and
+    the last lines of that are shown instead. Snakemake's description of the job
+    follows, up to the `shell:` line, once (Snakemake 9 prints the block twice)."""
+    if not error_block:
+        return "", ""
+    head = next((l for l in error_block if _RE_ERROR_IN_RULE.match(l)), error_block[0])
+    desc: list[str] = []
+    for line in error_block[error_block.index(head):]:
+        if line.strip().startswith("shell:") or line.startswith(("Shutting down", "Exiting because")):
+            break
+        if desc and _RE_ERROR_IN_RULE.match(line):
+            break
+        if line.strip() != "message: None":
+            desc.append(line.rstrip())
+    if any("(command exited with non-zero exit code)" in l for l in error_block):
+        desc.append("    (command exited with non-zero exit code)")
+
+    body: list[str] = []
+    m = next((_RE_JOB_LOG.match(l) for l in error_block if _RE_JOB_LOG.match(l)), None)
+    job_log = Path(m.group(1)) if m else None
+    if job_log is not None and job_log.is_file() and job_log.stat().st_size > 0:
+        tail = job_log.read_text(errors="replace").splitlines()[-15:]
+        body += [f"job log — {job_log}:", *tail, ""]
+    else:
+        ctx = [l.rstrip() for l in context if not _RE_CHATTER.match(l)]
+        if ctx:
+            body += ["last output before the error:", *ctx[-25:], ""]
+        if job_log is not None:
+            body.append(f"(the job log {job_log} is empty)")
+    body += ["Snakemake:", *desc]
+    return head, "\n".join(body)
 
 
 def run_snakemake_live(cmd: list[str]) -> int:
@@ -401,6 +444,7 @@ def run_snakemake_live(cmd: list[str]) -> int:
     plan_shown = False
     running: list[str] = []
     error_block: list[str] = []
+    context: list[str] = []      # pipe lines just before the error block
     in_error = False
     nothing_to_do = False
     log_path = ""
@@ -427,13 +471,14 @@ def run_snakemake_live(cmd: list[str]) -> int:
                     continue
                 if in_error and _RE_STEPS.match(line):
                     # Snakemake went on: the "error" was a tool's own message, not fatal.
-                    in_error, error_block = False, []
+                    in_error, error_block, context = False, [], []
                 elif in_error:
                     if not line.startswith(("Shutting down", "Exiting because")):
                         error_block.append(line)
                     continue
                 if _RE_ERROR.match(line):
                     in_error = True
+                    context = lines[-26:-1]
                     error_block.append(line)
                     continue
 
@@ -495,8 +540,10 @@ def run_snakemake_live(cmd: list[str]) -> int:
     if nothing_to_do:
         ui.ok("nothing to do — the results are already up to date")
     if rc != 0:
-        head = error_block[0] if error_block else f"Snakemake exited with status {rc}"
-        tail = "\n".join(error_block[1:] if error_block else lines[-25:])
+        if error_block:
+            head, tail = failure_report(error_block, context)
+        else:
+            head, tail = f"Snakemake exited with status {rc}", "\n".join(lines[-25:])
         ui.error_panel("Pipeline failed", head, tail,
                        hint=f"complete log: {log_path or '.snakemake/log/'}")
     return rc
