@@ -25,7 +25,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import yaml
 
-from _viz import (CALLS_TSV, CAT_ORDER, CYCLE_LETTER, GRID, INK, INK2, MUTED, PATHWAY_COLOR, save_all,
+from _viz import (CALLS_TSV, CAT_ORDER, CYCLE_LETTER, GRID, INK, INK2, MUTED, PATHWAY_COLOR, save_all, save_pointer,
                   PATHWAY_SHORT, PRESENT_CODES, STATUS_CODE,
                   draw_status_glyph, draw_status_legend, order_by_profile)
 
@@ -170,6 +170,8 @@ def main() -> None:
     ap.add_argument("--matrix-out", required=True, type=Path)
     ap.add_argument("--heatmap-out", required=True, type=Path, nargs="+",
                     help="one or more paths; the extension picks the format")
+    ap.add_argument("--max-rows", type=int, default=120,
+                    help="above this many genomes write a pointer figure instead of the grid")
     args = ap.parse_args()
 
     samples = [s for s in args.samples.split(",") if s]
@@ -227,6 +229,12 @@ def main() -> None:
         fh.write("\t".join(cols) + "\n")
         for r in rows_tsv:
             fh.write("\t".join(str(r[c]) for c in cols) + "\n")
+
+    if len(samples) > args.max_rows:
+        save_pointer(args.heatmap_out, len(samples), "gene grid", args.max_rows)
+        print(f"[cross_sample_report] wrote {args.matrix_out}; {len(samples)} genomes > "
+              f"--max-rows {args.max_rows}: pointer figure instead of the grid")
+        return
 
     # ── Circle / dot-grid presence-absence plot ───────────────────────────
     # Publication style: rows = genomes (left y-labels); columns = the genes

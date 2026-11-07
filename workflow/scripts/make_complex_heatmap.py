@@ -23,6 +23,7 @@ import yaml
 
 from _completeness import load_complexes, pretty
 from _completeness_grid import render_grid
+from _viz import save_pointer
 
 
 def render(
@@ -64,6 +65,8 @@ def main() -> None:
     ap.add_argument("--samples",     required=True, help="comma-separated names")
     ap.add_argument("--out",         required=True, type=Path, nargs="+",
                     help="one or more paths; the extension picks the format")
+    ap.add_argument("--max-rows",    type=int, default=120,
+                    help="above this many genomes write a pointer figure instead of the grid")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))
@@ -81,6 +84,10 @@ def main() -> None:
         p = args.results_dir / s / "calls" / "complex_completeness.tsv"
         sample_data[s] = load_complexes(p)
 
+    if len(samples) > args.max_rows:
+        save_pointer(args.out, len(samples), "complex grid", args.max_rows)
+        print(f"[complex_heatmap] {len(samples)} genomes > --max-rows {args.max_rows}: pointer figure")
+        return
     render(samples, sample_data, complexes, args.out)
 
 

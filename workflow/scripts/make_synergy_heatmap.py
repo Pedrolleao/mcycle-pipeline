@@ -31,7 +31,7 @@ import yaml
 
 from _completeness import load_synergies, pretty
 from _completeness_grid import render_grid
-from _viz import RULED_OUT_LABEL
+from _viz import RULED_OUT_LABEL, save_pointer
 
 
 def render(samples: list[str], sample_data: dict[str, dict],
@@ -69,6 +69,8 @@ def main() -> None:
     ap.add_argument("--samples",     required=True)
     ap.add_argument("--out",         required=True, type=Path, nargs="+",
                     help="one or more paths; the extension picks the format")
+    ap.add_argument("--max-rows",    type=int, default=120,
+                    help="above this many genomes write a pointer figure instead of the grid")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))
@@ -81,6 +83,10 @@ def main() -> None:
         sample_data[s] = {k: (v["state"], v["text"])
                           for k, v in load_synergies(p).items()}
 
+    if len(samples) > args.max_rows:
+        save_pointer(args.out, len(samples), "module grid", args.max_rows)
+        print(f"[synergy_heatmap] {len(samples)} genomes > --max-rows {args.max_rows}: pointer figure")
+        return
     render(samples, sample_data, synergies, args.out)
 
 

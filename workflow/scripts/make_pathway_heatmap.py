@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 import yaml
 
 
-from _viz import (GRID, INK, INK2, MUTED, PATHWAY_COLOR, PATHWAY_LABEL, save_all,
+from _viz import (GRID, INK, INK2, MUTED, PATHWAY_COLOR, PATHWAY_LABEL, save_all, save_pointer,
                   draw_status_glyph, draw_status_legend)
 
 COMPLEX_BAND = INK2      # neutral, so it never reads as a pathway hue
@@ -63,6 +63,7 @@ def render(
     pathway: str,
     complex_members: set[str],
     outs: list[Path],
+    max_rows: int = 120,
 ) -> None:
     target_ids = [t["id"] for t in targets]
     target_names = [t["name"] for t in targets]
@@ -85,6 +86,11 @@ def render(
     samples = sorted(samples, key=score, reverse=True)
     n_rows = len(samples)
     n_cols = len(target_ids)
+
+    if n_rows > max_rows:
+        save_pointer(outs, n_rows, f"{PATHWAY_LABEL.get(pathway, pathway)} grid", max_rows)
+        print(f"[pathway_heatmap] {n_rows} active rows > --max-rows {max_rows}: pointer figure")
+        return
 
     if n_rows == 0:
         # No genome carries any gene of this pathway: say so instead of
@@ -223,6 +229,8 @@ def main() -> None:
     ap.add_argument("--pathway",  required=True)
     ap.add_argument("--out",      required=True, type=Path, nargs="+",
                     help="one or more paths; the extension picks the format")
+    ap.add_argument("--max-rows", type=int, default=120,
+                    help="above this many genomes with a signal write a pointer figure instead")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.targets))
@@ -247,7 +255,7 @@ def main() -> None:
             complex_members |= members
 
     samples, data = load_matrix(args.matrix)
-    render(samples, data, targets, args.pathway, complex_members, args.out)
+    render(samples, data, targets, args.pathway, complex_members, args.out, args.max_rows)
 
 
 if __name__ == "__main__":

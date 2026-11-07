@@ -22,6 +22,11 @@ thresholds:
     qcov_hsp_perc: 50
     pident_min: 30                  # default; per-target blast_identity_min overrides
 
+figures:
+  # Static grids (mcycle_heatmap, figures/pathway_*, complexes, synergies) above this many
+  # genomes become a pointer figure; mcycle_report.html has no limit (its grids scroll).
+  max_rows: 120
+
 build:
   # KOfam profile HMMs + adaptive thresholds (primary detection backbone).
   # Pinned release: the build (workflow/scripts/build_hmm_db.py) verifies the

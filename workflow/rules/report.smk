@@ -3,6 +3,10 @@
 #      + methane-cycle map + (nucleotide input) gene-neighbourhood maps
 #   2. cross-sample matrix.tsv + heatmap + focused figures + mcycle_report.html
 
+# Static grids (overview heatmap, per-pathway, complexes, modules) above this many
+# genomes become a pointer figure to the HTML report (config `figures.max_rows`).
+MAX_ROWS = (config.get("figures") or {}).get("max_rows", 120)
+
 
 rule complex_completeness:
     input:
@@ -58,6 +62,7 @@ rule cross_sample_report:
     params:
         samples=",".join(SAMPLES.keys()),
         results_dir=str(RESULTS),
+        max_rows=MAX_ROWS,
     shell:
         r"""
         python workflow/scripts/make_cross_sample_report.py \
@@ -65,7 +70,8 @@ rule cross_sample_report:
             --results-dir {params.results_dir} \
             --targets {input.targets} \
             --matrix-out {output.matrix} \
-            --heatmap-out {output.heatmap_svg} {output.heatmap_png}
+            --heatmap-out {output.heatmap_svg} {output.heatmap_png} \
+            --max-rows {params.max_rows}
         """
 
 
@@ -89,13 +95,16 @@ rule pathway_heatmap:
     output:
         svg=FIGURES_DIR / "pathway_{pathway}.svg",
         png=FIGURES_DIR / "pathway_{pathway}.png",
+    params:
+        max_rows=MAX_ROWS,
     wildcard_constraints:
         pathway="|".join(PATHWAY_CATEGORIES),
     shell:
         r"""
         python workflow/scripts/make_pathway_heatmap.py \
             --matrix {input.matrix} --targets {input.targets} \
-            --pathway {wildcards.pathway} --out {output.svg} {output.png}
+            --pathway {wildcards.pathway} --out {output.svg} {output.png} \
+            --max-rows {params.max_rows}
         """
 
 
@@ -111,11 +120,13 @@ rule complex_heatmap_figure:
     params:
         samples=",".join(SAMPLES.keys()),
         results_dir=str(RESULTS),
+        max_rows=MAX_ROWS,
     shell:
         r"""
         python workflow/scripts/make_complex_heatmap.py \
             --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.svg} {output.png}
+            --samples {params.samples} --out {output.svg} {output.png} \
+            --max-rows {params.max_rows}
         """
 
 
@@ -131,11 +142,13 @@ rule synergy_heatmap_figure:
     params:
         samples=",".join(SAMPLES.keys()),
         results_dir=str(RESULTS),
+        max_rows=MAX_ROWS,
     shell:
         r"""
         python workflow/scripts/make_synergy_heatmap.py \
             --results-dir {params.results_dir} --targets {input.targets} \
-            --samples {params.samples} --out {output.svg} {output.png}
+            --samples {params.samples} --out {output.svg} {output.png} \
+            --max-rows {params.max_rows}
         """
 
 
