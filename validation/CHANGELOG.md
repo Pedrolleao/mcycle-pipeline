@@ -72,3 +72,36 @@ Made when the repository was prepared for cloning (commit `b7ea805`).
   to the previous run; `make regression` passes its 14 checks with the numbers of the
   report (hold-out micro-F1 0.961 [0.940, 0.976], full panel 0.973 [0.963, 0.981],
   3,173 cells) and rewrites the committed score tables without a difference.
+
+## 2026-11-07 — code-review changes, no call changes (R1–R8 of `WORKPLAN_2026-11_review.md`)
+Eight small, separately committed changes after the Fable review of commit `97fd402`;
+every one re-ran `make smoke` (168 / 168) and compared the 18 call tables byte for byte
+with the snapshot of that commit (`validation/baseline_2026-11.sha256`, 54 tables:
+`mcycle_calls.tsv`, `complex_completeness.tsv`, `synergy_completeness.tsv`). Nothing in
+the tool's calls, module statuses or figures changed; the only cell that differs is the
+`application` text of the `mcr` row of `complex_completeness.tsv` (R6, a developer note
+removed).
+- **R1** the launcher refuses sample names outside the Snakemake wildcard pattern,
+  duplicate stems and malformed FASTA before anything runs (used to die at DAG build, run
+  only the last duplicate, or hang in `diamond blastp`).
+- **R2** the error panel shows the failed job's log tail and the right Snakemake log path.
+- **R3** `hmmscan` on one thread per job: clean smoke run 67 s → 30 s on 8 cores, all 18
+  `hmmscan` tables identical.
+- **R4** every figure rendered once and saved as SVG + PNG (22 / 22 figures pixel- and
+  text-identical, `validation/compare_figures.py`).
+- **R5** per-run config `<results_dir>/mcycle_run_config.yaml` (tool version, date, command
+  line, samples) instead of rewriting `config/config.yaml`; the checkout stays clean.
+- **R6** `gap_analysis.txt` rewritten (present / complexes / process modules, with the
+  input kind in the header); the note "⚠️ direction set by resolve_mcr_direction" became a
+  YAML comment. The `targets.yaml` edit rebuilt both databases: `mcycle_targets.hmm` and
+  `tc_cutoffs.tsv` byte-identical; the two seed FASTAs differ in UniProt's header text
+  only — the 36 diamond tables of the smoke panel made with the validated database are
+  byte-identical to those made with the rebuilt one.
+- **R7** (one module-fraction convention) measured and **not applied**: it would flip
+  `acetoclastic_methanogenesis` from partial to absent in 7 genomes of the reference,
+  GTDB-500 and MAG sets (details in the work plan) — a change for its own cycle.
+- **R8** static grids above 120 genomes become a pointer figure (`figures.max_rows`); the
+  HTML report's column labels stay in view while scrolling.
+- The shared files were ported to `ncycle-pipeline` and `scycle-pipeline` (R1, R2, R4, R5,
+  R8; R3 to scycle, which also runs `hmmscan`); on their 5-genome test data every call
+  table and figure is identical before and after the port.

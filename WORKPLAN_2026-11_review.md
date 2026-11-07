@@ -37,8 +37,8 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | DONE 2026-11-07 |
 | R7 | Module fraction: one convention in TSV, figures and report | **also 7 module statuses** (measured) | MEASURED 2026-11-07, NOT APPLIED — user's decision |
 | R8 | Large runs: cap the static grids, sticky header in the HTML report, column-name note | no | DONE 2026-11-07 |
-| R9 | hmmsearch instead of hmmscan | needs the gate | DESIGN ONLY |
-| R10 | Port to ncycle / scycle, CHANGELOG, README, push | no | TODO |
+| R9 | hmmsearch instead of hmmscan | needs the gate | DESIGN ONLY — after R3 the gain is small, see note |
+| R10 | Port to ncycle / scycle, CHANGELOG, README, push | no | DONE 2026-11-07 except the push (ask first) |
 
 Order: R0 → R1 → R2 → R3 → R4 are independent of each other after R0 and can be done in
 any order; R5 touches the same launcher code as R1 / R2 and goes after them; R6 and R7
@@ -284,10 +284,26 @@ comparison over every existing result set as in M10 (`validation/amendments/`), 
 diff. Expected gain after R3 is smaller than it looks (R3 already removes most of the
 wall time), so decide after the R3 measurement.
 
+**After R3 (2026-11-07):** the smoke panel runs in 30 s instead of 67 s on 8 cores, and
+hmmscan is no longer the step that sets the wall time, so R9 buys little on a workstation;
+on a cluster with one core per job it would still cut the hmmscan step ~4.7×.
+`ncycle-pipeline` already runs `hmmsearch` (its `parse_hmmscan_domtbl` reads the swapped
+columns), so the design and the domZ question can start from there. Not started.
+
 ### R10 — Close out (1–2 h)
 
 - Port the shared-file patches (R1, R2, R3, R4, R5, R8) to `ncycle-pipeline` and
   `scycle-pipeline`; run their smoke targets.
+  *Done 2026-11-07:* launchers patched from the mcycle diff (only each tool's own dates,
+  the env-var line and the sister comment differ), shared figure scripts and the report
+  template copied, rule files patched (R3 to scycle only — ncycle runs `hmmsearch`, whose
+  threading was not measured), Snakefile / config / README / `validation/compare_figures.py`
+  / `launcher_cases` carried over. The sisters have no `make smoke`; their 5-genome
+  `test_data` was run before and after the port: ncycle 20 / 20 call tables, matrix and
+  46 / 46 figures identical; scycle 20 / 20, matrix and 40 / 40 identical; launcher cases
+  5 / 5 in both. (Two scycle attempts writing to /tmp failed with Snakemake's "output has
+  older modification time than input" clock complaint — a timing flake of that run, the
+  same files passed when written under the home directory.)
 - `validation/CHANGELOG.md`: one dated entry listing R1–R8 with "no call changes" and
   the R7 re-basing.
 - README: the sentences named above; `ROADMAP.md`: link this plan under "Done after the

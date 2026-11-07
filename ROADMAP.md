@@ -28,6 +28,11 @@ Where the methane tool stands against the sister-tool contract
   gene fragment are no longer labelled as alkyl-CoM reductase subunits. Minimal by
   decision: 8 calls change in the GTDB-500 set, none on the reference panel
   (`validation/CHANGELOG.md`, `validation/REPORT.md` section 6).
+- **2026-11-07 — review fixes R1–R8** (`WORKPLAN_2026-11_review.md`): input validation in the
+  launcher, error panel with the job log, hmmscan on one thread (smoke 67 s → 30 s), figures
+  rendered once, per-run config, gap_analysis.txt rewritten, static grids capped with a sticky
+  header in the HTML report; no call changes. R7 (module-fraction convention) measured, waits
+  for a decision; R9 (hmmsearch) design only.
 
 ## Next cycle — new call semantics, own validation
 
