@@ -35,7 +35,7 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | R4 | Every figure rendered once, saved twice | no | DONE 2026-11-07 |
 | R5 | Per-run config instead of rewriting `config/config.yaml` | no | DONE 2026-11-07 |
 | R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | DONE 2026-11-07 |
-| R7 | Module fraction: one convention in TSV, figures and report | matrix values of ruled-out modules only | TODO |
+| R7 | Module fraction: one convention in TSV, figures and report | **also 7 module statuses** (measured) | MEASURED 2026-11-07, NOT APPLIED — user's decision |
 | R8 | Large runs: cap the static grids, sticky header in the HTML report, column-name note | no | TODO |
 | R9 | hmmsearch instead of hmmscan | needs the gate | DESIGN ONLY |
 | R10 | Port to ncycle / scycle, CHANGELOG, README, push | no | TODO |
@@ -225,6 +225,25 @@ hydrogenotrophic methanogenesis in *A. fulgidus* is 6 / 13 = 0.462 in
 - Record the before / after values for the smoke panel in `validation/CHANGELOG.md`
   under a dated entry "no call changes; module completeness of ruled-out modules
   re-based".
+
+**Measured 2026-11-07 (dry comparison, old vs new `compute_complex_completeness.py`
+over the existing calls of all result sets: smoke 18, reference 49, GTDB-500 500,
+MAGs 12).** The premise "status does not change" is wrong: with the direction slot
+no longer counted, a module with an odd number of required slots can cross the 0.5
+threshold. `acetoclastic_methanogenesis` (9 required slots + the Mcr direction) goes
+from 5 / 10 = 0.500 `partial` to 4 / 9 = 0.444 `absent` in 7 genomes — reference
+panel `Malvi_Mx1201`; GTDB-500 `GCA_001717005_1`, `GCA_023402275_1`,
+`GCA_029887795_1`, `GCA_035404685_1`, `GCA_963586845_1`; MAG `Mmethylicus_V2`.
+No status changes in the smoke panel; 1,474 completeness values change without a
+status change (e.g. *A. fulgidus* hydrogenotrophic 6 / 13 = 0.462 → 6 / 12 = 0.500).
+Because 7 reported module statuses would move, this is a change for its own validated
+cycle (amendment with before / after tables in `validation/CHANGELOG.md`), not a
+re-basing of values — **not applied**. Alternatives to decide between: (a) apply it
+as a disclosed amendment; (b) keep the TSV as is and make the figures show the TSV's
+n / N (then the figures would read 5 / 10 for a 9-slot module); (c) leave both as they
+are and document the two conventions in the README. The figures and the HTML report
+keep reading the required slots from the `requires_present` / `requires_missing`
+columns either way.
 
 ### R8 — Large runs (2–3 h)
 
