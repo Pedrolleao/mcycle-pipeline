@@ -29,9 +29,9 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | Phase | What | Changes calls? | State |
 |---|---|---|---|
 | R0 | Baseline: snapshot of the current outputs and timings | no | DONE 2026-11-07 |
-| R1 | Launcher refuses what the workflow cannot run (names, duplicates, malformed FASTA) | no | TODO |
-| R2 | Error panel shows the cause and the right log path | no | TODO |
-| R3 | hmmscan on one thread per job | no | TODO |
+| R1 | Launcher refuses what the workflow cannot run (names, duplicates, malformed FASTA) | no | DONE 2026-11-07 |
+| R2 | Error panel shows the cause and the right log path | no | DONE 2026-11-07 |
+| R3 | hmmscan on one thread per job | no | DONE 2026-11-07 |
 | R4 | Every figure rendered once, saved twice | no | TODO |
 | R5 | Per-run config instead of rewriting `config/config.yaml` | no | TODO |
 | R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | TODO |
@@ -279,8 +279,8 @@ wall time), so decide after the R3 measurement.
 
 | What | Before (R0) | After | Phase |
 |---|---|---|---|
-| `make smoke` wall time, 8 cores (clean, incl. check_smoke) | 67 s | | R3 |
-| hmmscan summed job seconds, smoke panel (18 jobs, `--cpu 4`) | 101 s (5.6 s / job) | | R3 |
+| `make smoke` wall time, 8 cores (clean, incl. check_smoke) | 67 s | 30 s | R3 |
+| hmmscan summed job seconds, smoke panel (18 jobs, `--cpu 4`) | 101 s (5.6 s / job) | 93 s with `--cpu 1`, 8 jobs at once (5.2 s / job) | R3 |
 | figure stage (cross_sample_report + 7 pathway + complexes + synergies), job seconds | 12 s (2 + 7 + 2 + 1) | | R4 |
 | summed job seconds, all 175 jobs | 179 s | | R3 / R4 |
 | `git status` after a run | modified: config/config.yaml | | R5 |
