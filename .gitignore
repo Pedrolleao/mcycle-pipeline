@@ -26,6 +26,8 @@ resources/blast_db/
 
 # ---- Pipeline run outputs ----
 mcycle_results/
+# R0 snapshot of the 2026-11 review (checksums in validation/baseline_2026-11.sha256 are tracked)
+validation/baseline_2026-11/
 /validation/.kegg_cache/
 
 # ---- Validation runs (one results dir per study) ----
