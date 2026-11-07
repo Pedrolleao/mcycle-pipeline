@@ -105,3 +105,28 @@ removed).
 - The shared files were ported to `ncycle-pipeline` and `scycle-pipeline` (R1, R2, R4, R5,
   R8; R3 to scycle, which also runs `hmmscan`); on their 5-genome test data every call
   table and figure is identical before and after the port.
+
+## 2026-11-07 — amendment: module completeness counts the required slots only (R7)
+- **What.** `compute_complex_completeness.py` no longer counts a matching Mcr direction as
+  an extra slot of the three methanogenesis modules. `completeness`, `n_present` and
+  `n_total` in `synergy_completeness.tsv` (and the `synergy__*` columns of
+  `mcycle_matrix.tsv`) now count the required slots, which is what the figures, the HTML
+  report and `gap_analysis.txt` already showed. The direction and key-gene rules still
+  decide the status and are listed under `forbids_satisfied` / `forbids_violated`.
+- **Why.** The TSV and the figures disagreed (6 / 13 against 6 / 12 for the same module),
+  and the extra slot lifted `acetoclastic_methanogenesis` to exactly 5 / 10 = 0.500
+  `partial` in methyl-reducing methanogens that carry Mcr and HdrD but none of the
+  acetoclastic genes.
+- **Effect** (old against new script on the unchanged calls of every result set;
+  `validation/amendments/2026-11-07_module_fraction_changes.tsv` lists each row): 5,549
+  module rows change `n_present` / `n_total`, 1,474 of them the `completeness` value,
+  7 the status — `acetoclastic_methanogenesis` partial → absent in `Malvi_Mx1201`
+  (reference panel), `GCA_001717005.1`, `GCA_023402275.1`, `GCA_029887795.1`,
+  `GCA_035404685.1`, `GCA_963586845.1` (GTDB-500) and `Mmethylicus_V2` (MAG study), all
+  Methanomassiliicoccales / Methanomethylicia / Methanofastidiosales. No gene call
+  changes; no status change in the smoke panel (168 / 168); the reference-panel scores
+  (gene calls) are unaffected. The smoke panel's 22 figures are pixel-identical before
+  and after; 67 cells of `mcycle_matrix.tsv` (all `synergy__*`) change value.
+- **Shared code.** `_completeness.load_synergies` reads the per-tool convention from
+  `_domain.MODULE_RULES_COUNT_AS_SLOTS` (False here, True in ncycle and scycle, whose
+  TSVs and figures are unchanged).

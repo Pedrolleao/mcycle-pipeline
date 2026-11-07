@@ -19,11 +19,13 @@ an unsatisfied one to requires_missing as the whole choice ("ackA+pta|acs").
 
 The methanogenesis modules and the reverse-methanogenesis (ANME) module need the
 same Mcr, so they are told apart by the Mcr direction that apply_rules.py tags on
-the mcrA / mcrB / mcrG evidence_source (e.g. `ko|mcr_reverse`): when a direction
-is called, it counts as one extra slot, and a module that needs the OPPOSITE
-direction is ruled out (status absent, the direction listed under
-forbids_violated). Without Mcr there is no call and the modules are scored on
-gene presence alone.
+the mcrA / mcrB / mcrG evidence_source (e.g. `ko|mcr_reverse`): a module that
+needs the OPPOSITE direction is ruled out (status absent, the direction listed
+under forbids_violated), a matching direction is listed under forbids_satisfied.
+The direction is a rule, not a slot: completeness, n_present and n_total count
+the required slots only, the same convention as the figures and the HTML report
+(amendment of 2026-11-07; before it the direction counted as one extra slot).
+Without Mcr there is no call and the modules are scored on gene presence alone.
 
 A module may also name `key:` entries — what defines it (e.g. `nod` for
 nitrite-dependent methane oxidation; Mcr plus a substrate methyltransferase
@@ -154,8 +156,11 @@ def main() -> None:
                                 for g in _alt_genes(k))]
             if unmet:
                 violated.append(f"no key gene ({'; '.join(unmet)})")
-            n_present = len(present) + len(satisfied)
-            n_total = len(present) + len(missing) + len(satisfied) + len(violated)
+            # Completeness counts the REQUIRED slots only (what the figures and the
+            # HTML report show); the direction and key-gene rules decide the status
+            # and are listed under forbids_satisfied / forbids_violated, not counted.
+            n_present = len(present)
+            n_total = len(present) + len(missing)
             comp = n_present / n_total if n_total else 0.0
             status = "absent" if violated else status_for(comp)
             fh.write("\t".join([

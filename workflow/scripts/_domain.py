@@ -71,3 +71,7 @@ PRETTY_REPLACE = [("hdr abc", "HdrABC"), ("hdr de", "HdrDE"), ("mcr", "Mcr"),
 
 # Legend text for a module that is ruled out by an exclusion rule.
 RULED_OUT_LABEL = "ruled out — key gene absent, or Mcr runs the other way"
+
+# How synergy_completeness.tsv counts a module (read by _completeness.load_synergies):
+# required slots only (amendment of 2026-11-07); the Mcr direction and key-gene rules are listed under forbids_* and not counted.
+MODULE_RULES_COUNT_AS_SLOTS = False

@@ -35,9 +35,9 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | R4 | Every figure rendered once, saved twice | no | DONE 2026-11-07 |
 | R5 | Per-run config instead of rewriting `config/config.yaml` | no | DONE 2026-11-07 |
 | R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | DONE 2026-11-07 |
-| R7 | Module fraction: one convention in TSV, figures and report | **also 7 module statuses** (measured) | MEASURED 2026-11-07, NOT APPLIED — user's decision |
+| R7 | Module fraction: one convention in TSV, figures and report | 5,549 module rows re-counted, 7 statuses (all `acetoclastic_methanogenesis` in methyl-reducing methanogens, partial → absent) | DONE 2026-11-07 as amendment, option (a) chosen by the user |
 | R8 | Large runs: cap the static grids, sticky header in the HTML report, column-name note | no | DONE 2026-11-07 |
-| R9 | hmmsearch instead of hmmscan | needs the gate | DESIGN ONLY — after R3 the gain is small, see note |
+| R9 | hmmsearch instead of hmmscan | needs the gate | NOT PURSUED (user, 2026-11-07: the run is fast enough after R3); design note kept |
 | R10 | Port to ncycle / scycle, CHANGELOG, README, push | no | DONE 2026-11-07 except the push (ask first) |
 
 Order: R0 → R1 → R2 → R3 → R4 are independent of each other after R0 and can be done in
@@ -238,7 +238,14 @@ No status changes in the smoke panel; 1,474 completeness values change without a
 status change (e.g. *A. fulgidus* hydrogenotrophic 6 / 13 = 0.462 → 6 / 12 = 0.500).
 Because 7 reported module statuses would move, this is a change for its own validated
 cycle (amendment with before / after tables in `validation/CHANGELOG.md`), not a
-re-basing of values — **not applied**. Alternatives to decide between: (a) apply it
+re-basing of values. The user chose (a) on 2026-11-07 (the 7 genomes are methyl-reducing
+methanogens without any acetoclastic gene, so `absent` is the right status; `partial` was
+an artefact of the direction slot). Applied as the amendment of 2026-11-07:
+`validation/amendments/2026-11-07_module_fraction_changes.tsv` (every changed row of all
+four result sets), CHANGELOG entry, `_completeness.load_synergies` reads the per-tool
+convention from `_domain.MODULE_RULES_COUNT_AS_SLOTS` (False here, True in the sisters,
+so the shared file stays identical and their output does not change). The alternatives
+were: (a) apply it
 as a disclosed amendment; (b) keep the TSV as is and make the figures show the TSV's
 n / N (then the figures would read 5 / 10 for a 9-slot module); (c) leave both as they
 are and document the two conventions in the README. The figures and the HTML report

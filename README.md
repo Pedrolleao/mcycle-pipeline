@@ -181,8 +181,11 @@ CO₂ ⇄ formyl-methanofuran steps in an archaeon, on the formyl-H₄MPT → fo
 
 **Modules, direction and key genes.** A module in `synergy_completeness.tsv` is a
 list of slots: `requires` genes, plus `requires_any` choices written `a+b|c`
-("a and b, or c"). Two rules can rule a module out — status `absent`, the reason
-under `forbids_violated`, "ruled out" in the figures:
+("a and b, or c"). `completeness`, `n_present` and `n_total` count these slots only
+(the same n / N the figures and the HTML report show; until 2026-11-07 a matching Mcr
+direction counted as one extra slot — `validation/CHANGELOG.md`). Two rules can rule a
+module out — status `absent`, the reason under `forbids_violated`, "ruled out" in the
+figures:
 
 - **direction** — the three methanogenesis modules need Mcr `methanogenic`,
   `reverse_methanogenesis_aom` needs `reverse`;
