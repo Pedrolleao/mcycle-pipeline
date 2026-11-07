@@ -30,11 +30,13 @@ rule gap_analysis:
         txt=RESULTS / "{sample}" / "report" / "gap_analysis.txt",
     params:
         sample="{sample}",
-        mode=lambda wc: "read" if sample_is_read_mode(wc.sample) else "protein",
+        input_kind=lambda wc: sample_kind(wc.sample),
+        prodigal=lambda wc: SAMPLES[wc.sample].get("prodigal_mode", ""),
     shell:
         r"""
         python workflow/scripts/make_gap_analysis.py \
-            --sample {params.sample} --mode {params.mode} \
+            --sample {params.sample} --input-kind {params.input_kind} \
+            --prodigal-mode "{params.prodigal}" \
             --calls {input.calls} \
             --complexes {input.complexes} \
             --synergies {input.synergies} \

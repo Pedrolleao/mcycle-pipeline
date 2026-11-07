@@ -34,7 +34,7 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | R3 | hmmscan on one thread per job | no | DONE 2026-11-07 |
 | R4 | Every figure rendered once, saved twice | no | DONE 2026-11-07 |
 | R5 | Per-run config instead of rewriting `config/config.yaml` | no | DONE 2026-11-07 |
-| R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | TODO |
+| R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | DONE 2026-11-07 |
 | R7 | Module fraction: one convention in TSV, figures and report | matrix values of ruled-out modules only | TODO |
 | R8 | Large runs: cap the static grids, sticky header in the HTML report, column-name note | no | TODO |
 | R9 | hmmsearch instead of hmmscan | needs the gate | DESIGN ONLY |
@@ -285,12 +285,29 @@ wall time), so decide after the R3 measurement.
 | summed job seconds, all 175 jobs | 179 s | | R3 / R4 |
 | `git status` after a run | modified: config/config.yaml | clean | R5 |
 
+R6 notes (2026-11-07): editing `targets.yaml` rebuilt both databases (network was up).
+`mcycle_targets.hmm` and `tc_cutoffs.tsv` came back byte-identical; the two seed FASTAs
+did not (`unstable_refs.fasta` f518807e… → 29f733f9…, `blast_gated_refs.fasta`
+c0198350… → b46ba66b…), but the difference is UniProt's header text only: the 36 diamond
+tables of the smoke panel made with the validated database (results of 2026-10-05) are
+byte-identical to those made with the rebuilt one, and so are all 18 call tables. The
+build script keeps the full UniProt description line after `>target||acc`, so the file
+checksum tracks UniProt's annotation releases, not the sequences; the sister tools pin
+their seeds under `resources/seeds_pinned/` with a per-sequence manifest — worth copying
+here in a later phase (see "Possible follow-ups").
+
 R0 notes (2026-11-07): the snapshot in `validation/baseline_2026-11/` (18 × calls/*.tsv,
 hmm/<s>.hmmscan.tsv, plus figures/, mcycle_heatmap.*, mcycle_matrix.tsv) comes from a
 clean `make smoke` of commit `97fd402`; its 54 call tables are byte-identical to the
 `mcycle_results/` of 2026-10-05 (the validation state). Per-rule job seconds come from
 the `jobid:` / `Finished jobid:` timestamps of `.snakemake/log/2026-11-07T171946…log`
 (1 s resolution, so sub-second rules read 0).
+
+## Possible follow-ups (not in this plan)
+
+- Pin the UniProt seed FASTAs as the sister tools do (`resources/seeds_pinned/` plus a
+  per-sequence sha256 manifest), so a `targets.yaml` edit no longer needs the network and
+  the seeds are the validated ones by construction.
 
 ## Decisions for the user
 

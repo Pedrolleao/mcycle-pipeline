@@ -592,7 +592,9 @@ complexes:
   mcr:
     members: [mcrA, mcrB, mcrG]
     obligatory: true
-    application: "Methyl-CoM <=> CH4; methanogenesis, or (ANME) reverse methanogenesis — ⚠️ direction set by resolve_mcr_direction"
+    # The direction (methanogenic | reverse) is called by apply_rules.resolve_mcr_direction
+    # and tagged on the mcrA / mcrB / mcrG evidence_source; see the mcrA_anme target.
+    application: "Methyl-CoM <=> CH4; methanogenesis, or (ANME) reverse methanogenesis"
   mtr:
     members: [mtrA, mtrB, mtrC, mtrD, mtrE, mtrH]
     obligatory: true
