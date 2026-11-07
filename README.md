@@ -65,6 +65,11 @@ On a cluster or in any batch job, pass both `--input` and `--prodigal-mode`: wit
 terminal the launcher asks nothing — a missing `--input` is an error, a missing
 `--prodigal-mode` falls back to `single` with a warning.
 
+A sample is named after its file (`Mx_12.fna` → `Mx_12`); the name may hold letters,
+digits, `_`, `.` and `-` only, two inputs may not share a stem (`a.faa` + `a.fna`), and a
+file that is not FASTA or holds characters outside the FASTA alphabet is refused before
+anything runs.
+
 `mcycle.py` auto-detects protein (`.faa`) vs nucleotide (`.fna`, → Prodigal) input,
 builds the databases on first run (and again whenever `config/targets.yaml` is newer
 than them), then dispatches Snakemake. It asks whether nucleotide input is isolate

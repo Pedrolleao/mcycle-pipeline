@@ -21,9 +21,14 @@ non-terminal stdout (logs, CI) give plain text with Snakemake's own output passe
 through unchanged. Snakemake's complete log is in .snakemake/log/ either way.
 
 Usage:
-    python mcycle.py [--input PATH] [--output DIR] [--mode protein]
+    python mcycle.py [--input PATH] [--output DIR]
                   [--cores N] [--dry-run] [--skip-db-setup]
                   [--prodigal-mode single|meta] [--plain]
+
+Before Snakemake starts, the launcher refuses what the workflow could not run:
+a sample name outside the wildcard pattern of workflow/rules/common.smk, two
+inputs with the same stem, a file that is not FASTA, a sequence with characters
+outside the FASTA alphabet (diamond blastp hangs on those).
 """
 
 from __future__ import annotations
@@ -54,6 +59,14 @@ ENV_NAME = os.environ.get("MCYCLE_ENV", "cycle-pipeline")
 FASTA_AA_EXT = {".faa", ".fap"}
 FASTA_NT_EXT = {".fna", ".fa", ".fasta", ".fas", ".ffn"}
 FASTQ_EXT = {".fastq", ".fq", ".fastq.gz", ".fq.gz"}
+
+# A sample name is the {sample} wildcard of every rule. Same pattern as the
+# `wildcard_constraints` of workflow/rules/common.smk — change both together.
+SAMPLE_NAME_RE = re.compile(r"[A-Za-z0-9_.\-]+")
+SAMPLE_NAME_RULE = "letters, digits, '_', '.', '-' only (no spaces)"
+# Residues a FASTA sequence line may hold (amino acids or nucleotides, IUPAC codes,
+# '*' stop, '-' / '.' gaps). Anything else makes diamond blastp hang.
+FASTA_ALPHABET = set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz*-.")
 
 REQUIRED_TOOLS = [
     "snakemake", "hmmscan", "hmmpress", "prodigal", "blastp",
@@ -92,7 +105,7 @@ def bootstrap_env_and_reexec(argv: list[str]) -> None:
         ui.info(f"re-running inside conda env '{ENV_NAME}'")
 
     # Re-invoke this script inside the env.
-    args = ["conda", "run", "--no-capture-output", "-n", ENV_NAME,
+    args = [conda, "run", "--no-capture-output", "-n", ENV_NAME,
             "python", str(Path(__file__).resolve()), *argv]
     os.execvp(args[0], args)
 
@@ -115,22 +128,77 @@ def looks_like_fastq(path: Path) -> bool:
     return any(suffixes.endswith(e) for e in FASTQ_EXT)
 
 
-def fasta_is_nucleotide(path: Path, sample_size: int = 3000) -> bool:
-    """Read up to `sample_size` non-header residues; nucleotide if >85% are
-    in {A,C,G,T,N,U} (case-insensitive)."""
-    buf = []
-    with open(path) as fh:
+def sample_fasta(path: Path, sample_size: int = 3000) -> tuple[bool, str]:
+    """(first non-blank line is a '>' header, up to `sample_size` residues of the
+    first records). One read serves the type detection and the sanity check."""
+    buf: list[str] = []
+    has_header = False
+    first = True
+    with open(path, errors="replace") as fh:
         for line in fh:
+            if first and line.strip():
+                has_header = line.startswith(">")
+                first = False
             if line.startswith(">"):
                 continue
             buf.append(line.strip())
             if sum(len(s) for s in buf) >= sample_size:
                 break
-    seq = "".join(buf)[:sample_size].upper()
+    return has_header, "".join(buf)[:sample_size]
+
+
+def fasta_is_nucleotide(path: Path, sample_size: int = 3000) -> bool:
+    """Read up to `sample_size` non-header residues; nucleotide if >85% are
+    in {A,C,G,T,N,U} (case-insensitive)."""
+    _, seq = sample_fasta(path, sample_size)
+    seq = seq.upper()
     if not seq:
         return False
     nt = sum(1 for c in seq if c in "ACGTUN")
     return nt / len(seq) > 0.85
+
+
+def fasta_problem(path: Path) -> str | None:
+    """Why the workflow could not run this file, or None. Looks at the first
+    records only (what sample_fasta reads): no '>' header, no sequence, or a
+    character outside the FASTA alphabet."""
+    has_header, seq = sample_fasta(path)
+    if not has_header:
+        return "not a FASTA file (the first line is not a '>' header)"
+    if not seq:
+        return "no sequence after the first header"
+    bad = next((c for c in seq if c not in FASTA_ALPHABET), None)
+    if bad is not None:
+        return f"illegal character {bad!r} in the sequence (diamond blastp would hang on it)"
+    return None
+
+
+def validate_samples(samples: list[dict], check_sequences: bool = True) -> None:
+    """Refuse what the workflow cannot run; every problem is listed, then exit 1.
+    Names are not fixed silently: the sample name is the row label of every output."""
+    problems: list[str] = []
+    by_name: dict[str, list[str]] = {}
+    for s in samples:
+        by_name.setdefault(s["name"], []).append(s["path"])
+        if not SAMPLE_NAME_RE.fullmatch(s["name"]):
+            problems.append(f"{s['path']}: sample name '{s['name']}' is not allowed — "
+                            f"{SAMPLE_NAME_RULE}; rename the file")
+    for name, paths in by_name.items():
+        if len(paths) > 1:
+            problems.append(f"two inputs would be one sample '{name}': "
+                            + " and ".join(paths) + "; rename or remove one")
+    if check_sequences:
+        for s in samples:
+            if s["kind"] == "fastq":
+                continue
+            why = fasta_problem(Path(s["path"]))
+            if why:
+                problems.append(f"{s['path']}: {why}")
+    if problems:
+        for msg in problems:
+            ui.err(msg)
+        ui.err(f"{len(problems)} input problem(s); nothing was run")
+        sys.exit(1)
 
 
 def discover_samples(input_path: Path) -> list[dict]:
@@ -264,7 +332,7 @@ def _stale(db: Path) -> bool:
     return db.exists() and _TARGETS.exists() and _TARGETS.stat().st_mtime > db.stat().st_mtime
 
 
-def build_databases(skip: bool, modes_present: set[str]) -> None:
+def build_databases(skip: bool) -> None:
     if skip:
         ui.info("database check skipped (--skip-db-setup)")
         return
@@ -473,9 +541,13 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--output", type=Path, default=None, metavar="DIR",
                    help="Directory for the results (default: mcycle_results/ next to "
                         "this script, as set by paths.results_dir in the config)")
+    # Only the protein/assembly mode exists (raw-FASTQ 'read' mode was removed
+    # 2026-06-12); the flag is kept for old command lines and hidden from --help.
     p.add_argument("--mode", choices=["auto", "protein"], default="protein",
-                   help="Pipeline mode (protein/assembly). Raw-FASTQ 'read' mode was "
-                        "removed 2026-06-12; supply .faa proteomes or .fna assemblies.")
+                   help=argparse.SUPPRESS)
+    # Skips the FASTA sanity check (names and duplicates are still checked): lets a
+    # test feed a bad file to the workflow to see how a failing job is reported.
+    p.add_argument("--skip-validation", action="store_true", help=argparse.SUPPRESS)
     p.add_argument("--cores", type=int, default=os.cpu_count() or 4)
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--skip-db-setup", action="store_true")
@@ -536,17 +608,13 @@ def main() -> None:
                    f"provide .faa proteomes or .fna assemblies. Offending: {', '.join(fastq)}")
             sys.exit(1)
 
+        validate_samples(samples, check_sequences=not args.skip_validation)
         prompt_prodigal_mode(samples, args.prodigal_mode)
         samples_table(samples)
 
-    # Determine pipeline modes touched.
-    modes_present = set()
-    for s in samples:
-        modes_present.add("read" if s["kind"] == "fastq" else "protein")
-
-    # Step 3–5 — databases.
+    # Step 3 — databases.
     with ui.stage(3, N_STAGES, "Databases"):
-        build_databases(args.skip_db_setup, modes_present)
+        build_databases(args.skip_db_setup)
 
     # Step 5 — config.
     write_samples_block(samples)
