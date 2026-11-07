@@ -33,7 +33,7 @@ The tool is frozen and validated (`validation/REPORT.md`, amendment of 2026-10-0
 | R2 | Error panel shows the cause and the right log path | no | DONE 2026-11-07 |
 | R3 | hmmscan on one thread per job | no | DONE 2026-11-07 |
 | R4 | Every figure rendered once, saved twice | no | DONE 2026-11-07 |
-| R5 | Per-run config instead of rewriting `config/config.yaml` | no | TODO |
+| R5 | Per-run config instead of rewriting `config/config.yaml` | no | DONE 2026-11-07 |
 | R6 | Text outputs: gap_analysis wording and relevance, header, dev note | no | TODO |
 | R7 | Module fraction: one convention in TSV, figures and report | matrix values of ruled-out modules only | TODO |
 | R8 | Large runs: cap the static grids, sticky header in the HTML report, column-name note | no | TODO |
@@ -283,7 +283,7 @@ wall time), so decide after the R3 measurement.
 | hmmscan summed job seconds, smoke panel (18 jobs, `--cpu 4`) | 101 s (5.6 s / job) | 93 s with `--cpu 1`, 8 jobs at once (5.2 s / job) | R3 |
 | figure stage (cross_sample_report + 7 pathway + complexes + synergies), job seconds | 12 s (2 + 7 + 2 + 1); the 10 scripts timed by hand: 14.2 s as two calls each | 8.3 s as one call with two outputs (mean of 3) | R4 |
 | summed job seconds, all 175 jobs | 179 s | | R3 / R4 |
-| `git status` after a run | modified: config/config.yaml | | R5 |
+| `git status` after a run | modified: config/config.yaml | clean | R5 |
 
 R0 notes (2026-11-07): the snapshot in `validation/baseline_2026-11/` (18 × calls/*.tsv,
 hmm/<s>.hmmscan.tsv, plus figures/, mcycle_heatmap.*, mcycle_matrix.tsv) comes from a

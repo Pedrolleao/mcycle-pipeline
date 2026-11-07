@@ -4,8 +4,9 @@ mcycle-pipeline launcher.
 
 Maps MAGs / isolate proteomes to their participation in the methane cycle.
 Bootstraps the conda environment, detects input type, makes sure the HMM /
-BLAST databases are built, writes the discovered samples into
-config/config.yaml, then invokes Snakemake.
+BLAST databases are built, writes a per-run config (the base config plus the
+discovered samples and the results directory) into the results directory,
+then invokes Snakemake with it. The base config is never written.
 (Same launcher as the nitrogen and sulfur sister pipelines.)
 
 Inputs are assembled FASTA — .faa proteomes, or .fna assemblies which are
@@ -34,12 +35,14 @@ outside the FASTA alphabet (diamond blastp hangs on those).
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import os
 import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import cycle_ui as ui
@@ -359,22 +362,51 @@ def build_databases(skip: bool) -> None:
 
 # ───────────────────────────── config writing ────────────────────────────────
 
-def write_samples_block(samples: list[dict]) -> None:
-    """Rewrite the `samples:` block at the bottom of config.yaml.
-    Preserves everything else by truncating from the `samples:` marker line."""
+RUN_CONFIG_NAME = f"{TOOL}_run_config.yaml"
+
+
+def write_run_config(samples: list[dict], results_dir: Path, version: str,
+                     explicit_output: bool, dry_run: bool = False) -> Path:
+    """Write <results_dir>/mcycle_run_config.yaml: the base config (everything above
+    its `samples:` line) with the discovered `samples:` block and — when --output was
+    given — `results_dir:`; the tool version, date and command line are comments at
+    the top. Snakemake is given this file; the base config is only read, so a tracked
+    config stays clean and two runs with different results directories do not clobber
+    each other. The file doubles as the provenance record of the run, so a dry run
+    writes a temporary file instead of overwriting the record of the last real run."""
     text = CONFIG_PATH.read_text()
     head, _, _ = text.partition("\nsamples:")
-    lines = [head.rstrip("\n"), "", "samples:"]
-    if not samples:
-        lines[-1] = "samples: {}"
-    else:
-        for s in samples:
-            lines.append(f"  {s['name']}:")
-            for k, v in s.items():
-                if k == "name":
-                    continue
+    lines = [
+        f"# {RUN_CONFIG_NAME} — written by {TOOL}.py, do not edit: the next run overwrites it.",
+        f"# base config: {CONFIG_PATH}",
+        f"# results: {results_dir}",
+        f"# tool: {TOOL} {version or '(no git revision)'}",
+        f"# date: {datetime.datetime.now().astimezone().isoformat(timespec='seconds')}",
+        f"# command: {' '.join(sys.argv)}",
+        "",
+        head.rstrip("\n"),
+        "",
+    ]
+    if explicit_output:
+        # Without --output, paths.results_dir of the base config decides (relative to
+        # the pipeline directory, as before), so existing results are not re-keyed.
+        lines += ["# Results directory of this run (--output; overrides paths.results_dir).",
+                  f"results_dir: {results_dir}", ""]
+    lines.append("samples:" if samples else "samples: {}")
+    for s in samples:
+        lines.append(f"  {s['name']}:")
+        for k, v in s.items():
+            if k != "name":
                 lines.append(f"    {k}: {v}")
-    CONFIG_PATH.write_text("\n".join(lines) + "\n")
+    if dry_run:
+        fd, name = tempfile.mkstemp(prefix=f"{TOOL}_run_config.", suffix=".yaml")
+        os.close(fd)
+        out = Path(name)
+    else:
+        results_dir.mkdir(parents=True, exist_ok=True)
+        out = results_dir / RUN_CONFIG_NAME
+    out.write_text("\n".join(lines) + "\n")
+    return out
 
 
 # ───────────────────────────── snakemake ─────────────────────────────────────
@@ -618,7 +650,8 @@ def main() -> None:
         ui.err(f"missing tools even in env '{ENV_NAME}': {', '.join(missing)}")
         sys.exit(1)
 
-    ui.banner("run" if not args.dry_run else "dry run", tool_version(), SUBTITLE)
+    version = tool_version()
+    ui.banner("run" if not args.dry_run else "dry run", version, SUBTITLE)
 
     # --output is relative to where the user is; Snakemake runs from ROOT.
     results_dir = (args.output.expanduser().resolve() if args.output is not None
@@ -663,20 +696,17 @@ def main() -> None:
     with ui.stage(3, N_STAGES, "Databases"):
         build_databases(args.skip_db_setup)
 
-    # Step 5 — config.
-    write_samples_block(samples)
-
-    # Step 6 — snakemake.
+    # Step 4 — the per-run config, then Snakemake.
+    run_config = write_run_config(samples, results_dir, version, args.output is not None,
+                                  dry_run=args.dry_run)
     cmd = ["snakemake", "--cores", str(args.cores),
-           "--configfile", str(CONFIG_PATH),
+           "--configfile", str(run_config),
            "--snakefile", str(ROOT / "workflow" / "Snakefile")]
-    if args.output is not None:
-        cmd += ["--config", f"results_dir={results_dir}"]
     if args.dry_run:
         cmd.append("--dry-run")
 
     with ui.stage(4, N_STAGES, "Pipeline"):
-        ui.ok(f"{len(samples)} sample(s) written to {CONFIG_PATH.relative_to(ROOT) if CONFIG_PATH.is_relative_to(ROOT) else CONFIG_PATH}")
+        ui.ok(f"{len(samples)} sample(s) written to {run_config}")
         ui.kv("command", " ".join(cmd))
         rc = run_snakemake(cmd, args.dry_run)
     if rc != 0:

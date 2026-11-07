@@ -1,5 +1,7 @@
 # config.yaml — mcycle-pipeline thresholds and paths.
-# The `samples:` block at the bottom is rewritten by mcycle.py at each invocation.
+# mcycle.py reads this file and writes a per-run copy with the discovered samples to
+# <results_dir>/mcycle_run_config.yaml; `samples:` here stays empty (fill it in only
+# to run Snakemake by hand).
 
 paths:
   hmm_db:        resources/hmm/mcycle_targets.hmm

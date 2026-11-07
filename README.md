@@ -74,8 +74,11 @@ anything runs.
 builds the databases on first run (and again whenever `config/targets.yaml` is newer
 than them), then dispatches Snakemake. It asks whether nucleotide input is isolate
 genomes or metagenome assemblies unless `--prodigal-mode single|meta` is given, and
-writes the samples it found into the `samples:` block of `config/config.yaml` — so
-`git status` shows that file as modified after a run.
+writes the samples it found, the results directory, the tool version and the command
+line to `mcycle_run_config.yaml` inside the results directory, and runs Snakemake with
+that file. `config/config.yaml` is only read, so nothing in the checkout changes and
+two runs with different results directories can run at the same time; the run config
+is also the provenance record of a results directory.
 
 Results go to `mcycle_results/` inside this directory unless `--output DIR` is given (a
 path relative to where you run the command). When the run finishes the launcher prints
