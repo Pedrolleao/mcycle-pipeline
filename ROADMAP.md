@@ -36,6 +36,11 @@ Where the methane tool stands against the sister-tool contract
   not pursued.
 - **2026-11-08 — BLAST seeds pinned.** `resources/seeds_pinned/` holds the 28 seed records;
   `build_blast_db.py` builds from them offline, as the sister tools do. No call changes.
+- **2026-11-08 — cycle map redrawn as a metro map** (`_cycle_model.py` geometry,
+  `make_cycle_map.py`, the report's cycle panel): lines = pathways, stations = compounds,
+  stops = genes. Presentation only; calls, tables and the consistency check unchanged. The
+  sister tools still draw their arrow diagrams — their models need a metro layout before
+  the shared renderer can be ported.
 
 ## Next cycle — new call semantics, own validation
 

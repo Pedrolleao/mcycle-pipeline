@@ -148,7 +148,7 @@ as SVG (vector) and PNG (300 DPI).
 | `calls/complex_completeness.tsv`, `calls/synergy_completeness.tsv` | completeness of the 17 complexes and 11 process modules |
 | `calls/mcycle_loci.tsv` | *(nucleotide input only)* called genes grouped into loci: genes on one contig with at most 5 other genes between them |
 | `report/gap_analysis.txt` | plain-text summary: the genes found with their evidence, the complexes (partial ones with their missing subunits; absent and complete ones as lists) and the process modules (complete, partial with the missing slots, ruled out with the reason) |
-| `report/mcycle_map.svg/.png` | the genome's calls drawn on the methane cycle (see below) |
+| `report/mcycle_map.svg/.png` | the genome's calls drawn on the methane cycle as a metro map (see below) |
 | `report/loci.svg/.png` | *(input with gene coordinates: nucleotide, or a proteome with Prodigal headers)* gene-arrow maps of every locus, filed under the pathway of most of its called genes, each arrow filled with its own gene's pathway, to a common bp scale |
 
 **Across samples**
@@ -170,14 +170,21 @@ complex / module grids: solid = complete, ring with `n/N` = partial, faint ring 
 a cross = ruled out. Colour always means pathway; the palette lives in
 `workflow/scripts/_domain.py`.
 
-**The cycle map.** A loop around a ladder of H₄MPT-bound C1 intermediates.
-Methanogenesis runs down the right-hand side (CO₂ → CH₄), with acetate and methylated
-compounds entering from the right; aerobic methane oxidation climbs the left
-(CH₄ → CH₃OH → HCHO → formate → CO₂, or → biomass). Two things depend on the genome.
-In a `reverse` (ANME) genome the methanogenesis chain is drawn from CH₄ to CO₂. And
-the shared `fwdABC` / `ftr` / `mch` genes are drawn where they act: on the
-CO₂ ⇄ formyl-methanofuran steps in an archaeon, on the formyl-H₄MPT → formate step
-(as the Fhc complex) in a bacterium that has `fae` and no Mcr.
+**The cycle map** is drawn as a metro map (since 2026-11-08). Each pathway is a line in
+its colour, each compound a station (a ringed white disc), each gene a stop on the line
+of the step it performs: a disc ringed in the line colour when the gene is found (with a
+centre dot when domain-only), faint when absent, crossed when disqualified. A step whose
+route is complete is a line in service, a partial step is dashed (under construction),
+an absent step is grey; a light chevron before the arrival station gives the direction
+of travel. The ladder of H₄MPT-bound C1 intermediates is the straight trunk from CO₂
+(left) to CH₄ (right); aerobic methane oxidation returns along the bottom (CH₄ → CH₃OH →
+HCHO → formate → CO₂, or → biomass); acetate, methylated compounds and the
+heterodisulfide cycle feed in from the top. Two things depend on the genome. In a
+`reverse` (ANME) genome the methanogenesis chain is travelled from CH₄ to CO₂. And the
+shared `fwdABC` / `ftr` / `mch` genes are drawn where they act: on the CO₂ ⇄
+formyl-methanofuran steps in an archaeon, on the formyl-H₄MPT → formate step (as the Fhc
+complex) in a bacterium that has `fae` and no Mcr. Hover a line or a stop in the HTML
+report for the step, its genes and their calls.
 
 **Modules, direction and key genes.** A module in `synergy_completeness.tsv` is a
 list of slots: `requires` genes, plus `requires_any` choices written `a+b|c`

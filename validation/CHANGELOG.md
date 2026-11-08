@@ -144,3 +144,16 @@ removed).
   `targets.yaml` edit therefore no longer needs the network.
 - Acceptance: rebuild from the snapshot, `make smoke` 168/168, all 54 call tables
   byte-identical to `validation/baseline_2026-11.sha256`.
+
+## 2026-11-08 — cycle map redrawn as a metro map (presentation only, no call changes)
+- `workflow/scripts/_cycle_model.py`: the diagram geometry is now a metro layout
+  (stations, octilinear line paths, one stop per gene, direction chevrons); the step
+  definitions, routes, gene lines and the genome-mode logic (`evaluate`, `genome_context`)
+  are unchanged, so `validation/check_report_consistency.py` checks the same tokens.
+- `workflow/scripts/make_cycle_map.py` and the cycle panel of `report_template.html`
+  draw that layout (static SVG/PNG and the interactive map, light and dark). The
+  single-genome figure carries its key in the free top-left corner of the map.
+- Acceptance: clean `make smoke` 168/168, 54/54 call tables unchanged against
+  `validation/baseline_2026-11.sha256`, `check_report_consistency.py` OK on 18 genomes.
+  `validation/compare_figures.py` now differs for `mcycle_maps.*` and `mcycle_map.*` by
+  design; the other figures are unchanged.
