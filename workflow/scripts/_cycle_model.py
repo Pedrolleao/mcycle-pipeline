@@ -79,6 +79,8 @@ _F = "formaldehyde_c1"
 #   right of it, 0 alternating (dense steps); a list gives one value per
 #   straight stretch of the path.
 # stop_shift: moves the group of stops along the path (units, towards the end).
+# stop_spacing: this step's own cap on the distance between stops (default
+#   STOP_SPACING_MAX).
 # routes: alternative gene sets, any one of which performs the step.
 # lines:  the genes drawn as stops, in order (may include accessory genes that
 #   no route requires, e.g. mcrC/D, mvhAGD, frhABG).
@@ -112,7 +114,7 @@ STEPS = [
      "routes": [["mch"]], "lines": [["mch"]]},
     {"id": "mtd", "name": "Methenyl-H₄MPT ⇄ methylene-H₄MPT (F₄₂₀-dependent Mtd, or H₂-forming Hmd)",
      "pathway": _R, "reversible": True, "hide_in": {"oxidative"},
-     "path": ["MEN", "MLN"], "side": 1,
+     "path": ["MEN", "MLN"], "side": -1, "stop_shift": 8.0, "stop_spacing": 6.0,   # labels below: the mtdB strand runs above
      "routes": [["mtd"], ["hmd"]], "lines": [["mtd", "hmd"]]},
     {"id": "mtdB", "name": "Methylene-H₄MPT → methenyl-H₄MPT (NAD(P)-dependent MtdB)",
      "pathway": _F,
@@ -339,7 +341,8 @@ def _length(pts) -> float:
     return sum(math.hypot(x1 - x0, y1 - y0) for (x0, y0), (x1, y1) in zip(pts, pts[1:]))
 
 
-def _stop_distances(pts, n: int, shift: float = 0.0) -> list[float]:
+def _stop_distances(pts, n: int, shift: float = 0.0,
+                    spacing: float = STOP_SPACING_MAX) -> list[float]:
     """Distances along the polyline of n evenly spread stops, keeping clear of
     the two stations and of every bend; a long stretch groups its stops around
     its middle instead of spreading them out."""
@@ -354,7 +357,7 @@ def _stop_distances(pts, n: int, shift: float = 0.0) -> list[float]:
             usable.append((a, b))
         at += L
     U = sum(b - a for a, b in usable) or 1.0
-    span = min(U, n * STOP_SPACING_MAX)
+    span = min(U, n * spacing)
     lead = min(max((U - span) / 2 + shift, 0.0), U - span)
     out = []
     for i in range(n):
@@ -389,7 +392,8 @@ def step_geometry(st) -> dict:
     n = len(tokens)
     stops = []
     sides = st.get("side", 1)
-    for i, d in enumerate(_stop_distances(pts, n, st.get("stop_shift", 0.0))):
+    for i, d in enumerate(_stop_distances(pts, n, st.get("stop_shift", 0.0),
+                                          st.get("stop_spacing", STOP_SPACING_MAX))):
         (x, y), (tx, ty), k = _along(pts, d)
         side = sides[k] if isinstance(sides, (list, tuple)) else sides
         side = side or (1 if i % 2 == 0 else -1)
