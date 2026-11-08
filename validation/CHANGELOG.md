@@ -130,3 +130,17 @@ removed).
 - **Shared code.** `_completeness.load_synergies` reads the per-tool convention from
   `_domain.MODULE_RULES_COUNT_AS_SLOTS` (False here, True in ncycle and scycle, whose
   TSVs and figures are unchanged).
+
+## 2026-11-08 — BLAST seeds pinned in the repository (no call changes)
+- `resources/seeds_pinned/unstable_refs.fasta` (19 records) and `blast_gated_refs.fasta`
+  (9 records): the UniProt seed FASTAs behind the DIAMOND databases, copied from the
+  rebuild of 2026-11-07 (R6). The files of the 2026-10-04 fetch, used for the validation
+  of 2026-10-05, differ from these in UniProt header text only (36 diamond tables and
+  54 call tables of the smoke panel byte-identical, reference panel 14/14 with unchanged
+  score tables; `WORKPLAN_2026-11_review.md`, R6 notes).
+- `workflow/scripts/build_blast_db.py` copies and indexes the pinned files when they
+  cover every curated accession of `config/targets.yaml`, and fetches from UniProt only
+  with `--upstream` or after a seed is added — the same logic as ncycle / scycle. A
+  `targets.yaml` edit therefore no longer needs the network.
+- Acceptance: rebuild from the snapshot, `make smoke` 168/168, all 54 call tables
+  byte-identical to `validation/baseline_2026-11.sha256`.

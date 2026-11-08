@@ -44,8 +44,8 @@ regression-score:
 	python validation/score_mcycle.py
 	python validation/test_regression.py
 
-# (Re)build the HMM and BLAST databases from config/targets.yaml (KOfam profiles from
-# resources/kofam_pinned/, seeds from UniProt).
+# (Re)build the HMM and BLAST databases from config/targets.yaml and the pinned
+# snapshots under resources/ (KOfam profiles, BLAST seeds) — no download.
 dbs:
 	python workflow/scripts/build_hmm_db.py --force
 	python workflow/scripts/build_blast_db.py --force

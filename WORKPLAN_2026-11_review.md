@@ -353,11 +353,22 @@ clean `make smoke` of commit `97fd402`; its 54 call tables are byte-identical to
 the `jobid:` / `Finished jobid:` timestamps of `.snakemake/log/2026-11-07T171946…log`
 (1 s resolution, so sub-second rules read 0).
 
+Checksum refresh (2026-11-08): `validation/baseline_2026-11.sha256` now carries the 36
+`complex_completeness.tsv` / `synergy_completeness.tsv` checksums of the post-R6/R7 state
+(the 18 `mcycle_calls.tsv` lines are the R0 ones, unchanged). Verified before the refresh:
+against the R0 snapshot the complex tables differ in the `application` text of the mcr
+row only (R6) and the synergy tables in exactly the 156 smoke rows of
+`validation/amendments/2026-11-07_module_fraction_changes.tsv`, with the values of that
+table (R7). The gitignored snapshot directory stays the R0 record.
+
 ## Possible follow-ups (not in this plan)
 
-- Pin the UniProt seed FASTAs as the sister tools do (`resources/seeds_pinned/` plus a
-  per-sequence sha256 manifest), so a `targets.yaml` edit no longer needs the network and
-  the seeds are the validated ones by construction.
+- ~~Pin the UniProt seed FASTAs as the sister tools do~~ — done 2026-11-08:
+  `resources/seeds_pinned/` (the two FASTAs of the 2026-11-07 fetch, README) and
+  `build_blast_db.py` with the sisters' `pinned_covers` / `--upstream` logic; a
+  `targets.yaml` edit no longer needs the network. (The sisters' per-accession manifest
+  under `resources/.cache/` was not copied: mcycle has 19 accessions and no gene-name
+  fetch path, so the two FASTAs are the manifest.)
 
 ## Decisions for the user
 

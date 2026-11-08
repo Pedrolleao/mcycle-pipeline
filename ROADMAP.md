@@ -31,8 +31,11 @@ Where the methane tool stands against the sister-tool contract
 - **2026-11-07 — review fixes R1–R8** (`WORKPLAN_2026-11_review.md`): input validation in the
   launcher, error panel with the job log, hmmscan on one thread (smoke 67 s → 30 s), figures
   rendered once, per-run config, gap_analysis.txt rewritten, static grids capped with a sticky
-  header in the HTML report; no call changes. R7 (module-fraction convention) measured, waits
-  for a decision; R9 (hmmsearch) design only.
+  header in the HTML report; no call changes. R7 (module-fraction convention) applied the
+  same day as a disclosed amendment (7 module statuses, no call changes); R9 (hmmsearch)
+  not pursued.
+- **2026-11-08 — BLAST seeds pinned.** `resources/seeds_pinned/` holds the 28 seed records;
+  `build_blast_db.py` builds from them offline, as the sister tools do. No call changes.
 
 ## Next cycle — new call semantics, own validation
 

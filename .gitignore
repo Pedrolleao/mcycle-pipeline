@@ -2,9 +2,9 @@
 # mcycle-pipeline .gitignore
 # Goal: commit the tool + config + small validation artifacts.
 # Exclude large/regenerable data (DBs, downloads, per-genome pipeline outputs).
-# NOTE: resources/blast_db/ holds the cached BLAST reference sequences fetched
-# from UniProt — archive it SEPARATELY (e.g. Zenodo) with a release, because
-# UniProt accessions can be deleted; it is intentionally NOT committed here.
+# NOTE: the built databases (resources/hmm/, resources/blast_db/) are not committed;
+# their inputs are — resources/kofam_pinned/ and resources/seeds_pinned/ (the UniProt
+# seed FASTAs of the validated BLAST databases; UniProt entries can be deleted).
 # ============================================================================
 
 # ---- Python / Snakemake / OS cruft ----

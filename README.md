@@ -31,9 +31,9 @@ section 6). What they do not cover is in *Known limits* below.
 ## Install
 
 Developed and validated on Linux (x86-64). Needs `git`, conda or mamba, `curl` and
-`unzip`; about 3 GB of disk for the environment. Network access is needed for the install,
-for the first database build (28 seed sequences from UniProt) and for fetching the
-test genomes from NCBI; the pipeline itself runs offline.
+`unzip`; about 3 GB of disk for the environment. Network access is needed for the install
+and for fetching the test genomes from NCBI; the databases are built from snapshots in
+the repository, and the pipeline itself runs offline.
 
 ```bash
 git clone https://github.com/Pedrolleao/mcycle-pipeline.git
@@ -277,16 +277,21 @@ GT_FILE=ground_truth.tsv python validation/score_mcycle.py   # KEGG contrast
 
 ```bash
 python workflow/scripts/build_hmm_db.py     # KOfam KO profiles (+ custom HMMs / Pfam fallbacks if any)
-python workflow/scripts/build_blast_db.py    # curated UniProt seeds → DIAMOND DBs
+python workflow/scripts/build_blast_db.py    # pinned UniProt seeds → DIAMOND DBs
 python validation/check_smoke.py             # re-check existing mcycle_results/ against the expectations
 ```
 
-**KOfam is pinned in the repository.** The 90 KOfam profiles and their thresholds are
-built from `resources/kofam_pinned/`, the release of 2026-05-24 the tool was validated
-on. genome.jp serves KOfam from a rolling URL and keeps no old releases — the release
-of 2026-09-29 has a different threshold for 85 of the 90 KOs — so a database built
-from a fresh download is not the validated one. `build_hmm_db.py --upstream` downloads
-the current release (~1.5 GB) anyway; re-validate (`make regression`) before trusting it.
+**KOfam and the BLAST seeds are pinned in the repository.** The 90 KOfam profiles and
+their thresholds are built from `resources/kofam_pinned/`, the release of 2026-05-24 the
+tool was validated on, and the 28 seed records of the two DIAMOND databases from
+`resources/seeds_pinned/`. genome.jp serves KOfam from a rolling URL and keeps no old
+releases — the release of 2026-09-29 has a different threshold for 85 of the 90 KOs —
+and UniProt entries are revised and deleted, so databases built from fresh downloads
+are not the validated ones. `build_hmm_db.py --upstream` (~1.5 GB download) and
+`build_blast_db.py --upstream` fetch the current data anyway; re-validate
+(`make regression`) before trusting the result. Adding a seed to `config/targets.yaml`
+also makes the next build fetch from UniProt (the snapshot no longer covers the list);
+check the result and replace the two files in `resources/seeds_pinned/`.
 
 **What a clone does not contain.** Pipeline results, the downloaded genomes, and the
 third-party tools and databases of the comparator benchmark (METABOLIC, DRAM, MCycDB,

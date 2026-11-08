@@ -12,12 +12,19 @@ Two output FASTAs:
 Header convention mirrors ESP_Search:  >{target_id}||{uniprot_accession}
 This lets downstream code split on `||` to map a hit back to a target.
 
-Usage:  python workflow/scripts/build_blast_db.py [--force]
+Pinned seeds (2026-11-08): the two FASTAs of the validated databases are kept in
+`resources/seeds_pinned/`. When they hold every curated accession of targets.yaml
+the build copies and indexes them without touching the network; otherwise (a seed
+was added, or `--upstream`) it fetches all seeds from UniProt. UniProt entries are
+revised and deleted, so a fresh fetch is not guaranteed to be the validated set.
+
+Usage:  python workflow/scripts/build_blast_db.py [--force] [--upstream]
 """
 
 from __future__ import annotations
 
 import argparse
+import shutil
 import subprocess
 import sys
 import time
@@ -30,6 +37,7 @@ from _common import (
 )
 
 BLAST_DIR = ROOT / "resources" / "blast_db"
+PINNED = ROOT / "resources" / "seeds_pinned"   # the two seed FASTAs of the validation
 UNIPROT_BASE = "https://rest.uniprot.org/uniprotkb"
 
 
@@ -123,6 +131,26 @@ def build_one(out_fasta: Path, targets: list[dict]) -> None:
         chunks.append(retag_headers(fasta, t["id"]))
         time.sleep(0.5)   # be polite to UniProt
     out_fasta.write_text("".join(chunks))
+    index_fasta(out_fasta)
+
+
+def pinned_covers(*target_lists: list[dict]) -> bool:
+    """True if resources/seeds_pinned/ holds both seed FASTAs and they contain every
+    curated accession of targets.yaml (a seed added since is not in the snapshot)."""
+    have: set[str] = set()
+    for name in ("unstable_refs.fasta", "blast_gated_refs.fasta"):
+        if not (PINNED / name).exists():
+            return False
+        with open(PINNED / name) as fh:
+            have.update(line[1:].split()[0] for line in fh if line.startswith(">"))
+    return all(f"{t['id']}||{acc}" in have
+               for targets in target_lists for t in targets
+               for acc in (t.get("blast_refs_uniprot") or [])
+               if not acc.startswith("UPI"))
+
+
+def index_fasta(out_fasta: Path) -> None:
+    """makeblastdb + DIAMOND database for one seed FASTA."""
     if not out_fasta.stat().st_size:
         print(f"  ! {out_fasta} is empty — skipping makeblastdb", file=sys.stderr)
         return
@@ -141,6 +169,9 @@ def build_one(out_fasta: Path, targets: list[dict]) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--upstream", action="store_true",
+                    help="Ignore resources/seeds_pinned/ and fetch the seeds from "
+                         "UniProt (entries deleted there since are lost)")
     args = ap.parse_args()
 
     targets = load_targets()["targets"]
@@ -155,6 +186,20 @@ def main() -> None:
             and gated_fa.with_suffix(".phr").exists():
         print("[build_blast_db] BLAST DBs already present; pass --force to rebuild")
         return
+
+    if not args.upstream:
+        if pinned_covers(unstable, gated):
+            print(f"[build_blast_db] using the pinned seed snapshot in "
+                  f"{PINNED.relative_to(ROOT)}/")
+            for fa in (unstable_fa, gated_fa):
+                fa.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(PINNED / fa.name, fa)
+                index_fasta(fa)
+            print("[build_blast_db] done.")
+            return
+        print("[build_blast_db] ! resources/seeds_pinned/ does not hold every curated "
+              "accession of targets.yaml — fetching all seeds from UniProt instead",
+              file=sys.stderr)
 
     print(f"[build_blast_db] unstable_refs.fasta: {len(unstable)} target(s)")
     build_one(unstable_fa, unstable)
