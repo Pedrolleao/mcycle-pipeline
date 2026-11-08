@@ -154,6 +154,9 @@ def draw_cycle(ax, codes: dict[str, int], fontsize: float, u2pt: float,
         _line(ax, pts, colour, state, u2pt, z, stripes=st["stripes"])
         _chevron(ax, st["chevron_rev"] if e["reversed"] else st["chevron"],
                  u2pt, z + 0.1)
+        for fd in st["feeders"]:
+            _line(ax, fd["path"], colour, state, u2pt, z, stripes=fd["stripes"])
+            _chevron(ax, fd["chevron"], u2pt, z + 0.1)
         toks = [t for line in e["lines"] for t in line]
         for i, (sp, tok) in enumerate(zip(st["stops"], toks)):
             _stop(ax, sp, tok["code"], hue, u2pt, 5)

@@ -78,6 +78,9 @@ _F = "formaldehyde_c1"
 # side:   where the stop labels go — +1 left of the direction of travel, -1
 #   right of it, 0 alternating (dense steps); a list gives one value per
 #   straight stretch of the path.
+# feeders: extra lines of the same step that bring a second substrate to the
+#   product station (waypoint lists, drawn in the step's colour and state, with
+#   a chevron and no stops; never reversed).
 # stop_shift: moves the group of stops along the path (units, towards the end).
 # stop_spacing: this step's own cap on the distance between stops (default
 #   STOP_SPACING_MAX).
@@ -444,8 +447,15 @@ def step_geometry(st) -> dict:
         if not at_end:
             tx, ty = -tx, -ty
         return {"x": x, "y": y, "tx": tx, "ty": ty}
+    feeders = []
+    for fp in st.get("feeders", []):
+        fpts = [_pt(p) for p in fp]
+        (fx, fy), (ftx, fty), _ = _along(fpts, _length(fpts) - STATION_R - 1.0)
+        feeders.append({"path": fpts, "stripes": stripes(fpts),
+                        "chevron": {"x": fx, "y": fy, "tx": ftx, "ty": fty}})
     return {"path": pts, "stops": stops, "chevron": chevron(True),
-            "chevron_rev": chevron(False), "stripes": stripes(pts)}
+            "chevron_rev": chevron(False), "stripes": stripes(pts),
+            "feeders": feeders}
 
 
 def layout() -> dict:
@@ -462,6 +472,10 @@ def layout() -> dict:
             "chevron": {k: r(v) for k, v in g["chevron"].items()},
             "chevron_rev": {k: r(v) for k, v in g["chevron_rev"].items()},
             "stripes": [[[r(x), r(y)] for x, y in q] for q in g["stripes"]],
+            "feeders": [{"path": [[r(x), r(y)] for x, y in fd["path"]],
+                         "stripes": [[[r(x), r(y)] for x, y in q] for q in fd["stripes"]],
+                         "chevron": {k: r(v) for k, v in fd["chevron"].items()}}
+                        for fd in g["feeders"]],
         })
     return {
         "xlim": list(XLIM), "ylim": list(YLIM),

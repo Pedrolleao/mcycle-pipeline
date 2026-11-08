@@ -738,22 +738,25 @@ function renderCycle(sm) {
     const v = sm.steps[st.id], stt = v[0], rev = v[2];
     const hue = pcol(st.pathway), colour = stt === "absent" ? "var(--absent-edge)" : hue;
     const pts = rev ? st.path.slice().reverse() : st.path;
-    const d = pts.map((p, i) => (i ? "L" : "M") + f(X(p[0])) + "," + f(Y(p[1]))).join("");
     const g = s("g", {}, gLines);
-    const attrs = {d, fill: "none", stroke: colour, "stroke-width": G.line_w * k,
-      "stroke-linecap": "round", "stroke-linejoin": "round"};
-    if (stt === "partial") attrs["stroke-opacity"] = G.partial_alpha;
-    s("path", attrs, g);
-    // partial step: full-colour 45-degree stripes over the tinted line
-    if (stt === "partial") st.stripes.forEach(q =>
-      s("polygon", {points: q.map(p => f(X(p[0])) + "," + f(Y(p[1]))).join(" "), fill: hue}, g));
-    // direction chevron: a light V inside the line, before the arrival station
-    const c = rev ? st.chevron_rev : st.chevron, L = G.chevron * k;
-    const tx = c.tx, ty = -c.ty, nx = -ty, ny = tx, px = X(c.x), py = Y(c.y);
-    s("polyline", {points: `${f(px - (tx - nx * 0.9) * L)},${f(py - (ty - ny * 0.9) * L)} ${f(px)},${f(py)} ${f(px - (tx + nx * 0.9) * L)},${f(py - (ty + ny * 0.9) * L)}`,
-      fill: "none", stroke: "var(--surface)", "stroke-width": 0.45 * k, "stroke-linecap": "round",
-      "stroke-linejoin": "round", opacity: 0.95}, g);
-    s("path", {d, fill: "none", stroke: "transparent", "stroke-width": 16}, g);
+    const track = (pts, stripes, c) => {
+      const d = pts.map((p, i) => (i ? "L" : "M") + f(X(p[0])) + "," + f(Y(p[1]))).join("");
+      const attrs = {d, fill: "none", stroke: colour, "stroke-width": G.line_w * k,
+        "stroke-linecap": "round", "stroke-linejoin": "round"};
+      if (stt === "partial") attrs["stroke-opacity"] = G.partial_alpha;
+      s("path", attrs, g);
+      // partial step: full-colour 45-degree stripes over the tinted line
+      if (stt === "partial") stripes.forEach(q =>
+        s("polygon", {points: q.map(p => f(X(p[0])) + "," + f(Y(p[1]))).join(" "), fill: hue}, g));
+      // direction chevron: a light V inside the line, before the arrival station
+      const L = G.chevron * k, tx = c.tx, ty = -c.ty, nx = -ty, ny = tx, px = X(c.x), py = Y(c.y);
+      s("polyline", {points: `${f(px - (tx - nx * 0.9) * L)},${f(py - (ty - ny * 0.9) * L)} ${f(px)},${f(py)} ${f(px - (tx + nx * 0.9) * L)},${f(py - (ty + ny * 0.9) * L)}`,
+        fill: "none", stroke: "var(--surface)", "stroke-width": 0.45 * k, "stroke-linecap": "round",
+        "stroke-linejoin": "round", opacity: 0.95}, g);
+      s("path", {d, fill: "none", stroke: "transparent", "stroke-width": 16}, g);
+    };
+    track(pts, st.stripes, rev ? st.chevron_rev : st.chevron);
+    st.feeders.forEach(fd => track(fd.path, fd.stripes, fd.chevron));
     g.addEventListener("pointermove", e => showTip(e, stepTip(st)));
     g.addEventListener("pointerleave", hideTip);
     // stops: one per gene, in the order of the step's gene lines
