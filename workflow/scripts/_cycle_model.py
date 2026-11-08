@@ -34,30 +34,30 @@ import math
 import re
 
 # Canvas (data units, y up).
-XLIM = (0.0, 288.0)
-YLIM = (0.0, 122.0)
+XLIM = (0.0, 284.0)
+YLIM = (0.0, 126.0)
 
 # Stations.  id: (label, x, y, (label dx, label dy, ha, va))
 # Lines meet at the station centre; the label offset keeps the name clear of
 # the lines that arrive there.
 NODES = {
     "CO2":   ("CO₂",                16.0,  66.0, (0.0,   7.5, "center", "bottom")),
-    "FMFR":  ("formyl-MFR",         52.0,  66.0, (0.0,  -6.0, "center", "top")),
-    "FH4":   ("formyl-H₄MPT",       88.0,  66.0, (0.0,   7.5, "center", "bottom")),
-    "MEN":   ("methenyl-H₄MPT",    124.0,  66.0, (0.0,  -6.0, "center", "top")),
-    "MLN":   ("methylene-H₄MPT",   160.0,  66.0, (0.0,   7.5, "center", "bottom")),
-    "MH4":   ("methyl-H₄MPT",      196.0,  66.0, (0.0,  -6.0, "center", "top")),
-    "MCOM":  ("methyl-CoM",        232.0,  66.0, (-4.0,  -6.0, "right",  "top")),
-    "CH4":   ("CH₄",               268.0,  66.0, (6.5,   0.0, "left",   "center")),
-    "MEOH":  ("CH₃OH",             232.0,  30.0, (-4.5, -5.5, "right",  "top")),
-    "HCHO":  ("HCHO",              160.0,  30.0, (-4.5, -5.5, "right",  "top")),
-    "BIO":   ("biomass",           124.0,  10.0, (-6.0,  0.0, "right",  "center")),
-    "FOR":   ("formate",            52.0,  30.0, (0.0,  -6.0, "center", "top")),
-    "AC":    ("acetate",           160.0, 102.0, (-6.0,  0.0, "right",  "center")),
-    "ACCOA": ("acetyl-CoA",        196.0, 102.0, (6.5,   0.0, "left",   "center")),
-    "HDS":   ("CoM-S-S-CoB",        16.0, 110.0, (0.0,  -6.0, "center", "top")),
-    "THIOL": ("CoM-SH + CoB-SH",    88.0, 110.0, (0.0,  -6.0, "center", "top")),
-    "MA":    ("methylamines · DMS", 232.0, 110.0, (0.0,   6.0, "center", "bottom")),
+    "FMFR":  ("formyl-MFR",         48.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "FH4":   ("formyl-H₄MPT",       72.0,  66.0, (0.0,   7.5, "center", "bottom")),
+    "MEN":   ("methenyl-H₄MPT",     96.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "MLN":   ("methylene-H₄MPT",   130.0,  66.0, (0.0,   7.5, "center", "bottom")),
+    "MH4":   ("methyl-H₄MPT",      160.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "MCOM":  ("methyl-CoM",        216.0,  66.0, (-4.0,  -6.0, "right",  "top")),
+    "CH4":   ("CH₄",               264.0,  66.0, (6.5,   0.0, "left",   "center")),
+    "MEOH":  ("CH₃OH",             216.0,  30.0, (-4.5, -5.5, "right",  "top")),
+    "HCHO":  ("HCHO",              130.0,  30.0, (-4.5, -5.5, "right",  "top")),
+    "BIO":   ("biomass",            94.0,  10.0, (-6.0,  0.0, "right",  "center")),
+    "FOR":   ("formate",            44.0,  30.0, (0.0,  -6.0, "center", "top")),
+    "AC":    ("acetate",           124.0, 102.0, (-6.0,  0.0, "right",  "center")),
+    "ACCOA": ("acetyl-CoA",        160.0, 102.0, (6.5,   0.0, "left",   "center")),
+    "HDS":   ("CoM-S-S-CoB",        16.0, 114.0, (0.0,  -6.0, "center", "top")),
+    "THIOL": ("CoM-SH + CoB-SH",    88.0, 114.0, (0.0,  -6.0, "center", "top")),
+    "MA":    ("methylamines · DMS", 216.0, 110.0, (0.0,   6.0, "center", "bottom")),
 }
 
 # Short display names.
@@ -96,25 +96,25 @@ STEPS = [
      "lines": [["fwdA", "fwdB"], ["fwdC", "fwdD"]]},
     {"id": "ftr", "name": "Formyl-methanofuran ⇄ formyl-H₄MPT (formyltransferase)",
      "pathway": _R, "reversible": True, "hide_in": {"oxidative"},
-     "path": ["FMFR", "FH4"], "side": 1,
+     "path": ["FMFR", "FH4"], "side": 1, "stop_shift": -4.0,
      "routes": [["ftr"]], "lines": [["ftr"]]},
     {"id": "fhc", "name": "Formyl-H₄MPT → formate (Fhc complex: FhcABC + FhcD, the "
                           "bacterial homologues of fwdABC + ftr)",
      "pathway": _F, "only_in": {"oxidative"},
-     "path": ["FH4", "FOR"], "side": 1,
+     "path": ["FH4", (72.0, 58.0), "FOR"], "side": 1,
      "routes": [["ftr", "fwdA", "fwdB", "fwdC"]],
      "lines": [["ftr", "fwdA"], ["fwdB", "fwdC"]]},
     {"id": "fdh", "name": "Formate → CO₂ (formate dehydrogenase)", "pathway": _F,
-     "path": ["FOR", "CO2"], "side": -1,
+     "path": ["FOR", (44.0, 38.0), "CO2"], "side": -1,
      "routes": [["fdh"], ["fdhA", "fdhB"]],
      "lines": [["fdh", "fdhA", "fdhB"]]},
     {"id": "mch", "name": "Formyl-H₄MPT ⇄ methenyl-H₄MPT (cyclohydrolase)",
      "pathway": _R, "reversible": True, "up_in": {"oxidative"},
-     "path": ["FH4", "MEN"], "side": 1,
+     "path": ["FH4", "MEN"], "side": 1, "stop_shift": 4.0,
      "routes": [["mch"]], "lines": [["mch"]]},
     {"id": "mtd", "name": "Methenyl-H₄MPT ⇄ methylene-H₄MPT (F₄₂₀-dependent Mtd, or H₂-forming Hmd)",
      "pathway": _R, "reversible": True, "hide_in": {"oxidative"},
-     "path": ["MEN", "MLN"], "side": -1, "stop_shift": 8.0, "stop_spacing": 6.0,   # labels below: the mtdB strand runs above
+     "path": ["MEN", "MLN"], "side": -1, "stop_shift": 8.0, "stop_spacing": 5.5,   # labels below: the mtdB strand runs above
      "routes": [["mtd"], ["hmd"]], "lines": [["mtd", "hmd"]]},
     {"id": "mtdB", "name": "Methylene-H₄MPT → methenyl-H₄MPT (NAD(P)-dependent MtdB)",
      "pathway": _F,
@@ -131,7 +131,7 @@ STEPS = [
      "lines": [["mtrA", "mtrB", "mtrC", "mtrD"], ["mtrE", "mtrF", "mtrG", "mtrH"]]},
     {"id": "mcr", "name": "Methyl-CoM ⇄ CH₄ (methyl-coenzyme M reductase)",
      "pathway": _K, "reversible": True,
-     "path": ["MCOM", "CH4"], "side": 1,
+     "path": ["MCOM", "CH4"], "side": 1, "stop_shift": 4.0, "stop_spacing": 6.0,
      "routes": [["mcrA", "mcrB", "mcrG"]],
      "lines": [["mcrA", "mcrB", "mcrG"], ["mcrC", "mcrD", "mcrA_anme"]]},
     {"id": "hdr", "name": "Heterodisulfide → CoM-SH + CoB-SH (heterodisulfide reductase)",
@@ -163,7 +163,7 @@ STEPS = [
      "routes": [["mtsA", "mtsB"]], "lines": [["mtsA", "mtsB"]]},
     {"id": "mmo", "name": "CH₄ → CH₃OH (particulate or soluble methane monooxygenase)",
      "pathway": _O,
-     "path": ["CH4", (268.0, 48.0), (250.0, 30.0), "MEOH"], "side": [-1, -1, 1],
+     "path": ["CH4", (264.0, 48.0), (246.0, 30.0), "MEOH"], "side": [-1, -1, 1],
      "routes": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"]],
      "lines": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"],
                ["mmoB", "mmoC", "mmoD", "nod"]]},
@@ -182,11 +182,11 @@ STEPS = [
      "routes": [["frmA", "frmB"]], "lines": [["gfa"], ["frmA", "frmB"]]},
     {"id": "rump", "name": "HCHO → biomass (ribulose-monophosphate cycle)",
      "pathway": _F, "hide_in": {"methanogenic", "reverse"},
-     "path": ["HCHO", (160.0, 22.0), (148.0, 10.0), "BIO"], "offset": -1.6, "side": -1, "stop_shift": 8.0,
+     "path": ["HCHO", (130.0, 22.0), (118.0, 10.0), "BIO"], "offset": -1.6, "side": -1, "stop_shift": 8.0,
      "routes": [["hxlA", "hxlB"]], "lines": [["hxlA", "hxlB"]]},
     {"id": "serine", "name": "C1 → biomass (serine cycle)", "pathway": _F,
      "hide_in": {"methanogenic", "reverse"},
-     "path": ["HCHO", (160.0, 22.0), (148.0, 10.0), "BIO"], "offset": 1.6, "side": 1,
+     "path": ["HCHO", (130.0, 22.0), (118.0, 10.0), "BIO"], "offset": 1.6, "side": 1,
      "routes": [["sgaA", "hprA", "mtkA", "mtkB", "mcl"]],
      "lines": [["sgaA", "hprA", "gckA"], ["mtkA", "mtkB", "mcl"]]},
 ]
