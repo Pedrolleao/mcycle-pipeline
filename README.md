@@ -178,8 +178,9 @@ route is complete is a line in service, a partial step is dashed (under construc
 an absent step is grey; a light chevron before the arrival station gives the direction
 of travel. The ladder of H₄MPT-bound C1 intermediates is the straight trunk from CO₂
 (left) to CH₄ (right); aerobic methane oxidation returns along the bottom (CH₄ → CH₃OH →
-HCHO → formate → CO₂, or → biomass); acetate, methylated compounds and the
-heterodisulfide cycle feed in from the top. Two things depend on the genome. In a
+HCHO → formate → CO₂, or → biomass); acetate and methylated compounds feed in from the
+top, and the heterodisulfide cycle, which shares no compound with the rest of the map,
+is its own short line in the top-left corner. Two things depend on the genome. In a
 `reverse` (ANME) genome the methanogenesis chain is travelled from CH₄ to CO₂. And the
 shared `fwdABC` / `ftr` / `mch` genes are drawn where they act: on the CO₂ ⇄
 formyl-methanofuran steps in an archaeon, on the formyl-H₄MPT → formate step (as the Fhc

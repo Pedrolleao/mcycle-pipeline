@@ -16,8 +16,9 @@ each compound a station, each gene a stop on the line of the step it performs.
 The shared ladder of H₄MPT-bound C1 intermediates is the straight trunk from
 CO₂ (left) to CH₄ (right); methanogens travel it rightwards, aerobic
 methanotrophs and methylotrophs return along the bottom (CH₄ → CH₃OH → HCHO →
-formate → CO₂); acetate, methylamines and the heterodisulfide cycle feed in
-from the top. Two things depend on the genome:
+formate → CO₂); acetate and methylamines feed in from the top, and the
+heterodisulfide cycle, which touches no other station, is its own short line
+in the top-left corner. Two things depend on the genome:
 
 * the Mcr direction called by apply_rules.py — in a `reverse` (ANME) genome
   the whole methanogenesis chain is drawn pointing from CH₄ to CO₂;
@@ -33,30 +34,30 @@ import math
 import re
 
 # Canvas (data units, y up).
-XLIM = (0.0, 244.0)
-YLIM = (0.0, 118.0)
+XLIM = (0.0, 288.0)
+YLIM = (0.0, 122.0)
 
 # Stations.  id: (label, x, y, (label dx, label dy, ha, va))
 # Lines meet at the station centre; the label offset keeps the name clear of
 # the lines that arrive there.
 NODES = {
-    "CO2":   ("CO₂",                16.0,  60.0, (0.0,   6.0, "center", "bottom")),
-    "FMFR":  ("formyl-MFR",         46.0,  60.0, (0.0,  -6.0, "center", "top")),
-    "FH4":   ("formyl-H₄MPT",       76.0,  60.0, (4.5, -11.0, "left",   "top")),
-    "MEN":   ("methenyl-H₄MPT",    106.0,  60.0, (0.0,  -6.0, "center", "top")),
-    "MLN":   ("methylene-H₄MPT",   136.0,  60.0, (4.0, -11.0, "left",   "top")),
-    "MH4":   ("methyl-H₄MPT",      166.0,  60.0, (0.0,  -6.0, "center", "top")),
-    "MCOM":  ("methyl-CoM",        196.0,  60.0, (-4.0, -11.0, "right",  "top")),
-    "CH4":   ("CH₄",               226.0,  60.0, (6.5,   0.0, "left",   "center")),
-    "MEOH":  ("CH₃OH",             196.0,  30.0, (-4.5, -5.5, "right",  "top")),
-    "HCHO":  ("HCHO",              136.0,  30.0, (-4.5, -5.5, "right",  "top")),
-    "BIO":   ("biomass",           106.0,  10.0, (-6.0,  0.0, "right",  "center")),
-    "FOR":   ("formate",            46.0,  30.0, (0.0,  -6.0, "center", "top")),
-    "AC":    ("acetate",           166.0, 104.0, (-6.0,  0.0, "right",  "center")),
-    "ACCOA": ("acetyl-CoA",        166.0,  84.0, (-6.0,  0.0, "right",  "center")),
-    "HDS":   ("CoM-S-S-CoB",       226.0, 108.0, (0.0,   6.0, "center", "bottom")),
-    "THIOL": ("CoM-SH + CoB-SH",   226.0,  84.0, (0.0,  -4.5, "center", "top")),
-    "MA":    ("methylamines · DMS", 196.0, 94.0, (0.0,   6.0, "center", "bottom")),
+    "CO2":   ("CO₂",                16.0,  66.0, (0.0,   7.5, "center", "bottom")),
+    "FMFR":  ("formyl-MFR",         52.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "FH4":   ("formyl-H₄MPT",       88.0,  66.0, (0.0,   7.5, "center", "bottom")),
+    "MEN":   ("methenyl-H₄MPT",    124.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "MLN":   ("methylene-H₄MPT",   160.0,  66.0, (0.0,   7.5, "center", "bottom")),
+    "MH4":   ("methyl-H₄MPT",      196.0,  66.0, (0.0,  -6.0, "center", "top")),
+    "MCOM":  ("methyl-CoM",        232.0,  66.0, (-4.0,  -6.0, "right",  "top")),
+    "CH4":   ("CH₄",               268.0,  66.0, (6.5,   0.0, "left",   "center")),
+    "MEOH":  ("CH₃OH",             232.0,  30.0, (-4.5, -5.5, "right",  "top")),
+    "HCHO":  ("HCHO",              160.0,  30.0, (-4.5, -5.5, "right",  "top")),
+    "BIO":   ("biomass",           124.0,  10.0, (-6.0,  0.0, "right",  "center")),
+    "FOR":   ("formate",            52.0,  30.0, (0.0,  -6.0, "center", "top")),
+    "AC":    ("acetate",           160.0, 102.0, (-6.0,  0.0, "right",  "center")),
+    "ACCOA": ("acetyl-CoA",        196.0, 102.0, (6.5,   0.0, "left",   "center")),
+    "HDS":   ("CoM-S-S-CoB",        16.0, 110.0, (0.0,  -6.0, "center", "top")),
+    "THIOL": ("CoM-SH + CoB-SH",    88.0, 110.0, (0.0,  -6.0, "center", "top")),
+    "MA":    ("methylamines · DMS", 232.0, 110.0, (0.0,   6.0, "center", "bottom")),
 }
 
 # Short display names.
@@ -77,6 +78,7 @@ _F = "formaldehyde_c1"
 # side:   where the stop labels go — +1 left of the direction of travel, -1
 #   right of it, 0 alternating (dense steps); a list gives one value per
 #   straight stretch of the path.
+# stop_shift: moves the group of stops along the path (units, towards the end).
 # routes: alternative gene sets, any one of which performs the step.
 # lines:  the genes drawn as stops, in order (may include accessory genes that
 #   no route requires, e.g. mcrC/D, mvhAGD, frhABG).
@@ -114,7 +116,7 @@ STEPS = [
      "routes": [["mtd"], ["hmd"]], "lines": [["mtd", "hmd"]]},
     {"id": "mtdB", "name": "Methylene-H₄MPT → methenyl-H₄MPT (NAD(P)-dependent MtdB)",
      "pathway": _F,
-     "path": ["MLN", "MEN"], "offset": -2.6, "side": -1,
+     "path": ["MLN", "MEN"], "offset": -2.6, "side": -1, "stop_shift": 8.0,
      "routes": [["mtdB"]], "lines": [["mtdB"]]},
     {"id": "mer", "name": "Methylene-H₄MPT ⇄ methyl-H₄MPT (Mer; F₄₂₀H₂ from Frh)",
      "pathway": _R, "reversible": True,
@@ -132,7 +134,7 @@ STEPS = [
      "lines": [["mcrA", "mcrB", "mcrG"], ["mcrC", "mcrD", "mcrA_anme"]]},
     {"id": "hdr", "name": "Heterodisulfide → CoM-SH + CoB-SH (heterodisulfide reductase)",
      "pathway": _E,
-     "path": ["HDS", "THIOL"], "side": 0,
+     "path": ["HDS", "THIOL"], "side": 1,
      "routes": [["hdrA", "hdrB", "hdrC"], ["hdrD", "hdrE"]],
      "lines": [["hdrA", "hdrB", "hdrC"], ["mvhA", "mvhG", "mvhD"], ["hdrD", "hdrE"]]},
     {"id": "ack", "name": "Acetate → acetyl-CoA (Ack + Pta, or Acs)", "pathway": _A,
@@ -159,7 +161,7 @@ STEPS = [
      "routes": [["mtsA", "mtsB"]], "lines": [["mtsA", "mtsB"]]},
     {"id": "mmo", "name": "CH₄ → CH₃OH (particulate or soluble methane monooxygenase)",
      "pathway": _O,
-     "path": ["CH4", (226.0, 42.0), (214.0, 30.0), "MEOH"], "side": [-1, -1, 1],
+     "path": ["CH4", (268.0, 48.0), (250.0, 30.0), "MEOH"], "side": [-1, -1, 1],
      "routes": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"]],
      "lines": [["pmoA", "pmoB", "pmoC"], ["mmoX", "mmoY", "mmoZ"],
                ["mmoB", "mmoC", "mmoD", "nod"]]},
@@ -178,17 +180,17 @@ STEPS = [
      "routes": [["frmA", "frmB"]], "lines": [["gfa"], ["frmA", "frmB"]]},
     {"id": "rump", "name": "HCHO → biomass (ribulose-monophosphate cycle)",
      "pathway": _F, "hide_in": {"methanogenic", "reverse"},
-     "path": ["HCHO", (136.0, 22.0), (124.0, 10.0), "BIO"], "offset": -1.6, "side": -1,
+     "path": ["HCHO", (160.0, 22.0), (148.0, 10.0), "BIO"], "offset": -1.6, "side": -1, "stop_shift": 8.0,
      "routes": [["hxlA", "hxlB"]], "lines": [["hxlA", "hxlB"]]},
     {"id": "serine", "name": "C1 → biomass (serine cycle)", "pathway": _F,
      "hide_in": {"methanogenic", "reverse"},
-     "path": ["HCHO", (136.0, 22.0), (124.0, 10.0), "BIO"], "offset": 1.6, "side": 1,
+     "path": ["HCHO", (160.0, 22.0), (148.0, 10.0), "BIO"], "offset": 1.6, "side": 1,
      "routes": [["sgaA", "hprA", "mtkA", "mtkB", "mcl"]],
      "lines": [["sgaA", "hprA", "gckA"], ["mtkA", "mtkB", "mcl"]]},
 ]
 
 # Figure sizing used by make_cycle_map.py (inches / points).
-FIG = {"single_w": 11.4, "grid_w": 8.4, "single_fs": 9.0, "grid_fs": 6.6,
+FIG = {"single_w": 13.5, "grid_w": 9.9, "single_fs": 9.0, "grid_fs": 6.6,
        "grid_cols": 2}
 
 # Metro geometry (data units).
@@ -337,7 +339,7 @@ def _length(pts) -> float:
     return sum(math.hypot(x1 - x0, y1 - y0) for (x0, y0), (x1, y1) in zip(pts, pts[1:]))
 
 
-def _stop_distances(pts, n: int) -> list[float]:
+def _stop_distances(pts, n: int, shift: float = 0.0) -> list[float]:
     """Distances along the polyline of n evenly spread stops, keeping clear of
     the two stations and of every bend; a long stretch groups its stops around
     its middle instead of spreading them out."""
@@ -353,7 +355,7 @@ def _stop_distances(pts, n: int) -> list[float]:
         at += L
     U = sum(b - a for a, b in usable) or 1.0
     span = min(U, n * STOP_SPACING_MAX)
-    lead = (U - span) / 2
+    lead = min(max((U - span) / 2 + shift, 0.0), U - span)
     out = []
     for i in range(n):
         u = lead + span * (i + 0.5) / n
@@ -387,7 +389,7 @@ def step_geometry(st) -> dict:
     n = len(tokens)
     stops = []
     sides = st.get("side", 1)
-    for i, d in enumerate(_stop_distances(pts, n)):
+    for i, d in enumerate(_stop_distances(pts, n, st.get("stop_shift", 0.0))):
         (x, y), (tx, ty), k = _along(pts, d)
         side = sides[k] if isinstance(sides, (list, tuple)) else sides
         side = side or (1 if i % 2 == 0 else -1)

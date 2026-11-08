@@ -210,21 +210,6 @@ def _key_row(ax, x, y, kind, args, label, fontsize, u2pt, scale=1.0):
             fontsize=fontsize, color=INK2)
 
 
-def draw_key_inside(ax, fontsize: float, u2pt: float) -> None:
-    """Pathway lines and glyph key in the free top-left corner of the map
-    (single-genome figure)."""
-    x0, y0 = model.XLIM[0] + 3.0, model.YLIM[1] - 4.0
-    step = 4.0
-    for i, cat in enumerate(CAT_ORDER):
-        y = y0 - i * step
-        _line(ax, [(x0, y), (x0 + 6.0, y)], PATHWAY_COLOR[cat], "complete", u2pt, 2)
-        ax.text(x0 + 7.5, y, PATHWAY_LABEL[cat], ha="left", va="center",
-                fontsize=fontsize, color=INK2)
-    x1 = x0 + 62.0
-    for i, (kind, args, label) in enumerate(_key_items(fontsize)):
-        _key_row(ax, x1, y0 - i * step, kind, args, label, fontsize, u2pt)
-
-
 def _key_axes(ax, aspect: float) -> float:
     """100 data units across; the height follows the axes box so circles stay
     round under an equal aspect. Returns the height in data units."""
@@ -286,12 +271,12 @@ def render(samples: list[str], results_dir: Path, outs: list[Path],
     head_h = 14 * unit                         # title + subtitle band
     gap_x, gap_y = 0.25, 0.2
     margin = 0.3
-    legend_h, key_h = (0.0, 0.0) if single else (1.05, 1.0)
+    legend_h, key_h = 1.05, 1.0
     top_h = 0.0 if single else 0.55            # figure title (grid only)
 
     fig_w = 2 * margin + ncols * panel_w + (ncols - 1) * gap_x
     fig_h = (2 * margin + top_h + nrows * (panel_h + head_h)
-             + (nrows - 1) * gap_y + legend_h + key_h + (0.0 if single else 0.2))
+             + (nrows - 1) * gap_y + legend_h + key_h + 0.2)
     fig = plt.figure(figsize=(fig_w, fig_h))
 
     if not single:
@@ -316,18 +301,15 @@ def render(samples: list[str], results_dir: Path, outs: list[Path],
             sub = model.context_note(ctx) + "  ·  " + sub
         draw_cycle(ax, call_codes(calls), fontsize, u2pt, title=s,
                    subtitle=sub, ctx=ctx)
-        if single:
-            draw_key_inside(ax, fontsize - 1.0, u2pt)
 
-    if not single:
-        leg_w = min(fig_w - 2 * margin, 9.0)
-        leg_u2pt = 72.0 * leg_w / 100.0
-        ax_leg = fig.add_axes([margin / fig_w, (margin + key_h + 0.1) / fig_h,
-                               leg_w / fig_w, legend_h / fig_h])
-        draw_legend(ax_leg, 8.0, leg_u2pt, legend_h / leg_w)
-        ax_key = fig.add_axes([margin / fig_w, margin / fig_h,
-                               leg_w / fig_w, key_h / fig_h])
-        draw_pathway_key(ax_key, 8.0, leg_u2pt, key_h / leg_w)
+    leg_w = min(fig_w - 2 * margin, 9.0)
+    leg_u2pt = 72.0 * leg_w / 100.0
+    ax_leg = fig.add_axes([margin / fig_w, (margin + key_h + 0.1) / fig_h,
+                           leg_w / fig_w, legend_h / fig_h])
+    draw_legend(ax_leg, 8.0, leg_u2pt, legend_h / leg_w)
+    ax_key = fig.add_axes([margin / fig_w, margin / fig_h,
+                           leg_w / fig_w, key_h / fig_h])
+    draw_pathway_key(ax_key, 8.0, leg_u2pt, key_h / leg_w)
     _save(fig, outs)
 
 

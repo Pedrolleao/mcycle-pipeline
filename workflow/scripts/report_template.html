@@ -766,7 +766,7 @@ function renderCycle(sm) {
       if (code === -1) { const q = 0.5 * k; s("path", {d: `M${f(cx - q)},${f(cy - q)}L${f(cx + q)},${f(cy + q)}M${f(cx - q)},${f(cy + q)}L${f(cx + q)},${f(cy - q)}`,
         stroke: "var(--muted)", "stroke-width": 0.3 * k}, gs); }
       const lx = X(sp.lx), ly = Y(sp.ly);
-      const ta = {x: f(lx), y: f(ly), "text-anchor": anchorOf(sp.ha), dy: `${dyOf(sp.va)}em`, "font-size": 11, class: tokenClass(code)};
+      const ta = {x: f(lx), y: f(ly), "text-anchor": anchorOf(sp.ha), dy: `${dyOf(sp.va)}em`, "font-size": 13, class: tokenClass(code)};
       if (sp.rot) ta.transform = `rotate(${-sp.rot} ${f(lx)} ${f(ly)})`;
       const t = s("text", ta, gs, tokenText(tok));
       if (i === 0 && v[3]) s("tspan", {class: "g0", dx: 5}, t, "∅");
@@ -778,7 +778,7 @@ function renderCycle(sm) {
     s("circle", {cx: f(X(n.x)), cy: f(Y(n.y)), r: G.station_r * k, fill: "var(--surface)",
       stroke: "var(--ink)", "stroke-width": 0.75 * k}, gSt);
     s("text", {x: f(X(n.x + n.ldx)), y: f(Y(n.y + n.ldy)), "text-anchor": anchorOf(n.ha),
-      dy: `${dyOf(n.va)}em`, "font-size": 12, class: "station"}, gSt, n.label);
+      dy: `${dyOf(n.va)}em`, "font-size": 14.5, class: "station"}, gSt, n.label);
   });
 }
 
