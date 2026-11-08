@@ -174,8 +174,8 @@ a cross = ruled out. Colour always means pathway; the palette lives in
 its colour, each compound a station (a ringed white disc), each gene a stop on the line
 of the step it performs: a disc ringed in the line colour when the gene is found (with a
 centre dot when domain-only), faint when absent, crossed when disqualified. A step whose
-route is complete is a line in service, a partial step is dashed (under construction),
-an absent step is grey; a light chevron before the arrival station gives the direction
+route is complete is a line in service, a partial step is the same line hatched (the
+colour at 40 % with full-colour stripes across it), an absent step is grey; a light chevron before the arrival station gives the direction
 of travel. The ladder of H₄MPT-bound C1 intermediates is the straight trunk from CO₂
 (left) to CH₄ (right); aerobic methane oxidation returns along the bottom (CH₄ → CH₃OH →
 HCHO → formate → CO₂, or → biomass); acetate and methylated compounds feed in from the

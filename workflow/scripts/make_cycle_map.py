@@ -7,8 +7,8 @@ The diagram (stations = compounds, lines = pathways, stops = genes, layout) is
 defined in _cycle_model.py; this script is shared with the nitrogen and sulfur
 sister pipelines once their models carry a metro layout (2026-11-08: mcycle
 only). Every line is coloured by its pathway and drawn by the state
-of its step — complete (solid), partial (dashed, "under construction"), absent
-(grey) — and the genes behind it are the stops on the line: a white disc ringed
+of its step — complete (solid), partial (hatched: the line at 40 % with
+full-colour stripes), absent (grey) — and the genes behind it are the stops on the line: a white disc ringed
 in the line colour when found (half-marked when domain-only), faint when
 absent, crossed when disqualified. A chevron near the arrival station gives the
 direction of travel; in a reverse-Mcr (ANME) genome the methanogenesis chain
@@ -77,14 +77,17 @@ def _halo(u2pt: float):
     return [pe.withStroke(linewidth=0.5 * u2pt, foreground=BG)]
 
 
-def _line(ax, pts, colour, state, u2pt, z):
+def _line(ax, pts, colour, state, u2pt, z, stripes=None):
+    """A track. A partial step is the same continuous line at 40 % opacity
+    with full-colour 45° stripes across it (model.stripes)."""
     xs, ys = zip(*pts)
-    kw = dict(color=colour, lw=model.LINE_W * u2pt, solid_capstyle="round",
-              solid_joinstyle="round", dash_capstyle="butt",
-              dash_joinstyle="round", zorder=z)
+    ax.plot(xs, ys, color=colour, lw=model.LINE_W * u2pt, solid_capstyle="round",
+            solid_joinstyle="round", zorder=z,
+            alpha=model.PARTIAL_ALPHA if state == "partial" else 1.0)
     if state == "partial":
-        kw["ls"] = (0, (2.4 / model.LINE_W, 1.5 / model.LINE_W))
-    ax.plot(xs, ys, **kw)
+        for q in (stripes if stripes is not None else model.stripes(pts)):
+            ax.add_patch(mpatches.Polygon(q, closed=True, facecolor=colour,
+                                          edgecolor="none", zorder=z + 0.05))
 
 
 def _chevron(ax, c, u2pt, z):
@@ -148,7 +151,7 @@ def draw_cycle(ax, codes: dict[str, int], fontsize: float, u2pt: float,
         colour = ABSENT_EDGE if state == "absent" else hue
         z = 1 + order[state]
         pts = list(reversed(st["path"])) if e["reversed"] else st["path"]
-        _line(ax, pts, colour, state, u2pt, z)
+        _line(ax, pts, colour, state, u2pt, z, stripes=st["stripes"])
         _chevron(ax, st["chevron_rev"] if e["reversed"] else st["chevron"],
                  u2pt, z + 0.1)
         toks = [t for line in e["lines"] for t in line]
@@ -181,7 +184,7 @@ def _key_items(fontsize: float):
     """Rows of the state / glyph key: (kind, args, label)."""
     return [
         ("line", ("complete", "#6b6a66"), "complete step — every gene of one route found"),
-        ("line", ("partial", "#6b6a66"), "partial — some route genes found"),
+        ("line", ("partial", "#6b6a66"), "partial — some route genes found (hatched)"),
         ("line", ("absent", ABSENT_EDGE), "absent"),
         ("stop", (2, "#6b6a66"), "gene found (confirmed)"),
         ("stop", (1, "#6b6a66"), "gene° domain-only (HMM signature, no BLAST support)"),
@@ -192,21 +195,21 @@ def _key_items(fontsize: float):
 
 
 def _key_row(ax, x, y, kind, args, label, fontsize, u2pt, scale=1.0):
-    """One key row at (x, y) in data units; the sample glyph spans ~6 units."""
+    """One key row at (x, y) in data units; the sample glyph spans 8 units."""
     if kind == "line":
         state, colour = args
-        _line(ax, [(x, y), (x + 6.0 * scale, y)], colour, state, u2pt * scale, 2)
-        _chevron(ax, {"x": x + 5.2 * scale, "y": y, "tx": 1.0, "ty": 0.0},
+        _line(ax, [(x, y), (x + 8.0 * scale, y)], colour, state, u2pt * scale, 2)
+        _chevron(ax, {"x": x + 7.2 * scale, "y": y, "tx": 1.0, "ty": 0.0},
                  u2pt * scale, 2.1)
     elif kind == "stop":
         code, hue = args
-        _line(ax, [(x, y), (x + 6.0 * scale, y)], ABSENT_EDGE if code == 0 else hue,
+        _line(ax, [(x, y), (x + 8.0 * scale, y)], ABSENT_EDGE if code == 0 else hue,
               "complete", u2pt * scale, 2)
-        _stop(ax, {"x": x + 3.0 * scale, "y": y}, code, hue, u2pt * scale, 5)
+        _stop(ax, {"x": x + 4.0 * scale, "y": y}, code, hue, u2pt * scale, 5)
     else:
-        ax.text(x + 3.0 * scale, y, args[0], ha="center", va="center",
+        ax.text(x + 4.0 * scale, y, args[0], ha="center", va="center",
                 fontsize=fontsize, color=ABSENT_TEXT)
-    ax.text(x + 7.5 * scale, y, label, ha="left", va="center",
+    ax.text(x + 9.5 * scale, y, label, ha="left", va="center",
             fontsize=fontsize, color=INK2)
 
 
@@ -239,8 +242,8 @@ def draw_pathway_key(ax, fontsize: float, u2pt: float, aspect: float) -> None:
     for i, cat in enumerate(CAT_ORDER):
         col, row = i % per_row, i // per_row
         x, y = col * (100.0 / per_row), H - step * (row + 0.6)
-        _line(ax, [(x, y), (x + 6.0, y)], PATHWAY_COLOR[cat], "complete", u2pt, 2)
-        ax.text(x + 7.5, y, PATHWAY_LABEL[cat], ha="left", va="center",
+        _line(ax, [(x, y), (x + 8.0, y)], PATHWAY_COLOR[cat], "complete", u2pt, 2)
+        ax.text(x + 9.5, y, PATHWAY_LABEL[cat], ha="left", va="center",
                 fontsize=fontsize, color=INK2)
 
 

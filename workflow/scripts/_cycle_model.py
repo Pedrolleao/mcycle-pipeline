@@ -204,6 +204,8 @@ CORNER_MARGIN = 3.0      # no stop this close to a bend
 STOP_SPACING_MAX = 9.0   # stops on a long stretch are grouped, not spread out
 LABEL_GAP = 2.3          # stop centre → label
 CHEVRON = 1.9            # direction chevron size
+STRIPE = (1.3, 1.3)      # partial step: full-colour stripe / 40 %-tint gap along the line
+PARTIAL_ALPHA = 0.4      # opacity of the tinted base of a partial step
 
 
 # ───────────────────────────── evaluation ────────────────────────────────────
@@ -372,6 +374,28 @@ def _stop_distances(pts, n: int, shift: float = 0.0,
     return out
 
 
+def stripes(pts, width: float = LINE_W) -> list[list[tuple[float, float]]]:
+    """45° hatching of a partial step: parallelograms of full colour across the
+    line, drawn over the tinted base. Each straight stretch is hatched on its
+    own, keeping one line width clear of the ends and bends."""
+    s_len, gap = STRIPE
+    quads = []
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+        L = math.hypot(x1 - x0, y1 - y0)
+        if L < 2 * width + s_len:
+            continue
+        tx, ty = (x1 - x0) / L, (y1 - y0) / L
+        nx, ny = -ty, tx
+        h = width / 2
+        at = lambda a, b: (x0 + tx * a + nx * b, y0 + ty * a + ny * b)   # noqa: E731
+        c = width + s_len / 2
+        while c + s_len / 2 + h <= L - width:
+            quads.append([at(c - s_len / 2 - h, -h), at(c + s_len / 2 - h, -h),
+                          at(c + s_len / 2 + h, h), at(c - s_len / 2 + h, h)])
+            c += s_len + gap
+    return quads
+
+
 def _orient(tangent) -> str:
     tx, ty = tangent
     if abs(ty) > 0.9:
@@ -421,7 +445,7 @@ def step_geometry(st) -> dict:
             tx, ty = -tx, -ty
         return {"x": x, "y": y, "tx": tx, "ty": ty}
     return {"path": pts, "stops": stops, "chevron": chevron(True),
-            "chevron_rev": chevron(False)}
+            "chevron_rev": chevron(False), "stripes": stripes(pts)}
 
 
 def layout() -> dict:
@@ -437,12 +461,13 @@ def layout() -> dict:
                       for s in g["stops"]],
             "chevron": {k: r(v) for k, v in g["chevron"].items()},
             "chevron_rev": {k: r(v) for k, v in g["chevron_rev"].items()},
+            "stripes": [[[r(x), r(y)] for x, y in q] for q in g["stripes"]],
         })
     return {
         "xlim": list(XLIM), "ylim": list(YLIM),
         "wide": (XLIM[1] - XLIM[0]) > 130,
         "geom": {"line_w": LINE_W, "station_r": STATION_R, "stop_r": STOP_R,
-                 "chevron": CHEVRON},
+                 "chevron": CHEVRON, "partial_alpha": PARTIAL_ALPHA},
         "nodes": [{"id": k, "label": v[0], "x": v[1], "y": v[2],
                    "ldx": v[3][0], "ldy": v[3][1], "ha": v[3][2], "va": v[3][3]}
                   for k, v in NODES.items()],

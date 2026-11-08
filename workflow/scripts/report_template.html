@@ -742,8 +742,11 @@ function renderCycle(sm) {
     const g = s("g", {}, gLines);
     const attrs = {d, fill: "none", stroke: colour, "stroke-width": G.line_w * k,
       "stroke-linecap": "round", "stroke-linejoin": "round"};
-    if (stt === "partial") attrs["stroke-dasharray"] = `${2.4 * k} ${1.5 * k}`;
+    if (stt === "partial") attrs["stroke-opacity"] = G.partial_alpha;
     s("path", attrs, g);
+    // partial step: full-colour 45-degree stripes over the tinted line
+    if (stt === "partial") st.stripes.forEach(q =>
+      s("polygon", {points: q.map(p => f(X(p[0])) + "," + f(Y(p[1]))).join(" "), fill: hue}, g));
     // direction chevron: a light V inside the line, before the arrival station
     const c = rev ? st.chevron_rev : st.chevron, L = G.chevron * k;
     const tx = c.tx, ty = -c.ty, nx = -ty, ny = tx, px = X(c.x), py = Y(c.y);
@@ -976,8 +979,10 @@ function init() {
   const ly = document.getElementById("leg-cycle");
   const track = (state, col) => v => {
     const a = {x1: 1, x2: 17, y1: 9, y2: 9, stroke: col, "stroke-width": 6, "stroke-linecap": "round"};
-    if (state === "partial") a["stroke-dasharray"] = "7 4";
+    if (state === "partial") a["stroke-opacity"] = D.cycle.geom.partial_alpha;
     s("line", a, v);
+    if (state === "partial") [4, 9, 14].forEach(x =>
+      s("polygon", {points: `${x - 3},12 ${x - 1},12 ${x + 2},6 ${x},6`, fill: col}, v));
     s("polyline", {points: "11,5.5 14.5,9 11,12.5", fill: "none", stroke: "var(--surface)",
       "stroke-width": 1.8, "stroke-linecap": "round", "stroke-linejoin": "round"}, v);
   };
@@ -990,7 +995,7 @@ function init() {
     if (code === -1) s("path", {d: "M6.5,6.5L11.5,11.5M6.5,11.5L11.5,6.5", stroke: "var(--muted)", "stroke-width": 1.2}, v);
   };
   legendItem(ly, track("complete", "var(--ink2)"), "complete step — every gene of one route found");
-  legendItem(ly, track("partial", "var(--ink2)"), "partial — some route genes found");
+  legendItem(ly, track("partial", "var(--ink2)"), "partial — some route genes found (hatched)");
   legendItem(ly, track("absent", "var(--absent-edge)"), "absent");
   legendItem(ly, stop(2), "gene found");
   legendItem(ly, stop(1), "domain-only (°)");
