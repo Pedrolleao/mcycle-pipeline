@@ -81,6 +81,8 @@ _F = "formaldehyde_c1"
 # feeders: extra lines of the same step that bring a second substrate to the
 #   product station (waypoint lists, drawn in the step's colour and state, with
 #   a chevron and no stops; never reversed).
+# flat:   write the stop labels horizontally even on a horizontal stretch (a
+#   lone stop between parallel strands, where 45° text would cross them).
 # stop_shift: moves the group of stops along the path (units, towards the end).
 # stop_spacing: this step's own cap on the distance between stops (default
 #   STOP_SPACING_MAX).
@@ -412,7 +414,9 @@ def step_geometry(st) -> dict:
     """Polyline, stops (one per gene token, in `lines` order) and the chevron
     positions of one step. Stop labels: on a vertical or diagonal stretch the
     text is horizontal beside the stop; on a horizontal stretch it is written
-    at 45° so dense stops do not collide (the metro-map convention)."""
+    at 45° so dense stops do not collide (the metro-map convention), unless
+    the step is `flat` (a lone stop between parallel strands: horizontal text
+    centred over or under the stop)."""
     pts = _offset_polyline([_pt(p) for p in st["path"]], st.get("offset", 0.0))
     L = _length(pts)
     tokens = [g for line in st["lines"] for g in line]
@@ -426,7 +430,11 @@ def step_geometry(st) -> dict:
         side = side or (1 if i % 2 == 0 else -1)
         nx, ny = -ty * side, tx * side          # left normal × side
         o = _orient((tx, ty))
-        if o == "h":
+        if o == "h" and st.get("flat"):
+            up = 1 if ny > 0 else -1
+            stops.append({"x": x, "y": y, "lx": x, "ly": y + LABEL_GAP * up, "rot": 0,
+                          "ha": "center", "va": "bottom" if up > 0 else "top"})
+        elif o == "h":
             # 45° label: starts above the stop reading up-right, or ends below
             # it reading up to the stop.
             up = 1 if ny > 0 else -1
